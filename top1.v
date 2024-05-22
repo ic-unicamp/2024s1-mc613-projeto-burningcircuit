@@ -203,9 +203,6 @@ module top1(
   input CLOCK_50,
   input [3:0] SW,
   input [3:0] KEY,
-  output reg[7:0] input_red,
-  output reg[7:0] input_green,
-  output reg[7:0] input_blue,
   output VGA_CLK,
   output VGA_SYNC_N,
   output VGA_BLANK_N,
@@ -217,10 +214,16 @@ module top1(
 );
   wire [9:0] next_x;
   wire [9:0] next_y;
-  wire [7:0] re
-  d;
-  wire [7:0] green;
-  wire [7:0] blue;
+  wire [7:0] jogador1_red;
+  wire [7:0] jogador1_green;
+  wire [7:0] jogador1_blue;
+  wire [7:0] borda__red;
+  wire [7:0] borda__green;
+  wire [7:0] borda__blue;
+  wire [7:0] input_red;
+  wire [7:0] input_green;
+  wire [7:0] input_blue;
+
 
   jogador1 jogador1(
     .VGA_CLK(VGA_CLK),
@@ -229,9 +232,9 @@ module top1(
     .KEY(KEY),
     .next_x(next_x),
     .next_y(next_y),
-    .OUT_R(red),
-    .OUT_G(green),
-    .OUT_B(blue)
+    .OUT_R(jogador1_red),
+    .OUT_G(jogador1_green),
+    .OUT_B(jogador1_blue)
   );
   
   vga vga(
@@ -254,15 +257,19 @@ module top1(
   
    always@ (*)begin
       if((next_x >= 16 && next_x <= 623) && (next_y >= 16 && next_y <= 463))begin
-        input_red = red;  
-        input_green = green;  
-        input_blue = blue;  
+        borda_red = 0;  
+        borda_green = 0;  
+        borda_blue = 0 
       end
       else begin
-        input_red = 255;  
-        input_green = 0;  
-        input_blue = 0;
+        borda_red = 255;  
+        borda_green = 0;  
+        borda_blue = 0;
         end
     end
+  
+  assign input_red = jogador1_red ^ borda_red;
+  assign input_green = jogador1_green ^ borda_green;
+  assign input_blue = jogador1_blue ^ borda_blue;
 
 endmodule
