@@ -118,8 +118,8 @@ module jogador1(
       estado = IDLE;
       coord_atual_x = COORD_INICIAL_X;
       coord_atual_y = COORD_INICIAL_Y;
-      posicao_atual_x = COORD_INICIAL_X;
-      posicao_atual_y = COORD_INICIAL_Y;
+      posicao_futura_x = COORD_INICIAL_X;
+      posicao_futura_y = COORD_INICIAL_Y;
     end
     else if (contador_clock == 0) begin
       coord_atual_x = posicao_futura_x;
@@ -219,9 +219,9 @@ module top1(
   wire [7:0] jogador1_red;
   wire [7:0] jogador1_green;
   wire [7:0] jogador1_blue;
-  wire [7:0] borda__red;
-  wire [7:0] borda__green;
-  wire [7:0] borda__blue;
+  reg [7:0] borda_red;
+  reg [7:0] borda_green;
+  reg [7:0] borda_blue;
   wire [7:0] input_red;
   wire [7:0] input_green;
   wire [7:0] input_blue;
@@ -261,7 +261,7 @@ module top1(
       if((next_x >= 16 && next_x <= 623) && (next_y >= 16 && next_y <= 463))begin
         borda_red = 0;  
         borda_green = 0;  
-        borda_blue = 0 
+        borda_blue = 0; 
       end
       else begin
         borda_red = 255;  
