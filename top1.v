@@ -120,9 +120,23 @@ module jogador1(
       coord_atual_y = COORD_INICIAL_Y;
       posicao_futura_x = COORD_INICIAL_X;
       posicao_futura_y = COORD_INICIAL_Y;
+      sentido = 0;
     end
     else if (contador_clock == 0) begin
-      coord_atual_x = posicao_futura_x;
+      if(sentido == 0) begin // deslocando para direita
+        posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
+      end 
+      else if (sentido == 1) begin //deslocando para baixo
+        posicao_futura_y = coord_atual_y + ALTURA_JOGADOR1;  
+      end
+      else if (sentido == 2) begin // deslocando para esquerda
+        posicao_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
+      end 
+      else if (sentido == 3) begin //deslocando para cima
+        posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;  
+      end
+    end
+    coord_atual_x = posicao_futura_x;
       coord_atual_y = posicao_futura_y;
       case(estado)
         IDLE: begin
@@ -153,20 +167,6 @@ module jogador1(
           estado = IDLE;
         end
       endcase
-
-      if(sentido == 0) begin // deslocando para direita
-        posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
-      end 
-      else if (sentido == 1) begin //deslocando para baixo
-        posicao_futura_y = coord_atual_y + ALTURA_JOGADOR1;  
-      end
-      else if (sentido == 2) begin // deslocando para esquerda
-        posicao_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
-      end 
-      else if (sentido == 3) begin //deslocando para cima
-        posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;  
-      end
-    end
   end
 
 //desenha JOGADOR11
