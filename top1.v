@@ -30,7 +30,7 @@ module vga(
   end
 
   always @(posedge VGA_CLK) begin
-    if (SW[1]) begin
+    if (SW[0]) begin
       x = 0;
       y = 0;
     end else begin
@@ -83,8 +83,8 @@ module jogador1(
   parameter H_MOVE = 3'b100;
   parameter ESPERA = 3'b101;
 
-  parameter COORD_INICIAL_X = 219; 
-  parameter COORD_INICIAL_Y = 239; 
+  parameter COORD_INICIAL_X = 216; 
+  parameter COORD_INICIAL_Y = 240; 
   reg [9:0] coord_atual_x;
   reg [9:0] coord_atual_y;
 
@@ -98,30 +98,63 @@ module jogador1(
   reg [9:0] posicao_futura_x;
   reg [9:0] posicao_futura_y;
 
+  reg fim_de_jogo;
+
 
   always @ (posedge VGA_CLK) begin
     if (reset) begin
       contador_clock = 0;
     end
     else begin
-      if (contador_clock < 1000000) begin
-        contador_clock = contador_clock + 1;
-      end
-      else begin
-        contador_clock = 0;
+      if(fim_de_jogo == 0) begin
+        if (contador_clock < 1000000) begin
+          contador_clock = contador_clock + 1;
+        end
+        else begin
+          contador_clock = 0;
+        end
       end
     end
   end
 
   always@ (posedge VGA_CLK)begin
-    if(reset || (reiniciar == 0))begin
+    if(reset)begin
       estado = IDLE;
       coord_atual_x = COORD_INICIAL_X;
       coord_atual_y = COORD_INICIAL_Y;
+      posicao_futura_x = COORD_INICIAL_X;
+      posicao_futura_y = COORD_INICIAL_Y;
+      sentido = 0;
+      fim_de_jogo = 0;
+
     end
     else if (contador_clock == 0) begin
-      coord_atual_x = posicao_futura_x;
-      coord_atual_y = posicao_futura_y;
+      if(sentido == 0) begin // deslocando para direita
+        posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
+      end 
+      else if (sentido == 1) begin //deslocando para baixo
+        posicao_futura_y = coord_atual_y + ALTURA_JOGADOR1;  
+      end
+      else if (sentido == 2) begin // deslocando para esquerda
+        posicao_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
+      end 
+      else if (sentido == 3) begin //deslocando para cima
+        posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;  
+      end
+    end
+      if(reiniciar == 1) begin
+        coord_atual_x = COORD_INICIAL_X;
+        coord_atual_y = COORD_INICIAL_Y;
+        posicao_futura_x = COORD_INICIAL_X;
+        posicao_futura_y = COORD_INICIAL_Y;
+        fim_de_jogo = 0;
+        sentido = 0;
+      end
+      else begin
+        coord_atual_x = posicao_futura_x;
+        coord_atual_y = posicao_futura_y;
+      end
+      
       case(estado)
         IDLE: begin
           if(KEY[3] == 0) begin
@@ -151,20 +184,9 @@ module jogador1(
           estado = IDLE;
         end
       endcase
-
-      if(sentido == 0) begin // deslocando para direita
-        posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
-      end 
-      else if (sentido == 1) begin //deslocando para baixo
-        posicao_futura_y = coord_atual_y + ALTURA_JOGADOR1;  
+      if( !((coord_atual_x >= 16 && coord_atual_x <= 623) && (coord_atual_y >= 16 && coord_atual_y <= 463)) ) begin
+        fim_de_jogo = 1;
       end
-      else if (sentido == 2) begin // deslocando para esquerda
-        posicao_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
-      end 
-      else if (sentido == 3) begin //deslocando para cima
-        posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;  
-      end
-    end
   end
 
 //desenha JOGADOR11
@@ -193,6 +215,7 @@ module jogador1(
         OUT_G = 0;
         OUT_B = 0;
       end
+      
     end
   end
 
@@ -203,9 +226,6 @@ module top1(
   input CLOCK_50,
   input [3:0] SW,
   input [3:0] KEY,
-  output reg[7:0] input_red,
-  output reg[7:0] input_green,
-  output reg[7:0] input_blue,
   output VGA_CLK,
   output VGA_SYNC_N,
   output VGA_BLANK_N,
@@ -217,10 +237,16 @@ module top1(
 );
   wire [9:0] next_x;
   wire [9:0] next_y;
-  wire [7:0] re
-  d;
-  wire [7:0] green;
-  wire [7:0] blue;
+  wire [7:0] jogador1_red;
+  wire [7:0] jogador1_green;
+  wire [7:0] jogador1_blue;
+  reg [7:0] borda_red;
+  reg [7:0] borda_green;
+  reg [7:0] borda_blue;
+  wire [7:0] input_red;
+  wire [7:0] input_green;
+  wire [7:0] input_blue;
+
 
   jogador1 jogador1(
     .VGA_CLK(VGA_CLK),
@@ -229,9 +255,9 @@ module top1(
     .KEY(KEY),
     .next_x(next_x),
     .next_y(next_y),
-    .OUT_R(red),
-    .OUT_G(green),
-    .OUT_B(blue)
+    .OUT_R(jogador1_red),
+    .OUT_G(jogador1_green),
+    .OUT_B(jogador1_blue)
   );
   
   vga vga(
@@ -254,15 +280,19 @@ module top1(
   
    always@ (*)begin
       if((next_x >= 16 && next_x <= 623) && (next_y >= 16 && next_y <= 463))begin
-        input_red = red;  
-        input_green = green;  
-        input_blue = blue;  
+        borda_red = 0;  
+        borda_green = 0;  
+        borda_blue = 0; 
       end
       else begin
-        input_red = 255;  
-        input_green = 0;  
-        input_blue = 0;
+        borda_red = 255;  
+        borda_green = 0;  
+        borda_blue = 0;
         end
     end
+  
+  assign input_red = jogador1_red ^ borda_red;
+  assign input_green = jogador1_green ^ borda_green;
+  assign input_blue = jogador1_blue ^ borda_blue;
 
 endmodule
