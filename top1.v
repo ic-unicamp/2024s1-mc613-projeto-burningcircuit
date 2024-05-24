@@ -1,6 +1,7 @@
 module vga(
   input CLOCK_50,
   input [9:0] SW,
+  input wren,
   input [7:0] input_red,
   input [7:0] input_green,
   input [7:0] input_blue,
@@ -30,7 +31,7 @@ module vga(
   end
 
   always @(posedge VGA_CLK) begin
-    if (SW[1]) begin
+    if (SW[0]) begin
       x = 0;
       y = 0;
     end else begin
@@ -85,8 +86,8 @@ module jogador1(
   parameter H_MOVE = 3'b100;
   parameter ESPERA = 3'b101;
 
-  parameter COORD_INICIAL_X = 219; 
-  parameter COORD_INICIAL_Y = 239; 
+  parameter COORD_INICIAL_X = 216; 
+  parameter COORD_INICIAL_Y = 240; 
   reg [9:0] coord_atual_x;
   reg [9:0] coord_atual_y;
 
@@ -100,17 +101,21 @@ module jogador1(
   reg [9:0] posicao_futura_x;
   reg [9:0] posicao_futura_y;
 
+  reg fim_de_jogo;
+
 
   always @ (posedge VGA_CLK) begin
     if (reset) begin
       contador_clock = 0;
     end
     else begin
-      if (contador_clock < 1000000) begin
-        contador_clock = contador_clock + 1;
-      end
-      else begin
-        contador_clock = 0;
+      if(fim_de_jogo == 0) begin
+        if (contador_clock < 1000000) begin
+          contador_clock = contador_clock + 1;
+        end
+        else begin
+          contador_clock = 0;
+        end
       end
     end
   end
@@ -124,7 +129,10 @@ module jogador1(
       posicao_futura_y = COORD_INICIAL_Y;
       sentido = 0;
       wren = 0;
+      fim_de_jogo = 0;
+
     end
+      
     else if (contador_clock == 0) begin
       wren = 1;
       if(sentido == 0) begin // deslocando para direita
@@ -141,8 +149,19 @@ module jogador1(
       end
     end
     wren = 0;
-    coord_atual_x = posicao_futura_x;
-      coord_atual_y = posicao_futura_y;
+      if(reiniciar == 1) begin
+        coord_atual_x = COORD_INICIAL_X;
+        coord_atual_y = COORD_INICIAL_Y;
+        posicao_futura_x = COORD_INICIAL_X;
+        posicao_futura_y = COORD_INICIAL_Y;
+        fim_de_jogo = 0;
+        sentido = 0;
+      end
+      else begin
+        coord_atual_x = posicao_futura_x;
+        coord_atual_y = posicao_futura_y;
+      end
+      
       case(estado)
         IDLE: begin
           if(KEY[3] == 0) begin
@@ -172,6 +191,9 @@ module jogador1(
           estado = IDLE;
         end
       endcase
+      if( !((coord_atual_x >= 16 && coord_atual_x <= 623) && (coord_atual_y >= 16 && coord_atual_y <= 463)) ) begin
+        fim_de_jogo = 1;
+      end
   end
 
 //desenha JOGADOR11
@@ -200,6 +222,7 @@ module jogador1(
         OUT_G = 0;
         OUT_B = 0;
       end
+      
     end
   end
 
@@ -226,6 +249,9 @@ module top1(
   wire [7:0] jogador1_red;
   wire [7:0] jogador1_green;
   wire [7:0] jogador1_blue;
+  wire [7:0] jogador1_traco_red;
+  wire [7:0] jogador1_traco_green;
+  wire [7:0] jogador1_traco_blue;
   reg [7:0] borda_red;
   reg [7:0] borda_green;
   reg [7:0] borda_blue;
@@ -233,6 +259,8 @@ module top1(
   wire [7:0] input_green;
   wire [7:0] input_blue;
   wire [18:0] endereco_ram_jogador1;
+  wire [18:0] endereco_escrita_jogador1;
+  wire [18:0] endereco_leitura_jogador1;
   wire wren_jogador1;
   wire [7:0] sinalRGB_jogador1;
   wire [7:0] sinalRGB_jogador2;
@@ -241,6 +269,8 @@ module top1(
 
   assign sinalRGB_jogador1 = 8'b11111111;
   assign sinalRGB_jogador2 = 8'b10000000;
+  assign endereco_leitra_jogador1 = next_x + (next_y * 640);
+  assign endereco_ram_jogador1 = (wren == 1)? endereco_escrita_jogador1: endereco_leitura_jogador1;
 
   ram ram (
   .address_a(endereco_ram_jogador1), // endereço de escrita jogador 1
@@ -256,6 +286,7 @@ module top1(
   .outclock(outclock) // clk de saída
   );
 
+
   jogador1 jogador1(
     .VGA_CLK(VGA_CLK),
     .reset(SW[0]),
@@ -266,7 +297,7 @@ module top1(
     .OUT_R(jogador1_red),
     .OUT_G(jogador1_green),
     .OUT_B(jogador1_blue),
-    .endereco_ram(endereco_ram_jogador1),
+    .endereco_ram(endereco_escrita_jogador1),
     .wren(wren_jogador1)
   );
   
@@ -289,6 +320,24 @@ module top1(
   );
   
    always@ (*)begin
+      if(wren ==0) begin
+        if (saida_jogador1 == 8'b11111111)begin
+          jogador1_traco_red = 255;
+          jogador1_traco_green = 255;
+          jogador1_traco_blue = 0;
+        end
+        else begin
+          jogador1_traco_red = 0;
+          jogador1_traco_green = 0;
+          jogador1_traco_blue = 0;
+        end
+      end
+      else begin
+        jogador1_traco_blue = 0;
+        jogador1_traco_green = 0;
+        jogador1_traco_red = 0;
+      end
+
       if((next_x >= 16 && next_x <= 623) && (next_y >= 16 && next_y <= 463))begin
         borda_red = 0;  
         borda_green = 0;  
@@ -301,8 +350,8 @@ module top1(
         end
     end
   
-  assign input_red = jogador1_red ^ borda_red;
-  assign input_green = jogador1_green ^ borda_green;
-  assign input_blue = jogador1_blue ^ borda_blue;
+  assign input_red = jogador1_red ^ borda_red ^ jogador1_traco_red;
+  assign input_green = jogador1_green ^ borda_green ^ jogador1_traco_green;
+  assign input_blue = jogador1_blue ^ borda_blue ^ jogador1_traco_blue;
 
 endmodule
