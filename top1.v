@@ -268,10 +268,13 @@ module top1(
   wire [7:0] saida_jogador1;
   wire [7:0] saida_jogador2;
 
-  assign sinalRGB_jogador1 = 8'b11111111;
+  assign sinalRGB_jogador1 = 8'b00000001;
   assign sinalRGB_jogador2 = 8'b10000000;
   assign endereco_leitura_jogador1 = next_x + (next_y * 640);
-  assign endereco_ram_jogador1 = (wren_jogador1 == 1)? endereco_escrita_jogador1: endereco_leitura_jogador1;
+  assign wren_jogador1 = 1;
+
+  // assign endereco_escrita_jogador1 = 320 + (240 * 640);
+  //assign endereco_ram_jogador1 = (wren_jogador1 == 1)? endereco_escrita_jogador1: endereco_leitura_jogador1;
 
   ram ram (
   .data(sinalRGB_jogador1), // endereço de escrita jogador 1
@@ -308,8 +311,8 @@ module top1(
     .OUT_R(jogador1_red),
     .OUT_G(jogador1_green),
     .OUT_B(jogador1_blue),
-    .endereco_ram(endereco_escrita_jogador1),
-    .wren(wren_jogador1)
+    .endereco_ram(endereco_escrita_jogador1)
+    // .wren(wren_jogador1)
   );
   
   vga vga(
@@ -330,25 +333,24 @@ module top1(
    .next_y(next_y)
   );
   
-   always@ (*)begin
+   always@ (posedge VGA_CLK)begin
 
-      if(wren_jogador1 ==0) begin
-        if (saida_jogador1 == 8'b11111111)begin
-          jogador1_traco_red = 255;
-          jogador1_traco_green = 255;
-          jogador1_traco_blue = 0;
-        end
-        // else begin
-        //   jogador1_traco_red = 0;
-        //   jogador1_traco_green = 0;
-        //   jogador1_traco_blue = 0;
-        // end
+      if (saida_jogador1 == 8'b00000001)begin
+        
+        jogador1_traco_red = 255;
+        jogador1_traco_green = 255;
+        jogador1_traco_blue = 255;
       end
       else begin
-        jogador1_traco_blue = 0;
-        jogador1_traco_green = 0;
         jogador1_traco_red = 0;
+        jogador1_traco_green = 0;
+        jogador1_traco_blue = 0;
       end
+      // else begin
+      //   jogador1_traco_blue = 0;
+      //   jogador1_traco_green = 0;
+      //   jogador1_traco_red = 0;
+      // end
 
       if((next_x >= 16 && next_x <= 623) && (next_y >= 16 && next_y <= 463))begin
         borda_red = 0;  
@@ -365,5 +367,13 @@ module top1(
   assign input_red = jogador1_red ^ borda_red ^ jogador1_traco_red;
   assign input_green = jogador1_green ^ borda_green ^ jogador1_traco_green;
   assign input_blue = jogador1_blue ^ borda_blue ^ jogador1_traco_blue;
+
+  // assign input_red = (next_x == 320 && next_y == 240) ?  jogador1_traco_red: jogador1_red ^ borda_red;
+  // assign input_green = (next_x == 320 && next_y == 240) ? jogador1_traco_green : jogador1_green ^ borda_green;
+  // assign input_blue = (next_x == 320 && next_y == 240) ?  jogador1_traco_blue : jogador1_blue ^ borda_blue;
+
+  // assign input_red =  jogador1_traco_red;
+  // assign input_green =  jogador1_traco_green;
+  // assign input_blue =  jogador1_traco_blue;
 
 endmodule
