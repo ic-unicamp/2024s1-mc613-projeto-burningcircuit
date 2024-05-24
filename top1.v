@@ -68,8 +68,10 @@ module jogador1(
   input [9:0] next_y,  // y-coordinate of NEXT pixel that will be drawn
   output reg [7:0] OUT_R,     // RED (to resistor DAC OUT connector)
   output reg [7:0] OUT_G,   // GREEN (to resistor DAC to OUT connector)
-  output reg [7:0] OUT_B    // BLUE (to resistor DAC to OUT connector)
-);
+  output reg [7:0] OUT_B,    // BLUE (to resistor DAC to OUT connector)
+  output [18:0] endereco_ram,
+  output reg wren
+  );
 
  /*
  KEY[3] -> anti-horario
@@ -121,8 +123,10 @@ module jogador1(
       posicao_futura_x = COORD_INICIAL_X;
       posicao_futura_y = COORD_INICIAL_Y;
       sentido = 0;
+      wren = 0;
     end
     else if (contador_clock == 0) begin
+      wren = 1;
       if(sentido == 0) begin // deslocando para direita
         posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
       end 
@@ -136,6 +140,7 @@ module jogador1(
         posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;  
       end
     end
+    wren = 0;
     coord_atual_x = posicao_futura_x;
       coord_atual_y = posicao_futura_y;
       case(estado)
@@ -198,6 +203,8 @@ module jogador1(
     end
   end
 
+  assign endereco_ram = coord_atual_x + (coord_atual_y * 640);
+
 endmodule	
 
 
@@ -225,7 +232,29 @@ module top1(
   wire [7:0] input_red;
   wire [7:0] input_green;
   wire [7:0] input_blue;
+  wire [18:0] endereco_ram_jogador1;
+  wire wren_jogador1;
+  wire [7:0] sinalRGB_jogador1;
+  wire [7:0] sinalRGB_jogador2;
+  wire [7:0] saida_jogador1;
+  wire [7:0] saida_jogador2;
 
+  assign sinalRGB_jogador1 = 8'b11111111;
+  assign sinalRGB_jogador2 = 8'b10000000;
+
+  ram ram (
+  .address_a(endereco_ram_jogador1), // endereço de escrita jogador 1
+  .wren_a(wren_jogador1), // habilita escrita jogador 1
+  .data_a(sinalRGB_jogador1), // dado de escrita jogador 1
+  .q_a(saida_jogador1), // leitura jogador 1
+
+  .address_b(address_b), // endereço de leitura jogador 2
+  .data_b(data_b), // dado de escrita jogador 2
+  .wren_b(wren_b), // habilita escrita jogador 2
+  .q_b(saida_jogador2), // leitura jogador 2
+  .inclock(inclock), // clk de entrada
+  .outclock(outclock) // clk de saída
+  );
 
   jogador1 jogador1(
     .VGA_CLK(VGA_CLK),
@@ -236,7 +265,9 @@ module top1(
     .next_y(next_y),
     .OUT_R(jogador1_red),
     .OUT_G(jogador1_green),
-    .OUT_B(jogador1_blue)
+    .OUT_B(jogador1_blue),
+    .endereco_ram(endereco_ram_jogador1),
+    .wren(wren_jogador1)
   );
   
   vga vga(
