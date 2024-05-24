@@ -269,22 +269,18 @@ module top1(
 
   assign sinalRGB_jogador1 = 8'b11111111;
   assign sinalRGB_jogador2 = 8'b10000000;
-  assign endereco_leitra_jogador1 = next_x + (next_y * 640);
+  assign endereco_leitura_jogador1 = next_x + (next_y * 640);
   assign endereco_ram_jogador1 = (wren == 1)? endereco_escrita_jogador1: endereco_leitura_jogador1;
 
-  ram ram (
-  .address_a(endereco_ram_jogador1), // endereço de escrita jogador 1
-  .wren_a(wren_jogador1), // habilita escrita jogador 1
-  .data_a(sinalRGB_jogador1), // dado de escrita jogador 1
-  .q_a(saida_jogador1), // leitura jogador 1
-
-  .address_b(address_b), // endereço de leitura jogador 2
-  .data_b(data_b), // dado de escrita jogador 2
-  .wren_b(wren_b), // habilita escrita jogador 2
-  .q_b(saida_jogador2), // leitura jogador 2
-  .inclock(inclock), // clk de entrada
-  .outclock(outclock) // clk de saída
-  );
+  ram ram_inst (
+  .data(sinalRGB_jogador1),
+  .rdaddress(endereco_leitra_jogador1),
+  .rdclock(VGA_CLK),
+  .wraddress(endereco_escrita_jogador1),
+  .wrclock(VGA_CLK),
+  .wren(wren_jogador1),
+  .q(saida_jogador1)
+);
 
 
   jogador1 jogador1(
@@ -320,7 +316,7 @@ module top1(
   );
   
    always@ (*)begin
-      if(wren ==0) begin
+      if(wren_jogador1 ==0) begin
         if (saida_jogador1 == 8'b11111111)begin
           jogador1_traco_red = 255;
           jogador1_traco_green = 255;
