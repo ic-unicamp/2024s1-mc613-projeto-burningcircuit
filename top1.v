@@ -71,6 +71,8 @@ module jogador1(
   output reg [7:0] OUT_G,   // GREEN (to resistor DAC to OUT connector)
   output reg [7:0] OUT_B,    // BLUE (to resistor DAC to OUT connector)
   output [18:0] endereco_ram,
+  output [9:0] out_coord_atual_x_j1,
+  output [9:0] out_coord_atual_y_j1,
   output reg wren
   );
 
@@ -225,8 +227,11 @@ module jogador1(
       
     end
   end
-
-  assign endereco_ram = coord_atual_x + (coord_atual_y * 640);
+  
+  assign out_coord_atual_x_j1 = coord_atual_x;
+  assign out_coord_atual_y_j1 = coord_atual_y;
+  // assign endereco_ram = coord_atual_x + (coord_atual_y * 640);
+  assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
 
 endmodule	
 
@@ -245,6 +250,7 @@ module top1(
   output [7:0] VGA_G,   // GREEN (to resistor DAC to VGA connector)
   output [7:0] VGA_B    // BLUE (to resistor DAC to VGA connector)
 );
+
   wire [9:0] next_x;
   wire [9:0] next_y;
   wire [7:0] jogador1_red;
@@ -268,6 +274,11 @@ module top1(
   wire [7:0] saida_jogador1;
   wire [7:0] saida_jogador2;
 
+  wire [9:0] coord_atual_x_j1;
+  wire [9:0] coord_atual_y_j1;
+
+
+  // assign sinalRGB_jogador1 =  ( ( (next_x >= coord_atual_x_j1) && (next_x < coord_atual_x_j1 + 8) ) && ( (next_y >= coord_atual_y_j1) && (next_y < coord_atual_y_j1 + 8)  )  ) ? 8'b00000001: 8'b00000000 ;
   assign sinalRGB_jogador1 = 8'b00000001;
   assign sinalRGB_jogador2 = 8'b10000000;
   assign endereco_leitura_jogador1 = next_x + (next_y * 640);
@@ -311,7 +322,9 @@ module top1(
     .OUT_R(jogador1_red),
     .OUT_G(jogador1_green),
     .OUT_B(jogador1_blue),
-    .endereco_ram(endereco_escrita_jogador1)
+    .endereco_ram(endereco_escrita_jogador1),
+    .out_coord_atual_x_j1(coord_atual_x_j1),
+    .out_coord_atual_y_j1(coord_atual_y_j1)
     // .wren(wren_jogador1)
   );
   
@@ -336,7 +349,7 @@ module top1(
    always@ (posedge VGA_CLK)begin
 
       if (saida_jogador1 == 8'b00000001)begin
-        
+
         jogador1_traco_red = 255;
         jogador1_traco_green = 255;
         jogador1_traco_blue = 255;
