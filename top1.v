@@ -71,8 +71,8 @@ module jogador1(
   output reg [7:0] OUT_G,   // GREEN (to resistor DAC to OUT connector)
   output reg [7:0] OUT_B,    // BLUE (to resistor DAC to OUT connector)
   output [18:0] endereco_ram,
-  output [9:0] out_coord_atual_x_j1,
-  output [9:0] out_coord_atual_y_j1,
+  // output [9:0] out_coord_atual_x_j1,
+  // output [9:0] out_coord_atual_y_j1,
   output reg wren
   );
 
@@ -228,8 +228,8 @@ module jogador1(
     end
   end
   
-  assign out_coord_atual_x_j1 = coord_atual_x;
-  assign out_coord_atual_y_j1 = coord_atual_y;
+  // assign out_coord_atual_x_j1 = coord_atual_x;
+  // assign out_coord_atual_y_j1 = coord_atual_y;
   // assign endereco_ram = coord_atual_x + (coord_atual_y * 640);
   assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
 
@@ -274,8 +274,8 @@ module top1(
   wire [7:0] saida_jogador1;
   wire [7:0] saida_jogador2;
 
-  wire [9:0] coord_atual_x_j1;
-  wire [9:0] coord_atual_y_j1;
+  // wire [9:0] coord_atual_x_j1;
+  // wire [9:0] coord_atual_y_j1;
 
 
   // assign sinalRGB_jogador1 =  ( ( (next_x >= coord_atual_x_j1) && (next_x < coord_atual_x_j1 + 8) ) && ( (next_y >= coord_atual_y_j1) && (next_y < coord_atual_y_j1 + 8)  )  ) ? 8'b00000001: 8'b00000000 ;
@@ -322,9 +322,9 @@ module top1(
     .OUT_R(jogador1_red),
     .OUT_G(jogador1_green),
     .OUT_B(jogador1_blue),
-    .endereco_ram(endereco_escrita_jogador1),
-    .out_coord_atual_x_j1(coord_atual_x_j1),
-    .out_coord_atual_y_j1(coord_atual_y_j1)
+    .endereco_ram(endereco_escrita_jogador1)
+    // .out_coord_atual_x_j1(coord_atual_x_j1),
+    // .out_coord_atual_y_j1(coord_atual_y_j1)
     // .wren(wren_jogador1)
   );
   
