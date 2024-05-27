@@ -233,8 +233,6 @@ module jogador1(
   // assign endereco_ram = coord_atual_x + (coord_atual_y * 640);
   assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
 
-  assign endereco_ram = coord_atual_x + (coord_atual_y * 640);
-
 endmodule	
 
 
