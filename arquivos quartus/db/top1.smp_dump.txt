@@ -1,0 +1,7 @@
+
+State Machine - |top1|jogador1:jogador1|estado
+Name estado.ESPERA estado.H_MOVE estado.IDLE estado.AH_MOVE 
+estado.IDLE 0 0 0 0 
+estado.AH_MOVE 0 0 1 1 
+estado.H_MOVE 0 1 1 0 
+estado.ESPERA 1 0 1 0 
