@@ -71,6 +71,7 @@ module jogador1(
   output reg [7:0] OUT_G,   // GREEN (to resistor DAC to OUT connector)
   output reg [7:0] OUT_B,    // BLUE (to resistor DAC to OUT connector)
   output [18:0] endereco_ram,
+  output [7:0] sinalRGB,
   // output [9:0] out_coord_atual_x_j1,
   // output [9:0] out_coord_atual_y_j1,
   output reg wren
@@ -130,13 +131,11 @@ module jogador1(
       posicao_futura_x = COORD_INICIAL_X;
       posicao_futura_y = COORD_INICIAL_Y;
       sentido = 0;
-      wren = 0;
       fim_de_jogo = 0;
 
     end
       
     else if (contador_clock == 0) begin
-      wren = 1;
       if(sentido == 0) begin // deslocando para direita
         posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
       end 
@@ -150,7 +149,6 @@ module jogador1(
         posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;  
       end
     end
-    wren = 0;
       if(reiniciar == 1) begin
         coord_atual_x = COORD_INICIAL_X;
         coord_atual_y = COORD_INICIAL_Y;
@@ -199,39 +197,63 @@ module jogador1(
   end
 
 //desenha JOGADOR11
-  always @(*) begin
+
+  reg [18:0] end_jog1;
+  reg [18:0] contador_ram;
+  reg [7:0] sinalRGB_jog1;
+  always @(posedge VGA_CLK) begin
+
     if(reset)begin
-    OUT_R = 0;
-    OUT_G = 0;
-    OUT_B = 0;
+      OUT_R = 0;
+      OUT_G = 0;
+      OUT_B = 0;
+      end_jog1 = contador_ram;
+      contador_ram = contador_ram + 1; 
+      wren = 1;
+      sinalRGB_jog1 = 0;
 
     end
     else begin
+      contador_ram = 0;
       if( (next_x >= coord_atual_x) && (next_x < coord_atual_x + COMPRIMENTO_JOGADOR1) )begin
         if ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + ALTURA_JOGADOR1) )begin
-          OUT_R = 255;
-          OUT_G = 255;
+          OUT_R = 127;
+          OUT_G = 127;
           OUT_B = 0;
+          end_jog1 = next_x + (next_y * 640);
+          wren = 1;
+          sinalRGB_jog1 =  8'b00000001;
         end
         else begin
           OUT_R = 0;
           OUT_G = 0;
           OUT_B = 0;
+          end_jog1 = 0;
+          sinalRGB_jog1 = 0;
+          wren = 0;
         end
       end
       else begin
         OUT_R = 0;
         OUT_G = 0;
         OUT_B = 0;
+        end_jog1 = 0;
+        sinalRGB_jog1 = 0;
+        wren = 0;
       end
-      
     end
   end
+
+  
   
   // assign out_coord_atual_x_j1 = coord_atual_x;
   // assign out_coord_atual_y_j1 = coord_atual_y;
   // assign endereco_ram = coord_atual_x + (coord_atual_y * 640);
-  assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
+  // assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
+  // assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
+  assign endereco_ram = end_jog1;
+  assign sinalRGB = sinalRGB_jog1;
+
 
 endmodule	
 
@@ -279,10 +301,9 @@ module top1(
 
 
   // assign sinalRGB_jogador1 =  ( ( (next_x >= coord_atual_x_j1) && (next_x < coord_atual_x_j1 + 8) ) && ( (next_y >= coord_atual_y_j1) && (next_y < coord_atual_y_j1 + 8)  )  ) ? 8'b00000001: 8'b00000000 ;
-  assign sinalRGB_jogador1 = 8'b00000001;
-  assign sinalRGB_jogador2 = 8'b10000000;
+  // assign sinalRGB_jogador1 = 8'b00000001;
+  // assign sinalRGB_jogador2 = 8'b10000000;
   assign endereco_leitura_jogador1 = next_x + (next_y * 640);
-  assign wren_jogador1 = 1;
 
   // assign endereco_escrita_jogador1 = 320 + (240 * 640);
   //assign endereco_ram_jogador1 = (wren_jogador1 == 1)? endereco_escrita_jogador1: endereco_leitura_jogador1;
@@ -322,10 +343,11 @@ module top1(
     .OUT_R(jogador1_red),
     .OUT_G(jogador1_green),
     .OUT_B(jogador1_blue),
-    .endereco_ram(endereco_escrita_jogador1)
+    .endereco_ram(endereco_escrita_jogador1),
+    .sinalRGB(sinalRGB_jogador1),
     // .out_coord_atual_x_j1(coord_atual_x_j1),
     // .out_coord_atual_y_j1(coord_atual_y_j1)
-    // .wren(wren_jogador1)
+    .wren(wren_jogador1)
   );
   
   vga vga(
@@ -352,7 +374,7 @@ module top1(
 
         jogador1_traco_red = 255;
         jogador1_traco_green = 255;
-        jogador1_traco_blue = 255;
+        jogador1_traco_blue = 0;
       end
       else begin
         jogador1_traco_red = 0;
@@ -377,6 +399,11 @@ module top1(
         end
     end
   
+  // assign input_red = borda_red ^ jogador1_traco_red;
+  // assign input_green = borda_green ^ jogador1_traco_green;
+  // assign input_blue = borda_blue ^ jogador1_traco_blue;
+
+
   assign input_red = jogador1_red ^ borda_red ^ jogador1_traco_red;
   assign input_green = jogador1_green ^ borda_green ^ jogador1_traco_green;
   assign input_blue = jogador1_blue ^ borda_blue ^ jogador1_traco_blue;
