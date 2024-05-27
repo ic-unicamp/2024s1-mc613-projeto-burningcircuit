@@ -69,13 +69,11 @@ module jogador1(
   input [9:0] next_x,  // x-coordinate of NEXT pixel that will be drawn
   input [9:0] next_y,  // y-coordinate of NEXT pixel that will be drawn
   input [7:0] dado_mem_atual,
-  input [18:0] endereco_leitura_vga,
   output reg [7:0] OUT_R,     // RED (to resistor DAC OUT connector)
   output reg [7:0] OUT_G,   // GREEN (to resistor DAC to OUT connector)
   output reg [7:0] OUT_B,    // BLUE (to resistor DAC to OUT connector)
   output [18:0] endereco_ram,
   output [7:0] sinalRGB,
-  output reg [18:0] endereco_leitura_top1,
 
   // output [9:0] out_coord_atual_x_j1,
   // output [9:0] out_coord_atual_y_j1,
@@ -158,12 +156,10 @@ module jogador1(
 
     end
       // end_mem = posicao_futura_x + (posicao_futura_y * 640);
-      if(coord_atual_x != COORD_INICIAL_X && coord_atual_y != COORD_INICIAL_Y) begin
-        endereco_leitura_top1 = coord_atual_x + (coord_atual_y * 640);
+      if((coord_atual_x != COORD_INICIAL_X && coord_atual_y != COORD_INICIAL_Y )&& (next_x == posicao_futura_x && next_y == posicao_futura_y)) begin
         if(dado_mem_atual != 0) begin
           fim_de_jogo = 1;
         end
-        endereco_leitura_top1 = endereco_leitura_vga;
       end
       if(reiniciar == 1) begin
         coord_atual_x = COORD_INICIAL_X;
@@ -335,7 +331,6 @@ module top1(
   wire [7:0] input_blue;
   wire [18:0] endereco_ram_jogador1;
   wire [18:0] endereco_escrita_jogador1;
-  wire [18:0] endereco_leitura_vga;
   wire [18:0] endereco_leitura_jogador1;
   wire wren_jogador1;
   wire [7:0] sinalRGB_jogador1;
@@ -350,7 +345,7 @@ module top1(
   // assign sinalRGB_jogador1 =  ( ( (next_x >= coord_atual_x_j1) && (next_x < coord_atual_x_j1 + 8) ) && ( (next_y >= coord_atual_y_j1) && (next_y < coord_atual_y_j1 + 8)  )  ) ? 8'b00000001: 8'b00000000 ;
   // assign sinalRGB_jogador1 = 8'b00000001;
   // assign sinalRGB_jogador2 = 8'b10000000;
-  assign endereco_leitura_vga = next_x + (next_y * 640);
+  assign endereco_leitura_jogador1 = next_x + (next_y * 640);
 
   // assign endereco_escrita_jogador1 = 320 + (240 * 640);
   //assign endereco_ram_jogador1 = (wren_jogador1 == 1)? endereco_escrita_jogador1: endereco_leitura_jogador1;
@@ -389,7 +384,6 @@ module top1(
     .next_x(next_x),
     .next_y(next_y),
     .dado_mem_atual(saida_jogador1),
-    .endereco_leitura_vga(endereco_leitura_vga),
     .OUT_R(jogador1_red),
     .OUT_G(jogador1_green),
     .OUT_B(jogador1_blue),
@@ -397,8 +391,7 @@ module top1(
     .sinalRGB(sinalRGB_jogador1),
     // .out_coord_atual_x_j1(coord_atual_x_j1),
     // .out_coord_atual_y_j1(coord_atual_y_j1)
-    .wren(wren_jogador1),
-    .endereco_leitura_top1(endereco_leitura_jogador1)
+    .wren(wren_jogador1)
   );
   
   vga vga(

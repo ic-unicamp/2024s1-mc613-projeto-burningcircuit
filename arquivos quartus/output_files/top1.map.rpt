@@ -1,5 +1,5 @@
 Analysis & Synthesis report for top1
-Mon May 27 15:20:40 2024
+Mon May 27 15:27:53 2024
 Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
 
 
@@ -52,13 +52,13 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Mon May 27 15:20:40 2024       ;
+; Analysis & Synthesis Status     ; Successful - Mon May 27 15:27:53 2024       ;
 ; Quartus Prime Version           ; 17.1.0 Build 590 10/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; top1                                        ;
 ; Top-level Entity Name           ; top1                                        ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 136                                         ;
+; Total registers                 ; 117                                         ;
 ; Total pins                      ; 38                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 2,457,600                                   ;
@@ -210,16 +210,16 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+-----------------+
 ; Resource                                    ; Usage           ;
 +---------------------------------------------+-----------------+
-; Estimate of Logic utilization (ALMs needed) ; 342             ;
+; Estimate of Logic utilization (ALMs needed) ; 360             ;
 ;                                             ;                 ;
-; Combinational ALUT usage for logic          ; 458             ;
-;     -- 7 input functions                    ; 2               ;
-;     -- 6 input functions                    ; 203             ;
-;     -- 5 input functions                    ; 81              ;
-;     -- 4 input functions                    ; 22              ;
-;     -- <=3 input functions                  ; 150             ;
+; Combinational ALUT usage for logic          ; 482             ;
+;     -- 7 input functions                    ; 1               ;
+;     -- 6 input functions                    ; 216             ;
+;     -- 5 input functions                    ; 80              ;
+;     -- 4 input functions                    ; 26              ;
+;     -- <=3 input functions                  ; 159             ;
 ;                                             ;                 ;
-; Dedicated logic registers                   ; 136             ;
+; Dedicated logic registers                   ; 117             ;
 ;                                             ;                 ;
 ; I/O pins                                    ; 38              ;
 ; Total MLAB memory bits                      ; 0               ;
@@ -228,9 +228,9 @@ refer to the applicable agreement for further details.
 ; Total DSP Blocks                            ; 0               ;
 ;                                             ;                 ;
 ; Maximum fan-out node                        ; vga:vga|VGA_CLK ;
-; Maximum fan-out                             ; 400             ;
-; Total fan-out                               ; 11953           ;
-; Average fan-out                             ; 12.27           ;
+; Maximum fan-out                             ; 381             ;
+; Total fan-out                               ; 11994           ;
+; Average fan-out                             ; 12.25           ;
 +---------------------------------------------+-----------------+
 
 
@@ -239,15 +239,15 @@ refer to the applicable agreement for further details.
 +-------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------------------------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node                ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                   ; Entity Name     ; Library Name ;
 +-------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------------------------------------------------------------+-----------------+--------------+
-; |top1                                     ; 458 (12)            ; 136 (2)                   ; 2457600           ; 0          ; 38   ; 0            ; |top1                                                                                                 ; top1            ; work         ;
-;    |jogador1:jogador1|                    ; 181 (181)           ; 101 (101)                 ; 0                 ; 0          ; 0    ; 0            ; |top1|jogador1:jogador1                                                                               ; jogador1        ; work         ;
-;    |ram:ram|                              ; 185 (0)             ; 12 (0)                    ; 2457600           ; 0          ; 0    ; 0            ; |top1|ram:ram                                                                                         ; ram             ; work         ;
-;       |altsyncram:altsyncram_component|   ; 185 (0)             ; 12 (0)                    ; 2457600           ; 0          ; 0    ; 0            ; |top1|ram:ram|altsyncram:altsyncram_component                                                         ; altsyncram      ; work         ;
-;          |altsyncram_02q1:auto_generated| ; 185 (0)             ; 12 (12)                   ; 2457600           ; 0          ; 0    ; 0            ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated                          ; altsyncram_02q1 ; work         ;
+; |top1                                     ; 482 (36)            ; 117 (2)                   ; 2457600           ; 0          ; 38   ; 0            ; |top1                                                                                                 ; top1            ; work         ;
+;    |jogador1:jogador1|                    ; 181 (181)           ; 82 (82)                   ; 0                 ; 0          ; 0    ; 0            ; |top1|jogador1:jogador1                                                                               ; jogador1        ; work         ;
+;    |ram:ram|                              ; 183 (0)             ; 12 (0)                    ; 2457600           ; 0          ; 0    ; 0            ; |top1|ram:ram                                                                                         ; ram             ; work         ;
+;       |altsyncram:altsyncram_component|   ; 183 (0)             ; 12 (0)                    ; 2457600           ; 0          ; 0    ; 0            ; |top1|ram:ram|altsyncram:altsyncram_component                                                         ; altsyncram      ; work         ;
+;          |altsyncram_02q1:auto_generated| ; 183 (0)             ; 12 (12)                   ; 2457600           ; 0          ; 0    ; 0            ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated                          ; altsyncram_02q1 ; work         ;
 ;             |decode_3na:decode2|          ; 46 (46)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated|decode_3na:decode2       ; decode_3na      ; work         ;
 ;             |decode_s2a:rden_decode_b|    ; 38 (38)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated|decode_s2a:rden_decode_b ; decode_s2a      ; work         ;
-;             |mux_jhb:mux3|                ; 101 (101)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated|mux_jhb:mux3             ; mux_jhb         ; work         ;
-;    |vga:vga|                              ; 80 (80)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |top1|vga:vga                                                                                         ; vga             ; work         ;
+;             |mux_jhb:mux3|                ; 99 (99)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated|mux_jhb:mux3             ; mux_jhb         ; work         ;
+;    |vga:vga|                              ; 82 (82)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |top1|vga:vga                                                                                         ; vga             ; work         ;
 +-------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------------------------------------------------------------+-----------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -291,10 +291,10 @@ Encoding Type:  One-Hot
 ; borda_blue[0..7]                         ; Stuck at GND due to stuck port data_in         ;
 ; borda_green[0..7]                        ; Stuck at GND due to stuck port data_in         ;
 ; jogador1_traco_blue[0..7]                ; Stuck at GND due to stuck port data_in         ;
-; jogador1:jogador1|OUT_B[0..7]            ; Stuck at GND due to stuck port data_in         ;
-; jogador1:jogador1|sinalRGB_jog1[1..7]    ; Stuck at GND due to stuck port data_in         ;
 ; jogador1:jogador1|OUT_R[7]               ; Stuck at GND due to stuck port data_in         ;
 ; jogador1:jogador1|OUT_G[7]               ; Stuck at GND due to stuck port data_in         ;
+; jogador1:jogador1|OUT_B[0..7]            ; Stuck at GND due to stuck port data_in         ;
+; jogador1:jogador1|sinalRGB_jog1[1..7]    ; Stuck at GND due to stuck port data_in         ;
 ; borda_red[1..7]                          ; Merged with borda_red[0]                       ;
 ; jogador1_traco_red[0..7]                 ; Merged with jogador1_traco_green[0]            ;
 ; jogador1_traco_green[1..7]               ; Merged with jogador1_traco_green[0]            ;
@@ -332,12 +332,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 136   ;
+; Total registers                              ; 117   ;
 ; Number of registers using Synchronous Clear  ; 79    ;
 ; Number of registers using Synchronous Load   ; 19    ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 49    ;
+; Number of registers using Clock Enable       ; 30    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -347,17 +347,15 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                                     ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------------------------------------------------+
-; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |top1|vga:vga|x[1]                                                                                             ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |top1|vga:vga|y[1]                                                                                             ;
-; 4:1                ; 19 bits   ; 38 LEs        ; 0 LEs                ; 38 LEs                 ; Yes        ; |top1|jogador1:jogador1|end_jog1[14]                                                                           ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |top1|vga:vga|x[4]                                                                                             ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |top1|vga:vga|y[0]                                                                                             ;
+; 4:1                ; 19 bits   ; 38 LEs        ; 0 LEs                ; 38 LEs                 ; Yes        ; |top1|jogador1:jogador1|end_jog1[16]                                                                           ;
 ; 4:1                ; 20 bits   ; 40 LEs        ; 0 LEs                ; 40 LEs                 ; Yes        ; |top1|jogador1:jogador1|contador_clock[12]                                                                     ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |top1|jogador1:jogador1|sentido                                                                                ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated|mux_jhb:mux3|l3_w1_n4_mux_dataout ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; No         ; |top1|jogador1:jogador1|coord_atual_y                                                                          ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; |top1|jogador1:jogador1|coord_atual_y                                                                          ;
-; 6:1                ; 3 bits    ; 12 LEs        ; 9 LEs                ; 3 LEs                  ; No         ; |top1|jogador1:jogador1|coord_atual_x                                                                          ;
-; 6:1                ; 3 bits    ; 12 LEs        ; 9 LEs                ; 3 LEs                  ; No         ; |top1|jogador1:jogador1|coord_atual_x                                                                          ;
-; 33:1               ; 8 bits    ; 176 LEs       ; 176 LEs              ; 0 LEs                  ; No         ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated|mux_jhb:mux3|l6_w7_n0_mux_dataout ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated|mux_jhb:mux3|l3_w0_n4_mux_dataout ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 14 LEs               ; 7 LEs                  ; No         ; |top1|jogador1:jogador1|posicao_futura_y                                                                       ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 14 LEs               ; 7 LEs                  ; No         ; |top1|jogador1:jogador1|posicao_futura_x                                                                       ;
+; 33:1               ; 8 bits    ; 176 LEs       ; 176 LEs              ; 0 LEs                  ; No         ; |top1|ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated|mux_jhb:mux3|l6_w1_n0_mux_dataout ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------------------------------------------------+
 
 
@@ -484,33 +482,32 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 136                         ;
-;     ENA               ; 19                          ;
+; arriav_ff             ; 117                         ;
 ;     ENA SCLR          ; 30                          ;
 ;     SCLR              ; 30                          ;
 ;     SCLR SLD          ; 19                          ;
 ;     plain             ; 38                          ;
-; arriav_lcell_comb     ; 460                         ;
+; arriav_lcell_comb     ; 484                         ;
 ;     arith             ; 130                         ;
 ;         0 data inputs ; 4                           ;
 ;         1 data inputs ; 105                         ;
 ;         4 data inputs ; 9                           ;
 ;         5 data inputs ; 12                          ;
-;     extend            ; 2                           ;
-;         7 data inputs ; 2                           ;
-;     normal            ; 328                         ;
+;     extend            ; 1                           ;
+;         7 data inputs ; 1                           ;
+;     normal            ; 353                         ;
 ;         0 data inputs ; 2                           ;
 ;         1 data inputs ; 1                           ;
-;         2 data inputs ; 18                          ;
-;         3 data inputs ; 22                          ;
-;         4 data inputs ; 13                          ;
-;         5 data inputs ; 69                          ;
-;         6 data inputs ; 203                         ;
+;         2 data inputs ; 29                          ;
+;         3 data inputs ; 20                          ;
+;         4 data inputs ; 17                          ;
+;         5 data inputs ; 68                          ;
+;         6 data inputs ; 216                         ;
 ; boundary_port         ; 38                          ;
 ; stratixv_ram_block    ; 304                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 5.90                        ;
-; Average LUT depth     ; 4.03                        ;
+; Max LUT depth         ; 6.80                        ;
+; Average LUT depth     ; 4.90                        ;
 +-----------------------+-----------------------------+
 
 
@@ -529,19 +526,19 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
-    Info: Processing started: Mon May 27 15:20:34 2024
+    Info: Processing started: Mon May 27 15:27:47 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off top1 -c top1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
 Info (12021): Found 3 design units, including 3 entities, in source file top1.v
     Info (12023): Found entity 1: vga File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 1
     Info (12023): Found entity 2: jogador1 File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 63
-    Info (12023): Found entity 3: top1 File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 307
+    Info (12023): Found entity 3: top1 File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 303
 Info (12021): Found 1 design units, including 1 entities, in source file ram.v
     Info (12023): Found entity 1: ram File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/ram.v Line: 39
 Info (12127): Elaborating entity "top1" for the top level hierarchy
-Warning (10230): Verilog HDL assignment warning at top1.v(353): truncated value with size 32 to match size of target (19) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 353
-Info (12128): Elaborating entity "ram" for hierarchy "ram:ram" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 366
+Warning (10230): Verilog HDL assignment warning at top1.v(348): truncated value with size 32 to match size of target (19) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 348
+Info (12128): Elaborating entity "ram" for hierarchy "ram:ram" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 361
 Info (12128): Elaborating entity "altsyncram" for hierarchy "ram:ram|altsyncram:altsyncram_component" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/ram.v Line: 90
 Info (12130): Elaborated megafunction instantiation "ram:ram|altsyncram:altsyncram_component" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/ram.v Line: 90
 Info (12133): Instantiated megafunction "ram:ram|altsyncram:altsyncram_component" with the following parameter: File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/ram.v Line: 90
@@ -575,26 +572,25 @@ Info (12128): Elaborating entity "decode_s2a" for hierarchy "ram:ram|altsyncram:
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_jhb.tdf
     Info (12023): Found entity 1: mux_jhb File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/db/mux_jhb.tdf Line: 22
 Info (12128): Elaborating entity "mux_jhb" for hierarchy "ram:ram|altsyncram:altsyncram_component|altsyncram_02q1:auto_generated|mux_jhb:mux3" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/db/altsyncram_02q1.tdf Line: 49
-Info (12128): Elaborating entity "jogador1" for hierarchy "jogador1:jogador1" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 402
-Warning (10230): Verilog HDL assignment warning at top1.v(124): truncated value with size 32 to match size of target (20) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 124
+Info (12128): Elaborating entity "jogador1" for hierarchy "jogador1:jogador1" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 395
+Warning (10230): Verilog HDL assignment warning at top1.v(122): truncated value with size 32 to match size of target (20) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 122
+Warning (10230): Verilog HDL assignment warning at top1.v(134): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 134
+Warning (10230): Verilog HDL assignment warning at top1.v(135): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 135
 Warning (10230): Verilog HDL assignment warning at top1.v(136): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 136
 Warning (10230): Verilog HDL assignment warning at top1.v(137): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 137
-Warning (10230): Verilog HDL assignment warning at top1.v(138): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 138
-Warning (10230): Verilog HDL assignment warning at top1.v(139): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 139
-Warning (10230): Verilog HDL assignment warning at top1.v(147): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 147
-Warning (10230): Verilog HDL assignment warning at top1.v(150): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 150
-Warning (10230): Verilog HDL assignment warning at top1.v(153): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 153
-Warning (10230): Verilog HDL assignment warning at top1.v(156): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 156
-Warning (10230): Verilog HDL assignment warning at top1.v(162): truncated value with size 32 to match size of target (19) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 162
-Warning (10230): Verilog HDL assignment warning at top1.v(169): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 169
-Warning (10230): Verilog HDL assignment warning at top1.v(170): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 170
-Warning (10230): Verilog HDL assignment warning at top1.v(171): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 171
-Warning (10230): Verilog HDL assignment warning at top1.v(172): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 172
+Warning (10230): Verilog HDL assignment warning at top1.v(145): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 145
+Warning (10230): Verilog HDL assignment warning at top1.v(148): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 148
+Warning (10230): Verilog HDL assignment warning at top1.v(151): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 151
+Warning (10230): Verilog HDL assignment warning at top1.v(154): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 154
+Warning (10230): Verilog HDL assignment warning at top1.v(165): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 165
+Warning (10230): Verilog HDL assignment warning at top1.v(166): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 166
+Warning (10230): Verilog HDL assignment warning at top1.v(167): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 167
+Warning (10230): Verilog HDL assignment warning at top1.v(168): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 168
+Warning (10230): Verilog HDL assignment warning at top1.v(190): truncated value with size 32 to match size of target (2) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 190
 Warning (10230): Verilog HDL assignment warning at top1.v(194): truncated value with size 32 to match size of target (2) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 194
-Warning (10230): Verilog HDL assignment warning at top1.v(198): truncated value with size 32 to match size of target (2) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 198
-Warning (10230): Verilog HDL assignment warning at top1.v(243): truncated value with size 32 to match size of target (19) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 243
-Warning (10230): Verilog HDL assignment warning at top1.v(269): truncated value with size 32 to match size of target (19) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 269
-Info (12128): Elaborating entity "vga" for hierarchy "vga:vga" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 420
+Warning (10230): Verilog HDL assignment warning at top1.v(239): truncated value with size 32 to match size of target (19) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 239
+Warning (10230): Verilog HDL assignment warning at top1.v(265): truncated value with size 32 to match size of target (19) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 265
+Info (12128): Elaborating entity "vga" for hierarchy "vga:vga" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 413
 Warning (10230): Verilog HDL assignment warning at top1.v(38): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 38
 Warning (10230): Verilog HDL assignment warning at top1.v(41): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 41
 Warning (10230): Verilog HDL assignment warning at top1.v(49): truncated value with size 32 to match size of target (1) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 49
@@ -607,16 +603,16 @@ Warning (10230): Verilog HDL assignment warning at top1.v(57): truncated value w
 Warning (10230): Verilog HDL assignment warning at top1.v(58): truncated value with size 32 to match size of target (10) File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 58
 Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "VGA_SYNC_N" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 313
-    Warning (13410): Pin "VGA_BLANK_N" is stuck at VCC File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 314
-    Warning (13410): Pin "VGA_B[0]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 320
-    Warning (13410): Pin "VGA_B[1]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 320
-    Warning (13410): Pin "VGA_B[2]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 320
-    Warning (13410): Pin "VGA_B[3]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 320
-    Warning (13410): Pin "VGA_B[4]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 320
-    Warning (13410): Pin "VGA_B[5]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 320
-    Warning (13410): Pin "VGA_B[6]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 320
-    Warning (13410): Pin "VGA_B[7]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 320
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 309
+    Warning (13410): Pin "VGA_BLANK_N" is stuck at VCC File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 310
+    Warning (13410): Pin "VGA_B[0]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 316
+    Warning (13410): Pin "VGA_B[1]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 316
+    Warning (13410): Pin "VGA_B[2]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 316
+    Warning (13410): Pin "VGA_B[3]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 316
+    Warning (13410): Pin "VGA_B[4]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 316
+    Warning (13410): Pin "VGA_B[5]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 316
+    Warning (13410): Pin "VGA_B[6]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 316
+    Warning (13410): Pin "VGA_B[7]" is stuck at GND File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 316
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 3 registers lost all their fanouts during netlist optimizations.
 Warning (20013): Ignored 571 assignments for entity "DE1_SoC" -- entity does not exist in design
@@ -1194,16 +1190,16 @@ Warning (20013): Ignored 571 assignments for entity "DE1_SoC" -- entity does not
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 2 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "SW[2]" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 309
-    Warning (15610): No output dependent on input pin "SW[3]" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 309
-Info (21057): Implemented 883 device resources after synthesis - the final resource count might be different
+    Warning (15610): No output dependent on input pin "SW[2]" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 305
+    Warning (15610): No output dependent on input pin "SW[3]" File: /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/top1.v Line: 305
+Info (21057): Implemented 880 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 9 input pins
     Info (21059): Implemented 29 output pins
-    Info (21061): Implemented 541 logic cells
+    Info (21061): Implemented 538 logic cells
     Info (21064): Implemented 304 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 617 warnings
-    Info: Peak virtual memory: 1327 megabytes
-    Info: Processing ended: Mon May 27 15:20:40 2024
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 616 warnings
+    Info: Peak virtual memory: 1332 megabytes
+    Info: Processing ended: Mon May 27 15:27:53 2024
     Info: Elapsed time: 00:00:06
     Info: Total CPU time (on all processors): 00:00:14
 
