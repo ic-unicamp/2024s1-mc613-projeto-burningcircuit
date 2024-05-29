@@ -17,6 +17,12 @@ module vga(
   output [9:0] next_y  // y-coordinate of NEXT pixel that will be drawn
 );
 
+/*
+ falta implementar:
+    1.colocar a escrita no FB para ser feita em função da coord_passada de x e y
+    2.e a leitura do FB para ser feita em função da coord_atual de x e y
+*/
+
 
   reg [9:0] x;
   reg [9:0] y;
@@ -75,8 +81,8 @@ module jogador1(
   output [18:0] endereco_ram,
   output [7:0] sinalRGB,
 
-  // output [9:0] out_coord_atual_x_j1,
-  // output [9:0] out_coord_atual_y_j1,
+  // output [9:0] out_coord_passada_x_j1,
+  // output [9:0] out_coord_passadaj1,
   output reg wren
   );
 
@@ -94,8 +100,8 @@ module jogador1(
 
   parameter COORD_INICIAL_X = 216; 
   parameter COORD_INICIAL_Y = 240; 
-  reg [9:0] coord_atual_x;
-  reg [9:0] coord_atual_y;
+  reg [9:0] coord_passada_x;
+  reg [9:0] coord_passada_y;
 
   parameter COMPRIMENTO_JOGADOR1 = 8;
   parameter ALTURA_JOGADOR1 = 8;
@@ -104,11 +110,11 @@ module jogador1(
                         sentido = 2 -> esquerda
                         sentido = 3 -> cima  */
   reg [19:0] contador_clock;
-  reg [9:0] posicao_futura_x;
-  reg [9:0] posicao_futura_y;
-
   reg [9:0] coord_futura_x;
   reg [9:0] coord_futura_y;
+
+  reg [9:0] coord_atual_x;
+  reg [9:0] coord_atual_y;
 
   reg fim_de_jogo;
 
@@ -124,7 +130,7 @@ module jogador1(
 
 // contador de frame
   always @ (posedge VGA_CLK) begin
-    if (reset || reiniciar == 1) begin
+    if (reset) begin
       contador_clock = 0;
     end
     else begin
@@ -142,45 +148,43 @@ module jogador1(
 // always posiçoes
 always @(posedge VGA_CLK)begin
    if(reset)begin
+    coord_passada_x = 0;
+    coord_passada_y = 0;
     coord_atual_x = COORD_INICIAL_X;
     coord_atual_y = COORD_INICIAL_Y;
-    posicao_futura_x = COORD_INICIAL_X;
-    posicao_futura_y = COORD_INICIAL_Y;
     coord_futura_x = COORD_INICIAL_X;
     coord_futura_y = COORD_INICIAL_Y;
    end
 
    else if (contador_clock == 0) begin
+    coord_passada_x = coord_atual_x;
+    coord_passada_y = coord_atual_y;
     if(sentido == 0) begin // deslocando para direita
-      posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
-      coord_futura_x = posicao_futura_x + COMPRIMENTO_JOGADOR1;
+      coord_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
     end 
     else if (sentido == 1) begin //deslocando para baixo
-      posicao_futura_y = coord_atual_y + ALTURA_JOGADOR1; 
-      coord_futura_y = posicao_futura_y + ALTURA_JOGADOR1; 
+      coord_futura_y = coord_atual_y + ALTURA_JOGADOR1; 
     end
     else if (sentido == 2) begin // deslocando para esquerda
-      posicao_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
-      coord_futura_x = posicao_futura_x - COMPRIMENTO_JOGADOR1;
+      coord_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
     end 
     else if (sentido == 3) begin //deslocando para cima
-      posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;
-      coord_futura_y = posicao_futura_y - ALTURA_JOGADOR1;  
+      coord_futura_y = coord_atual_y - ALTURA_JOGADOR1;
     end
   end
 
     if(reiniciar == 1) begin
-      coord_atual_x = COORD_INICIAL_X;
-      coord_atual_y = COORD_INICIAL_Y;
-      posicao_futura_x = COORD_INICIAL_X;
-      posicao_futura_y = COORD_INICIAL_Y;
-      coord_futura_x = COORD_INICIAL_X ;
+      coord_passada_x = 0;
+      coord_passada_y = 0;
+      coord_futura_x = COORD_INICIAL_X;
       coord_futura_y = COORD_INICIAL_Y;
+      coord_atual_x = COORD_INICIAL_X ;
+      coord_atual_y = COORD_INICIAL_Y;
       // leitura_realizada = 0;
     end
     else begin
-      coord_atual_x = posicao_futura_x;
-      coord_atual_y = posicao_futura_y;
+      coord_atual_x = coord_futura_x;
+      coord_atual_y = coord_futura_y;
     end
   
 end
@@ -191,7 +195,7 @@ end
       estado = IDLE;
       sentido = 0;
     end
-      // end_mem = posicao_futura_x + (posicao_futura_y * 640);
+      // end_mem = coord_futura_x + (coord_futura_y * 640);
       
     if(reiniciar == 1) begin
       sentido = 0;
@@ -233,8 +237,8 @@ always @( posedge VGA_CLK)begin
     fim_de_jogo = 0;
   end
   else begin
-    if( next_x == coord_futura_x && next_y == coord_futura_y ) begin
-      if( (coord_futura_x == COORD_INICIAL_X) && (coord_futura_y == COORD_INICIAL_Y) && ( primeiro_movimento != 0) ) begin
+    if( next_x == coord_atual_x && next_y == coord_atual_y ) begin
+      if( (coord_atual_x == COORD_INICIAL_X) && (coord_atual_y == COORD_INICIAL_Y) && ( primeiro_movimento != 0) ) begin
         fim_de_jogo = 1;
       end
       else if(dado_mem_atual != 0 ) begin
@@ -242,14 +246,12 @@ always @( posedge VGA_CLK)begin
       end
     end
 
-    if( !((coord_atual_x >= 16 && coord_atual_x <= 623) && (coord_atual_y >= 16 && coord_atual_y <= 463)) ) begin
+    if( !((coord_passada_x >= 16 && coord_passada_x <= 623) && (coord_passada_y >= 16 && coord_passada_y <= 463)) ) begin
       fim_de_jogo = 1;
     end
   end
 
 end
-
-
 
 
 
@@ -259,8 +261,9 @@ end
   reg [18:0] contador_ram;
   reg [7:0] sinalRGB_jog1;
   integer i;
-  always @(posedge CLOCK_50) begin
 
+// always de deletar valores do framebuffer
+  always @(posedge CLOCK_50) begin
     if(reset || reiniciar == 1)begin
       OUT_R = 0;
       OUT_G = 0;
@@ -304,8 +307,8 @@ end
       //   contador_ram = contador_ram + 1; 
       // end
       contador_ram = 0;
-      if( (next_x >= coord_atual_x) && (next_x < coord_atual_x + COMPRIMENTO_JOGADOR1) )begin
-        if ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + ALTURA_JOGADOR1) )begin
+      if( (next_x >= coord_passada_x) && (next_x < coord_passada_x + COMPRIMENTO_JOGADOR1) )begin
+        if ( (next_y >= coord_passada_y) && (next_y < coord_passada_y + ALTURA_JOGADOR1) )begin
           OUT_R = 127;
           OUT_G = 127;
           OUT_B = 0;
@@ -335,11 +338,11 @@ end
 
   
   
-  // assign out_coord_atual_x_j1 = coord_atual_x;
-  // assign out_coord_atual_y_j1 = coord_atual_y;
-  // assign endereco_ram = coord_atual_x + (coord_atual_y * 640);
-  // assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
-  // assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
+  // assign out_coord_passada_x_j1 = coord_passada_x;
+  // assign out_coord_passadaj1 = coord_passada_y;
+  // assign endereco_ram = coord_passada_x + (coord_passada_y * 640);
+  // assign endereco_ram = (  ( ( (next_x >= coord_passada_x) && (next_x < coord_passada_x + 8) ) && ( (next_y >= coord_passada_y) && (next_y < coord_passada_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
+  // assign endereco_ram = (  ( ( (next_x >= coord_passada_x) && (next_x < coord_passada_x + 8) ) && ( (next_y >= coord_passada_y) && (next_y < coord_passada_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
   // assign endereco_ram = (leitura_realizada == 1) ? end_jog1 : 0;
   assign endereco_ram = end_jog1 ;
   assign sinalRGB = sinalRGB_jog1;
@@ -386,11 +389,11 @@ module top1(
   wire [7:0] saida_jogador1;
   wire [7:0] saida_jogador2;
 
-  // wire [9:0] coord_atual_x_j1;
-  // wire [9:0] coord_atual_y_j1;
+  // wire [9:0] coord_passada_x_j1;
+  // wire [9:0] coord_passadaj1;
 
 
-  // assign sinalRGB_jogador1 =  ( ( (next_x >= coord_atual_x_j1) && (next_x < coord_atual_x_j1 + 8) ) && ( (next_y >= coord_atual_y_j1) && (next_y < coord_atual_y_j1 + 8)  )  ) ? 8'b00000001: 8'b00000000 ;
+  // assign sinalRGB_jogador1 =  ( ( (next_x >= coord_passada_x_j1) && (next_x < coord_passada_x_j1 + 8) ) && ( (next_y >= coord_passadaj1) && (next_y < coord_passadaj1 + 8)  )  ) ? 8'b00000001: 8'b00000000 ;
   // assign sinalRGB_jogador1 = 8'b00000001;
   // assign sinalRGB_jogador2 = 8'b10000000;
   assign endereco_leitura_jogador1 = next_x + (next_y * 640);
@@ -425,8 +428,8 @@ module top1(
     .OUT_B(jogador1_blue),
     .endereco_ram(endereco_escrita_jogador1),
     .sinalRGB(sinalRGB_jogador1),
-    // .out_coord_atual_x_j1(coord_atual_x_j1),
-    // .out_coord_atual_y_j1(coord_atual_y_j1)
+    // .out_coord_passada_x_j1(coord_passada_x_j1),
+    // .out_coord_passadaj1(coord_passadaj1)
     .wren(wren_jogador1)
   );
   
