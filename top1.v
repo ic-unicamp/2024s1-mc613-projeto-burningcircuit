@@ -116,15 +116,15 @@ module jogador1(
 
   reg jogo_iniciado;
 
-  wire [7:0] primeiro_movemento;
+  wire [7:0] primeiro_movimento;
 
-  assign primeiro_movemento = (next_x == COORD_INICIAL_X + COMPRIMENTO_JOGADOR1 && next_y == COORD_INICIAL_Y) ? dado_mem_atual : 0 ; 
+  assign primeiro_movimento = (next_x == COORD_INICIAL_X + COMPRIMENTO_JOGADOR1 && next_y == COORD_INICIAL_Y) ? dado_mem_atual : 0 ; 
 
   // reg leitura_realizada;
 
-
+// contador de frame
   always @ (posedge VGA_CLK) begin
-    if (reset) begin
+    if (reset || reiniciar == 1) begin
       contador_clock = 0;
     end
     else begin
@@ -139,108 +139,116 @@ module jogador1(
     end
   end
 
-  always@ (posedge VGA_CLK)begin
-    if(reset)begin
-      estado = IDLE;
+// always posiçoes
+always @(posedge VGA_CLK)begin
+   if(reset)begin
+    coord_atual_x = COORD_INICIAL_X;
+    coord_atual_y = COORD_INICIAL_Y;
+    posicao_futura_x = COORD_INICIAL_X;
+    posicao_futura_y = COORD_INICIAL_Y;
+    coord_futura_x = COORD_INICIAL_X;
+    coord_futura_y = COORD_INICIAL_Y;
+   end
+
+   else if (contador_clock == 0) begin
+    if(sentido == 0) begin // deslocando para direita
+      posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
+      coord_futura_x = posicao_futura_x + COMPRIMENTO_JOGADOR1;
+    end 
+    else if (sentido == 1) begin //deslocando para baixo
+      posicao_futura_y = coord_atual_y + ALTURA_JOGADOR1; 
+      coord_futura_y = posicao_futura_y + ALTURA_JOGADOR1; 
+    end
+    else if (sentido == 2) begin // deslocando para esquerda
+      posicao_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
+      coord_futura_x = posicao_futura_x - COMPRIMENTO_JOGADOR1;
+    end 
+    else if (sentido == 3) begin //deslocando para cima
+      posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;
+      coord_futura_y = posicao_futura_y - ALTURA_JOGADOR1;  
+    end
+  end
+
+    if(reiniciar == 1) begin
       coord_atual_x = COORD_INICIAL_X;
       coord_atual_y = COORD_INICIAL_Y;
       posicao_futura_x = COORD_INICIAL_X;
       posicao_futura_y = COORD_INICIAL_Y;
-      sentido = 0;
-      fim_de_jogo = 0;
-      coord_futura_x = COORD_INICIAL_X;
+      coord_futura_x = COORD_INICIAL_X ;
       coord_futura_y = COORD_INICIAL_Y;
-      jogo_iniciado = 0;
       // leitura_realizada = 0;
-
     end
-      
-    else if (contador_clock == 0) begin
-      
+    else begin
+      coord_atual_x = posicao_futura_x;
+      coord_atual_y = posicao_futura_y;
+    end
+  
+end
 
-      // leitura_realizada = 0;
-      if(sentido == 0) begin // deslocando para direita
-        posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
-        coord_futura_x = posicao_futura_x + COMPRIMENTO_JOGADOR1;
-      end 
-      else if (sentido == 1) begin //deslocando para baixo
-        posicao_futura_y = coord_atual_y + ALTURA_JOGADOR1; 
-        coord_futura_y = posicao_futura_y + ALTURA_JOGADOR1; 
-      end
-      else if (sentido == 2) begin // deslocando para esquerda
-        posicao_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
-        coord_futura_x = posicao_futura_x - COMPRIMENTO_JOGADOR1;
-      end 
-      else if (sentido == 3) begin //deslocando para cima
-        posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;
-        coord_futura_y = posicao_futura_y - ALTURA_JOGADOR1;  
-      end
-
+// always movimento/botoes
+  always@ (posedge VGA_CLK)begin
+    if(reset)begin
+      estado = IDLE;
+      sentido = 0;
     end
       // end_mem = posicao_futura_x + (posicao_futura_y * 640);
-      if( next_x == coord_futura_x && next_y == coord_futura_y ) begin
-        if( (coord_futura_x == COORD_INICIAL_X) && (coord_futura_y == COORD_INICIAL_Y) && ( primeiro_movemento != 0) ) begin
-          fim_de_jogo = 1;
-        end
-        if(dado_mem_atual != 0  && (coord_futura_x != COORD_INICIAL_X) && (coord_futura_y != COORD_INICIAL_Y) ) begin
-          fim_de_jogo = 1;
-        end
-
-        // leitura_realizada = 1;
-      end
-      if(reiniciar == 1) begin
-        coord_atual_x = COORD_INICIAL_X;
-        coord_atual_y = COORD_INICIAL_Y;
-        posicao_futura_x = COORD_INICIAL_X;
-        posicao_futura_y = COORD_INICIAL_Y;
-        fim_de_jogo = 0;
-        sentido = 0;
-        coord_futura_x = COORD_INICIAL_X ;
-        coord_futura_y = COORD_INICIAL_Y;
-        jogo_iniciado = 0;
-        // leitura_realizada = 0;
-      end
-      else begin
-        coord_atual_x = posicao_futura_x;
-        coord_atual_y = posicao_futura_y;
-      end
       
-      case(estado)
-        IDLE: begin
-          if(KEY[3] == 0) begin
-            estado = AH_MOVE;
-          end
-          else if(KEY[2] == 0) begin
-            estado = H_MOVE;
-          end
-          else begin
-              estado = IDLE;
-          end
+    if(reiniciar == 1) begin
+      sentido = 0;
+    end
+    case(estado)
+      IDLE: begin
+        if(KEY[3] == 0) begin
+          estado = AH_MOVE;
         end
-        AH_MOVE: begin
-          sentido = sentido - 1;
-          estado = ESPERA; 
-        end 
-        H_MOVE: begin
-          sentido = sentido + 1;
-          estado = ESPERA; 
-        end   
-        ESPERA: begin
-          if(KEY[3] == 1 && KEY[2] == 1 && KEY[1] == 1 && KEY[0] == 1)begin
-            estado = IDLE;
-          end
+        else if(KEY[2] == 0) begin
+          estado = H_MOVE;
         end
-        default: begin
+        else begin
           estado = IDLE;
         end
-      endcase
-      if( !((coord_atual_x >= 16 && coord_atual_x <= 623) && (coord_atual_y >= 16 && coord_atual_y <= 463)) ) begin
-        fim_de_jogo = 1;
       end
+      AH_MOVE: begin
+        sentido = sentido - 1;
+        estado = ESPERA; 
+      end 
+      H_MOVE: begin
+        sentido = sentido + 1;
+        estado = ESPERA; 
+      end   
+      ESPERA: begin
+        if(KEY[3] == 1 && KEY[2] == 1 && KEY[1] == 1 && KEY[0] == 1)begin
+          estado = IDLE;
+        end
+      end
+      default: begin
+        estado = IDLE;
+      end
+    endcase
   end
 
+// always colisao
+always @( posedge VGA_CLK)begin
+  if (reset || reiniciar == 1 )begin
+    fim_de_jogo = 0;
+  end
+  else begin
+    if( next_x == coord_futura_x && next_y == coord_futura_y ) begin
+      if( (coord_futura_x == COORD_INICIAL_X) && (coord_futura_y == COORD_INICIAL_Y) && ( primeiro_movimento != 0) ) begin
+        fim_de_jogo = 1;
+      end
+      else if(dado_mem_atual != 0 ) begin
+        fim_de_jogo = 1;
+      end
+    end
 
-  
+    if( !((coord_atual_x >= 16 && coord_atual_x <= 623) && (coord_atual_y >= 16 && coord_atual_y <= 463)) ) begin
+      fim_de_jogo = 1;
+    end
+  end
+
+end
+
 
 
 
@@ -400,18 +408,6 @@ module top1(
 	.q(saida_jogador1)
   );
 
-  // .address_a(endereco_ram_jogador1), // endereço de escrita jogador 1
-  // .wren_a(wren_jogador1), // habilita escrita jogador 1
-  // .data_a(sinalRGB_jogador1), // dado de escrita jogador 1
-  // .q_a(saida_jogador1), // leitura jogador 1
-
-  // .address_b(address_b), // endereço de leitura jogador 2
-  // .data_b(data_b), // dado de escrita jogador 2
-  // .wren_b(wren_b), // habilita escrita jogador 2
-  // .q_b(saida_jogador2), // leitura jogador 2
-  // .inclock(VGA_CLK), // clk de entrada
-  // .outclock(VGA_CLK) // clk de saída
-  // );
   
 
 
