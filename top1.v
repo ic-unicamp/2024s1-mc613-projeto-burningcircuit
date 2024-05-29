@@ -107,9 +107,20 @@ module jogador1(
   reg [9:0] posicao_futura_x;
   reg [9:0] posicao_futura_y;
 
+  reg [9:0] coord_futura_x;
+  reg [9:0] coord_futura_y;
+
   reg fim_de_jogo;
 
   parameter COORD_INICIAL_mem = COORD_INICIAL_X + (COORD_INICIAL_Y * 640);
+
+  reg jogo_iniciado;
+
+  wire [7:0] primeiro_movemento;
+
+  assign primeiro_movemento = (next_x == COORD_INICIAL_X + COMPRIMENTO_JOGADOR1 && next_y == COORD_INICIAL_Y) ? dado_mem_atual : 0 ; 
+
+  // reg leitura_realizada;
 
 
   always @ (posedge VGA_CLK) begin
@@ -137,29 +148,45 @@ module jogador1(
       posicao_futura_y = COORD_INICIAL_Y;
       sentido = 0;
       fim_de_jogo = 0;
+      coord_futura_x = COORD_INICIAL_X;
+      coord_futura_y = COORD_INICIAL_Y;
+      jogo_iniciado = 0;
+      // leitura_realizada = 0;
 
     end
       
     else if (contador_clock == 0) begin
+      
+
+      // leitura_realizada = 0;
       if(sentido == 0) begin // deslocando para direita
         posicao_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
+        coord_futura_x = posicao_futura_x + COMPRIMENTO_JOGADOR1;
       end 
       else if (sentido == 1) begin //deslocando para baixo
-        posicao_futura_y = coord_atual_y + ALTURA_JOGADOR1;  
+        posicao_futura_y = coord_atual_y + ALTURA_JOGADOR1; 
+        coord_futura_y = posicao_futura_y + ALTURA_JOGADOR1; 
       end
       else if (sentido == 2) begin // deslocando para esquerda
         posicao_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
+        coord_futura_x = posicao_futura_x - COMPRIMENTO_JOGADOR1;
       end 
       else if (sentido == 3) begin //deslocando para cima
-        posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;  
+        posicao_futura_y = coord_atual_y - ALTURA_JOGADOR1;
+        coord_futura_y = posicao_futura_y - ALTURA_JOGADOR1;  
       end
 
     end
       // end_mem = posicao_futura_x + (posicao_futura_y * 640);
-      if( next_x == posicao_futura_x && next_y == posicao_futura_y) begin
-        if(dado_mem_atual != 0) begin
+      if( next_x == coord_futura_x && next_y == coord_futura_y ) begin
+        if( (coord_futura_x == COORD_INICIAL_X) && (coord_futura_y == COORD_INICIAL_Y) && ( primeiro_movemento != 0) ) begin
           fim_de_jogo = 1;
         end
+        if(dado_mem_atual != 0  && (coord_futura_x != COORD_INICIAL_X) && (coord_futura_y != COORD_INICIAL_Y) ) begin
+          fim_de_jogo = 1;
+        end
+
+        // leitura_realizada = 1;
       end
       if(reiniciar == 1) begin
         coord_atual_x = COORD_INICIAL_X;
@@ -168,6 +195,10 @@ module jogador1(
         posicao_futura_y = COORD_INICIAL_Y;
         fim_de_jogo = 0;
         sentido = 0;
+        coord_futura_x = COORD_INICIAL_X ;
+        coord_futura_y = COORD_INICIAL_Y;
+        jogo_iniciado = 0;
+        // leitura_realizada = 0;
       end
       else begin
         coord_atual_x = posicao_futura_x;
@@ -208,6 +239,12 @@ module jogador1(
       end
   end
 
+
+  
+
+
+
+
 //desenha JOGADOR11
 
   reg [18:0] end_jog1;
@@ -222,21 +259,23 @@ module jogador1(
       OUT_B = 0;
       wren = 1;
       sinalRGB_jog1 = 8'b00000000;
-      if( (( contador_ram >= COORD_INICIAL_mem) && ( contador_ram < COORD_INICIAL_mem + 8)) ||
-          (( contador_ram >= COORD_INICIAL_mem+640) && ( contador_ram < COORD_INICIAL_mem + 640 + 8)) ||
-          (( contador_ram >= COORD_INICIAL_mem+640*2) && ( contador_ram < COORD_INICIAL_mem + 640*2 + 8)) ||
-          (( contador_ram >= COORD_INICIAL_mem+640*3) && ( contador_ram < COORD_INICIAL_mem + 640*3 + 8)) ||
-          (( contador_ram >= COORD_INICIAL_mem+640*4) && ( contador_ram < COORD_INICIAL_mem + 640*4 + 8)) ||
-          (( contador_ram >= COORD_INICIAL_mem+640*5) && ( contador_ram < COORD_INICIAL_mem + 640*5 + 8)) ||
-          (( contador_ram >= COORD_INICIAL_mem+640*6) && ( contador_ram < COORD_INICIAL_mem + 640*6 + 8)) ||
-          (( contador_ram >= COORD_INICIAL_mem+640*7) && ( contador_ram < COORD_INICIAL_mem + 640*7 + 8))) begin
-            sinalRGB_jog1 = 8'b00000001;
-        end
+      // if( (( contador_ram >= COORD_INICIAL_mem) && ( contador_ram < COORD_INICIAL_mem + 8)) ||
+      //     (( contador_ram >= COORD_INICIAL_mem+640) && ( contador_ram < COORD_INICIAL_mem + 640 + 8)) ||
+      //     (( contador_ram >= COORD_INICIAL_mem+640*2) && ( contador_ram < COORD_INICIAL_mem + 640*2 + 8)) ||
+      //     (( contador_ram >= COORD_INICIAL_mem+640*3) && ( contador_ram < COORD_INICIAL_mem + 640*3 + 8)) ||
+      //     (( contador_ram >= COORD_INICIAL_mem+640*4) && ( contador_ram < COORD_INICIAL_mem + 640*4 + 8)) ||
+      //     (( contador_ram >= COORD_INICIAL_mem+640*5) && ( contador_ram < COORD_INICIAL_mem + 640*5 + 8)) ||
+      //     (( contador_ram >= COORD_INICIAL_mem+640*6) && ( contador_ram < COORD_INICIAL_mem + 640*6 + 8)) ||
+      //     (( contador_ram >= COORD_INICIAL_mem+640*7) && ( contador_ram < COORD_INICIAL_mem + 640*7 + 8))) begin
+      //       sinalRGB_jog1 = 8'b00000001;
+      //   end
       end_jog1 = contador_ram;
       // for(i = 0; i <= 307200; i = i+1 ) begin
       //   end_jog1 = i;
       // end
       contador_ram = contador_ram + 1; 
+      // contador_ram = contador_ram % 307200;
+
 
     end
     else begin
@@ -293,7 +332,8 @@ module jogador1(
   // assign endereco_ram = coord_atual_x + (coord_atual_y * 640);
   // assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
   // assign endereco_ram = (  ( ( (next_x >= coord_atual_x) && (next_x < coord_atual_x + 8) ) && ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
-  assign endereco_ram = end_jog1;
+  // assign endereco_ram = (leitura_realizada == 1) ? end_jog1 : 0;
+  assign endereco_ram = end_jog1 ;
   assign sinalRGB = sinalRGB_jog1;
 
 
