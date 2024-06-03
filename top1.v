@@ -143,18 +143,22 @@ module jogador1(
 
 // always posiçoes
 always @(posedge VGA_CLK)begin
-   if(reset)begin
-    coord_passada_x = 0;
-    coord_passada_y = 0;
+   if(reset || reiniciar == 1)begin
+    fim_de_jogo = 0;
     coord_atual_x = COORD_INICIAL_X;
     coord_atual_y = COORD_INICIAL_Y;
     coord_futura_x = COORD_INICIAL_X;
     coord_futura_y = COORD_INICIAL_Y;
+    OUT_R = 0;
+    end_jog1 = contador_ram;
+    contador_ram = contador_ram + 1; 
+    OUT_G = 0;
+    OUT_B = 0;
+    wren = 1;
+    sinalRGB_jog1 = 8'b00000000;
    end
 
    else if (contador_clock == 0) begin
-    coord_passada_x = coord_atual_x;
-    coord_passada_y = coord_atual_y;
     if(sentido == 0) begin // deslocando para direita
       coord_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
     end 
@@ -167,58 +171,64 @@ always @(posedge VGA_CLK)begin
     else if (sentido == 3) begin //deslocando para cima
       coord_futura_y = coord_atual_y - ALTURA_JOGADOR1;
     end
-  end
 
-    if(reiniciar == 1) begin
-      coord_passada_x = 0;
-      coord_passada_y = 0;
-      coord_futura_x = COORD_INICIAL_X;
-      coord_futura_y = COORD_INICIAL_Y;
-      coord_atual_x = COORD_INICIAL_X ;
-      coord_atual_y = COORD_INICIAL_Y;
-      // leitura_realizada = 0;
-    end
-    else begin
-      coord_atual_x = coord_futura_x;
-      coord_atual_y = coord_futura_y;
-    end
-  
-end
-
-
-// always colisao
-always @( posedge VGA_CLK)begin
-  if (reset || reiniciar == 1 )begin
-    fim_de_jogo = 0;
-  end
-  else begin
-
-    //testem se isso ja funciona com a nova "politica" de escrita e leitura do FB (escrever a passada e ler a atual)
-    //tentativa colisao com rastro (mais recente/ sem teste ainda)
     if( next_x == coord_futura_x && next_y == coord_futura_y ) begin
       if(dado_mem_atual != 0 ) begin
         fim_de_jogo = 1;
       end
     end
 
-    //tentativa colisao com rastro (1 semana atras)
-    // if( next_x == coord_atual_x && next_y == coord_atual_y ) begin
-    //   if( (coord_atual_x == COORD_INICIAL_X) && (coord_atual_y == COORD_INICIAL_Y) && ( primeiro_movimento != 0) ) begin
-    //     fim_de_jogo = 1;
-    //   end
-    //   else if(dado_mem_atual != 0 ) begin
-    //     fim_de_jogo = 1;
-    //   end
-    // end
-
-
-    // colisao com a borda
-    if( !((coord_passada_x >= 16 && coord_passada_x <= 623) && (coord_passada_y >= 16 && coord_passada_y <= 463)) ) begin
+     // colisao com a borda
+    if( !((coord_atual_x >= 16 && coord_atual_x <= 623) && (coord_atual_y >= 16 && coord_atual_y <= 463)) ) begin
       fim_de_jogo = 1;
     end
-  end
 
+    contador_ram = 0;
+
+      // escrita no FB a partir da coordenada passada
+      if( (next_x >= coord_atual_x) && (next_x < coord_atual_x + COMPRIMENTO_JOGADOR1) )begin
+        if ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + ALTURA_JOGADOR1) )begin
+          end_jog1 = next_x + (next_y * 640);
+          wren = 1;
+          sinalRGB_jog1 =  8'b00000001;
+        end
+        else begin
+          end_jog1 = 0;
+          sinalRGB_jog1 = 8'b00000000;
+          wren = 0;
+        end
+      end
+      else begin
+        end_jog1 = 0;
+        sinalRGB_jog1 = 8'b00000000;
+        wren = 0;
+      end
+
+      // desenha jogador na tela a partir da sua coordenada atual
+      if( (next_x >= coord_atual_x) && (next_x < coord_atual_x + COMPRIMENTO_JOGADOR1) )begin
+        if ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + ALTURA_JOGADOR1) )begin
+          OUT_R = 127;
+          OUT_G = 127;
+          OUT_B = 0;
+        end
+        else begin
+          OUT_R = 0;
+          OUT_G = 0;
+          OUT_B = 0;
+        end
+      end
+      else begin
+        OUT_R = 0;
+        OUT_G = 0;
+        OUT_B = 0;
+      end
+      coord_atual_x = coord_futura_x;
+      coord_atual_y = coord_futura_y;
+
+  end
+  
 end
+
 
 
 // always movimento/botoes
@@ -267,11 +277,8 @@ end
 // always de deletar valores do framebuffer em reset ou reiniciar, e escrita no FB da coord passada e desenha jogador em coord atual, caso contrario
   always @(posedge CLOCK_50) begin
     if(reset || reiniciar == 1)begin
-      OUT_R = 0;
-      OUT_G = 0;
-      OUT_B = 0;
-      wren = 1;
-      sinalRGB_jog1 = 8'b00000000;
+      
+      
       // if que deixa somente a area inicial que o jogador ocupa sem ser limpa do buffer
       // if( (( contador_ram >= COORD_INICIAL_mem) && ( contador_ram < COORD_INICIAL_mem + 8)) ||
       //     (( contador_ram >= COORD_INICIAL_mem+640) && ( contador_ram < COORD_INICIAL_mem + 640 + 8)) ||
@@ -283,50 +290,11 @@ end
       //     (( contador_ram >= COORD_INICIAL_mem+640*7) && ( contador_ram < COORD_INICIAL_mem + 640*7 + 8))) begin
       //       sinalRGB_jog1 = 8'b00000001;
       //   end
-      end_jog1 = contador_ram;
-      contador_ram = contador_ram + 1; 
+      
 
     end
     else begin
-      contador_ram = 0;
-
-      // escrita no FB a partir da coordenada passada
-      if( (next_x >= coord_passada_x) && (next_x < coord_passada_x + COMPRIMENTO_JOGADOR1) )begin
-        if ( (next_y >= coord_passada_y) && (next_y < coord_passada_y + ALTURA_JOGADOR1) )begin
-          end_jog1 = next_x + (next_y * 640);
-          wren = 1;
-          sinalRGB_jog1 =  8'b00000001;
-        end
-        else begin
-          end_jog1 = 0;
-          sinalRGB_jog1 = 8'b00000000;
-          wren = 0;
-        end
-      end
-      else begin
-        end_jog1 = 0;
-        sinalRGB_jog1 = 8'b00000000;
-        wren = 0;
-      end
-
-      // desenha jogador na tela a partir da sua coordenada atual
-      if( (next_x >= coord_atual_x) && (next_x < coord_atual_x + COMPRIMENTO_JOGADOR1) )begin
-        if ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + ALTURA_JOGADOR1) )begin
-          OUT_R = 127;
-          OUT_G = 127;
-          OUT_B = 0;
-        end
-        else begin
-          OUT_R = 0;
-          OUT_G = 0;
-          OUT_B = 0;
-        end
-      end
-      else begin
-        OUT_R = 0;
-        OUT_G = 0;
-        OUT_B = 0;
-      end
+      
     end
   end
 
