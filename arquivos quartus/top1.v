@@ -148,23 +148,28 @@ always @(posedge VGA_CLK)begin
     coord_passada_y = 0;
     coord_atual_x = COORD_INICIAL_X;
     coord_atual_y = COORD_INICIAL_Y;
-    coord_futura_x = COORD_INICIAL_X;
-    coord_futura_y = COORD_INICIAL_Y;
+    coord_futura_x = 0;
+    coord_futura_y = 0;
    end
 
    else if (contador_clock == 0) begin
     coord_passada_x = coord_atual_x;
     coord_passada_y = coord_atual_y;
     if(sentido == 0) begin // deslocando para direita
-      coord_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;  
+      coord_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;
+      coord_futura_y = coord_atual_y;  
     end 
     else if (sentido == 1) begin //deslocando para baixo
+      coord_futura_x = coord_atual_x;
       coord_futura_y = coord_atual_y + ALTURA_JOGADOR1; 
     end
     else if (sentido == 2) begin // deslocando para esquerda
-      coord_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;  
+      coord_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;
+      coord_futura_y = coord_atual_y;  
+
     end 
     else if (sentido == 3) begin //deslocando para cima
+      coord_futura_x = coord_atual_x;
       coord_futura_y = coord_atual_y - ALTURA_JOGADOR1;
     end
   end
@@ -172,8 +177,8 @@ always @(posedge VGA_CLK)begin
     if(reiniciar == 1) begin
       coord_passada_x = 0;
       coord_passada_y = 0;
-      coord_futura_x = COORD_INICIAL_X;
-      coord_futura_y = COORD_INICIAL_Y;
+      coord_futura_x = 0;
+      coord_futura_y = 0;
       coord_atual_x = COORD_INICIAL_X ;
       coord_atual_y = COORD_INICIAL_Y;
       // leitura_realizada = 0;
@@ -262,7 +267,7 @@ always @( posedge VGA_CLK)begin
 end
 
 // always de deletar valores do framebuffer em reset ou reiniciar, e escrita no FB da coord passada e desenha jogador em coord atual, caso contrario
-  always @(posedge CLOCK_50) begin
+  always @(posedge VGA_CLK) begin
     if(reset || reiniciar == 1)begin
       OUT_R = 0;
       OUT_G = 0;
@@ -382,7 +387,7 @@ module top1(
 	.rdaddress(endereco_leitura_jogador1),
 	.rdclock(VGA_CLK),
 	.wraddress(endereco_escrita_jogador1),
-	.wrclock(CLOCK_50),
+	.wrclock(VGA_CLK),
 	.wren(wren_jogador1),
 	.q(saida_jogador1)
   );
