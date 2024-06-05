@@ -79,8 +79,11 @@ module jogador1(
  */
 
   //estados        coord_passada_y = coord_atual_y;
-  reg [1:0] matriz_jogo [0:79] [0:59];
+  reg [1:0] matriz_jogo [0:59] [0:79] ;
   reg [3:0] estado;
+  reg [2:0] estado_matriz;
+  reg [6:0] contador_matriz_linha;
+  reg [6:0] contador_matriz_coluna;
   parameter IDLE = 3'b000;  
   parameter AH_MOVE = 3'b011;
   parameter H_MOVE = 3'b100;
@@ -107,28 +110,23 @@ module jogador1(
   integer i;
   integer j;
 
+
+  
+
   always @ (posedge CLOCK_50) begin
     if (reset || reiniciar == 1) begin
       coord_atual_x = COORD_INICIAL_X;
       coord_atual_y = COORD_INICIAL_Y;
-      coord_futura_x = 0;
-      coord_futura_y = 0;
+      coord_futura_x = COORD_INICIAL_X + 8;
+      coord_futura_y = COORD_INICIAL_Y;
       contador_jogador1 = 0;
-      for (i=0;i<80;i=i+1) begin
-        for (j=0;j<60;j=j+1) begin
-          if ((i >=2 && i <= 77) && (j >= 2 && j <= 57) )begin
-            matriz_jogo[i][j] = 0;
-          end
-          else begin
-            matriz_jogo[i][j] = 2;
-          end
-        end
-      end
-
+      estado_matriz = 1;
+      contador_matriz_coluna = 0;
+      contador_matriz_linha = 0;
       fim_de_jogo = 0;
 
     end
-    else begin
+    else if (estado_matriz == 0) begin
       if (contador_jogador1 == 0) begin
         //ler e gera o rgb
         if( (next_x >= coord_atual_x) && (next_x < coord_atual_x + COMPRIMENTO_JOGADOR1) )begin
@@ -151,8 +149,9 @@ module jogador1(
       end
 
       
-      else if (contador_clock == 0)
+      else if (contador_jogador1 == 1)
       begin
+        if (contador_clock == 0) begin
           /// move boneco
           //escreve na memoria
           if(sentido == 0) begin // deslocando para direita
@@ -172,8 +171,12 @@ module jogador1(
             coord_futura_y = coord_atual_y - ALTURA_JOGADOR1;
             coord_futura_x = coord_atual_x;
           end
+        end
+        // else begin
+        //   contador_clock = contador_clock + 1;
+        // end
         
-        matriz_jogo[coord_atual_x / 8][coord_atual_y / 8] = 1;
+        matriz_jogo[coord_atual_y /8][coord_atual_x /8] = 1;
         //guarda coord atual
         coord_atual_x = coord_futura_x;
         coord_atual_y = coord_futura_y;
@@ -183,14 +186,44 @@ module jogador1(
       else if (contador_jogador1 == 2) 
       begin
         //detecta colisao e encerra jogo
-        dado_matriz = matriz_jogo[coord_futura_x / 8][coord_futura_y / 8];
-        // if (dado_matriz != 0) begin
-        //   fim_de_jogo = 1;
-        // end
+        dado_matriz = matriz_jogo[coord_futura_y /8][coord_futura_x /8];
+        if (dado_matriz != 0 && (coord_futura_x != COORD_INICIAL_X && coord_futura_y != COORD_INICIAL_Y)) begin
+            fim_de_jogo = 1;
+          end
 
       end
       contador_jogador1 = contador_jogador1 + 1;
     end
+
+    case(estado_matriz)
+    0: begin //estado de espera
+      contador_matriz_coluna = 0;
+      contador_matriz_linha = 0;
+      if (reset || reiniciar == 1) begin
+        estado_matriz = 1;
+      end
+    end
+
+
+    1: begin //estado que zera a matriz
+      if(contador_matriz_coluna > 79) begin
+        contador_matriz_coluna = 0;
+        contador_matriz_linha = contador_matriz_linha + 1;
+        if (contador_matriz_linha > 59)
+          estado_matriz = 0;
+      end
+      if ((contador_matriz_linha >= 2 && contador_matriz_linha <= 57) && (contador_matriz_coluna >= 2 && contador_matriz_coluna <= 77)) begin
+        matriz_jogo[contador_matriz_linha][contador_matriz_coluna] = 0;
+      end
+      else begin
+        matriz_jogo[contador_matriz_linha][contador_matriz_coluna] = 2;
+      end
+      contador_matriz_coluna = contador_matriz_coluna + 1;
+    end
+    default: begin
+      estado_matriz = 0;
+    end
+  endcase
   end
 
 
@@ -201,7 +234,7 @@ module jogador1(
     end
     else begin
       if(fim_de_jogo == 0) begin
-        if (contador_clock < 1000000) begin
+        if (contador_clock < 500000) begin
           contador_clock = contador_clock + 1;
         end
         else begin
@@ -212,7 +245,7 @@ module jogador1(
   end
 
   always@ (posedge VGA_CLK)begin
-    if(reset)begin
+    if(reset || reiniciar == 1)begin
       estado = IDLE;
       sentido = 0;
     end
@@ -249,7 +282,7 @@ module jogador1(
     endcase
      
   end
-  assign saida_jogador1 = matriz_jogo[next_x / 8][next_y / 8];
+  assign saida_jogador1 = matriz_jogo[next_y / 8][next_x / 8];
 
 endmodule	
 
@@ -281,7 +314,7 @@ module top1(
   wire [7:0] input_red;
   wire [7:0] input_green;
   wire [7:0] input_blue;
-  reg [1:0] matriz_jogo [0:79] [0:59];
+  reg [1:0] matriz_jogo [0:59] [0:79];
 
   wire [1:0] saida_jogador1;
   wire [1:0] saida_jogador2;
