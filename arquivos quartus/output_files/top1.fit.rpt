@@ -1,5 +1,5 @@
 Fitter report for top1
-Wed Jun  5 18:35:45 2024
+Wed Jun  5 19:45:38 2024
 Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
 
 
@@ -64,15 +64,15 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Fitter Summary                                                                ;
 +---------------------------------+---------------------------------------------+
-; Fitter Status                   ; Successful - Wed Jun  5 18:35:45 2024       ;
+; Fitter Status                   ; Successful - Wed Jun  5 19:45:38 2024       ;
 ; Quartus Prime Version           ; 17.1.0 Build 590 10/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; top1                                        ;
 ; Top-level Entity Name           ; top1                                        ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSEMA5F31C6                                ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 21,372 / 32,070 ( 67 % )                    ;
-; Total registers                 ; 9686                                        ;
+; Logic utilization (in ALMs)     ; 13,879 / 32,070 ( 43 % )                    ;
+; Total registers                 ; 9691                                        ;
 ; Total pins                      ; 38 / 457 ( 8 % )                            ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 0 / 4,065,280 ( 0 % )                       ;
@@ -152,22 +152,22 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 20          ;
 ; Maximum allowed            ; 12          ;
 ;                            ;             ;
-; Average used               ; 1.42        ;
+; Average used               ; 1.48        ;
 ; Maximum used               ; 12          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   6.1%      ;
-;     Processor 3            ;   4.4%      ;
-;     Processor 4            ;   4.3%      ;
-;     Processor 5            ;   3.7%      ;
-;     Processor 6            ;   3.6%      ;
-;     Processor 7            ;   3.6%      ;
-;     Processor 8            ;   3.5%      ;
-;     Processor 9            ;   3.1%      ;
-;     Processor 10           ;   3.1%      ;
-;     Processor 11           ;   3.1%      ;
-;     Processor 12           ;   3.1%      ;
+;     Processor 2            ;   6.7%      ;
+;     Processor 3            ;   5.2%      ;
+;     Processor 4            ;   5.0%      ;
+;     Processor 5            ;   4.3%      ;
+;     Processor 6            ;   4.2%      ;
+;     Processor 7            ;   4.1%      ;
+;     Processor 8            ;   4.0%      ;
+;     Processor 9            ;   3.7%      ;
+;     Processor 10           ;   3.7%      ;
+;     Processor 11           ;   3.7%      ;
+;     Processor 12           ;   3.7%      ;
 +----------------------------+-------------+
 
 
@@ -414,8 +414,8 @@ refer to the applicable agreement for further details.
 ; Type                ; Total [A + B]        ; From Design Partitions [A] ; From Rapid Recompile [B] ;
 +---------------------+----------------------+----------------------------+--------------------------+
 ; Placement (by node) ;                      ;                            ;                          ;
-;     -- Requested    ; 0.00 % ( 0 / 45142 ) ; 0.00 % ( 0 / 45142 )       ; 0.00 % ( 0 / 45142 )     ;
-;     -- Achieved     ; 0.00 % ( 0 / 45142 ) ; 0.00 % ( 0 / 45142 )       ; 0.00 % ( 0 / 45142 )     ;
+;     -- Requested    ; 0.00 % ( 0 / 26401 ) ; 0.00 % ( 0 / 26401 )       ; 0.00 % ( 0 / 26401 )     ;
+;     -- Achieved     ; 0.00 % ( 0 / 26401 ) ; 0.00 % ( 0 / 26401 )       ; 0.00 % ( 0 / 26401 )     ;
 ;                     ;                      ;                            ;                          ;
 ; Routing (by net)    ;                      ;                            ;                          ;
 ;     -- Requested    ; 0.00 % ( 0 / 0 )     ; 0.00 % ( 0 / 0 )           ; 0.00 % ( 0 / 0 )         ;
@@ -438,7 +438,7 @@ refer to the applicable agreement for further details.
 +--------------------------------+-----------------------+-------------------------+-------------------+---------------------+-------+
 ; Partition Name                 ; Preservation Achieved ; Preservation Level Used ; Netlist Type Used ; Preservation Method ; Notes ;
 +--------------------------------+-----------------------+-------------------------+-------------------+---------------------+-------+
-; Top                            ; 0.00 % ( 0 / 45142 )  ; N/A                     ; Source File       ; N/A                 ;       ;
+; Top                            ; 0.00 % ( 0 / 26401 )  ; N/A                     ; Source File       ; N/A                 ;       ;
 ; hard_block:auto_generated_inst ; 0.00 % ( 0 / 0 )      ; N/A                     ; Source File       ; N/A                 ;       ;
 +--------------------------------+-----------------------+-------------------------+-------------------+---------------------+-------+
 
@@ -454,40 +454,40 @@ The pin-out file can be found in /home/ec2022/ra260628/Documents/MC613/2024s1-mc
 +-------------------------------------------------------------+-----------------------+-------+
 ; Resource                                                    ; Usage                 ; %     ;
 +-------------------------------------------------------------+-----------------------+-------+
-; Logic utilization (ALMs needed / total ALMs on device)      ; 21,372 / 32,070       ; 67 %  ;
-; ALMs needed [=A-B+C]                                        ; 21,372                ;       ;
-;     [A] ALMs used in final placement [=a+b+c+d]             ; 23,091 / 32,070       ; 72 %  ;
-;         [a] ALMs used for LUT logic and registers           ; 4,804                 ;       ;
-;         [b] ALMs used for LUT logic                         ; 18,247                ;       ;
-;         [c] ALMs used for registers                         ; 40                    ;       ;
+; Logic utilization (ALMs needed / total ALMs on device)      ; 13,879 / 32,070       ; 43 %  ;
+; ALMs needed [=A-B+C]                                        ; 13,879                ;       ;
+;     [A] ALMs used in final placement [=a+b+c+d]             ; 14,850 / 32,070       ; 46 %  ;
+;         [a] ALMs used for LUT logic and registers           ; 4,497                 ;       ;
+;         [b] ALMs used for LUT logic                         ; 10,004                ;       ;
+;         [c] ALMs used for registers                         ; 349                   ;       ;
 ;         [d] ALMs used for memory (up to half of total ALMs) ; 0                     ;       ;
-;     [B] Estimate of ALMs recoverable by dense packing       ; 1,762 / 32,070        ; 5 %   ;
-;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 43 / 32,070           ; < 1 % ;
+;     [B] Estimate of ALMs recoverable by dense packing       ; 988 / 32,070          ; 3 %   ;
+;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 17 / 32,070           ; < 1 % ;
 ;         [a] Due to location constrained logic               ; 0                     ;       ;
 ;         [b] Due to LAB-wide signal conflicts                ; 0                     ;       ;
-;         [c] Due to LAB input limits                         ; 43                    ;       ;
+;         [c] Due to LAB input limits                         ; 17                    ;       ;
 ;         [d] Due to virtual I/Os                             ; 0                     ;       ;
 ;                                                             ;                       ;       ;
 ; Difficulty packing design                                   ; Low                   ;       ;
 ;                                                             ;                       ;       ;
-; Total LABs:  partially or completely used                   ; 2,677 / 3,207         ; 83 %  ;
-;     -- Logic LABs                                           ; 2,677                 ;       ;
+; Total LABs:  partially or completely used                   ; 1,735 / 3,207         ; 54 %  ;
+;     -- Logic LABs                                           ; 1,735                 ;       ;
 ;     -- Memory LABs (up to half of total LABs)               ; 0                     ;       ;
 ;                                                             ;                       ;       ;
-; Combinational ALUT usage for logic                          ; 35,379                ;       ;
-;     -- 7 input functions                                    ; 2                     ;       ;
-;     -- 6 input functions                                    ; 15,819                ;       ;
-;     -- 5 input functions                                    ; 375                   ;       ;
-;     -- 4 input functions                                    ; 160                   ;       ;
-;     -- <=3 input functions                                  ; 19,023                ;       ;
-; Combinational ALUT usage for route-throughs                 ; 7                     ;       ;
+; Combinational ALUT usage for logic                          ; 16,633                ;       ;
+;     -- 7 input functions                                    ; 1                     ;       ;
+;     -- 6 input functions                                    ; 11,358                ;       ;
+;     -- 5 input functions                                    ; 4,878                 ;       ;
+;     -- 4 input functions                                    ; 53                    ;       ;
+;     -- <=3 input functions                                  ; 343                   ;       ;
+; Combinational ALUT usage for route-throughs                 ; 58                    ;       ;
 ;                                                             ;                       ;       ;
-; Dedicated logic registers                                   ; 9,686                 ;       ;
+; Dedicated logic registers                                   ; 9,691                 ;       ;
 ;     -- By type:                                             ;                       ;       ;
-;         -- Primary logic registers                          ; 9,686 / 64,140        ; 15 %  ;
+;         -- Primary logic registers                          ; 9,691 / 64,140        ; 15 %  ;
 ;         -- Secondary logic registers                        ; 0 / 64,140            ; 0 %   ;
 ;     -- By function:                                         ;                       ;       ;
-;         -- Design implementation registers                  ; 9,686                 ;       ;
+;         -- Design implementation registers                  ; 9,691                 ;       ;
 ;         -- Routing optimization registers                   ; 0                     ;       ;
 ;                                                             ;                       ;       ;
 ; Virtual pins                                                ; 0                     ;       ;
@@ -543,12 +543,12 @@ The pin-out file can be found in /home/ec2022/ra260628/Documents/MC613/2024s1-mc
 ; Oscillator blocks                                           ; 0 / 1                 ; 0 %   ;
 ; Impedance control blocks                                    ; 0 / 4                 ; 0 %   ;
 ; Hard Memory Controllers                                     ; 0 / 2                 ; 0 %   ;
-; Average interconnect usage (total/H/V)                      ; 30.2% / 29.1% / 33.6% ;       ;
-; Peak interconnect usage (total/H/V)                         ; 64.1% / 62.0% / 71.0% ;       ;
-; Maximum fan-out                                             ; 9637                  ;       ;
-; Highest non-global fan-out                                  ; 7529                  ;       ;
-; Total fan-out                                               ; 173776                ;       ;
-; Average fan-out                                             ; 3.85                  ;       ;
+; Average interconnect usage (total/H/V)                      ; 16.2% / 15.7% / 18.0% ;       ;
+; Peak interconnect usage (total/H/V)                         ; 52.4% / 51.4% / 61.1% ;       ;
+; Maximum fan-out                                             ; 9642                  ;       ;
+; Highest non-global fan-out                                  ; 4800                  ;       ;
+; Total fan-out                                               ; 113138                ;       ;
+; Average fan-out                                             ; 4.28                  ;       ;
 +-------------------------------------------------------------+-----------------------+-------+
 
 
@@ -557,43 +557,43 @@ The pin-out file can be found in /home/ec2022/ra260628/Documents/MC613/2024s1-mc
 +-------------------------------------------------------------+------------------------+--------------------------------+
 ; Statistic                                                   ; Top                    ; hard_block:auto_generated_inst ;
 +-------------------------------------------------------------+------------------------+--------------------------------+
-; Logic utilization (ALMs needed / total ALMs on device)      ; 21372 / 32070 ( 67 % ) ; 0 / 32070 ( 0 % )              ;
-; ALMs needed [=A-B+C]                                        ; 21372                  ; 0                              ;
-;     [A] ALMs used in final placement [=a+b+c+d]             ; 23091 / 32070 ( 72 % ) ; 0 / 32070 ( 0 % )              ;
-;         [a] ALMs used for LUT logic and registers           ; 4804                   ; 0                              ;
-;         [b] ALMs used for LUT logic                         ; 18247                  ; 0                              ;
-;         [c] ALMs used for registers                         ; 40                     ; 0                              ;
+; Logic utilization (ALMs needed / total ALMs on device)      ; 13879 / 32070 ( 43 % ) ; 0 / 32070 ( 0 % )              ;
+; ALMs needed [=A-B+C]                                        ; 13879                  ; 0                              ;
+;     [A] ALMs used in final placement [=a+b+c+d]             ; 14850 / 32070 ( 46 % ) ; 0 / 32070 ( 0 % )              ;
+;         [a] ALMs used for LUT logic and registers           ; 4497                   ; 0                              ;
+;         [b] ALMs used for LUT logic                         ; 10004                  ; 0                              ;
+;         [c] ALMs used for registers                         ; 349                    ; 0                              ;
 ;         [d] ALMs used for memory (up to half of total ALMs) ; 0                      ; 0                              ;
-;     [B] Estimate of ALMs recoverable by dense packing       ; 1762 / 32070 ( 5 % )   ; 0 / 32070 ( 0 % )              ;
-;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 43 / 32070 ( < 1 % )   ; 0 / 32070 ( 0 % )              ;
+;     [B] Estimate of ALMs recoverable by dense packing       ; 988 / 32070 ( 3 % )    ; 0 / 32070 ( 0 % )              ;
+;     [C] Estimate of ALMs unavailable [=a+b+c+d]             ; 17 / 32070 ( < 1 % )   ; 0 / 32070 ( 0 % )              ;
 ;         [a] Due to location constrained logic               ; 0                      ; 0                              ;
 ;         [b] Due to LAB-wide signal conflicts                ; 0                      ; 0                              ;
-;         [c] Due to LAB input limits                         ; 43                     ; 0                              ;
+;         [c] Due to LAB input limits                         ; 17                     ; 0                              ;
 ;         [d] Due to virtual I/Os                             ; 0                      ; 0                              ;
 ;                                                             ;                        ;                                ;
 ; Difficulty packing design                                   ; Low                    ; Low                            ;
 ;                                                             ;                        ;                                ;
-; Total LABs:  partially or completely used                   ; 2677 / 3207 ( 83 % )   ; 0 / 3207 ( 0 % )               ;
-;     -- Logic LABs                                           ; 2677                   ; 0                              ;
+; Total LABs:  partially or completely used                   ; 1735 / 3207 ( 54 % )   ; 0 / 3207 ( 0 % )               ;
+;     -- Logic LABs                                           ; 1735                   ; 0                              ;
 ;     -- Memory LABs (up to half of total LABs)               ; 0                      ; 0                              ;
 ;                                                             ;                        ;                                ;
-; Combinational ALUT usage for logic                          ; 35379                  ; 0                              ;
-;     -- 7 input functions                                    ; 2                      ; 0                              ;
-;     -- 6 input functions                                    ; 15819                  ; 0                              ;
-;     -- 5 input functions                                    ; 375                    ; 0                              ;
-;     -- 4 input functions                                    ; 160                    ; 0                              ;
-;     -- <=3 input functions                                  ; 19023                  ; 0                              ;
-; Combinational ALUT usage for route-throughs                 ; 7                      ; 0                              ;
+; Combinational ALUT usage for logic                          ; 16633                  ; 0                              ;
+;     -- 7 input functions                                    ; 1                      ; 0                              ;
+;     -- 6 input functions                                    ; 11358                  ; 0                              ;
+;     -- 5 input functions                                    ; 4878                   ; 0                              ;
+;     -- 4 input functions                                    ; 53                     ; 0                              ;
+;     -- <=3 input functions                                  ; 343                    ; 0                              ;
+; Combinational ALUT usage for route-throughs                 ; 58                     ; 0                              ;
 ; Memory ALUT usage                                           ; 0                      ; 0                              ;
 ;     -- 64-address deep                                      ; 0                      ; 0                              ;
 ;     -- 32-address deep                                      ; 0                      ; 0                              ;
 ;                                                             ;                        ;                                ;
 ; Dedicated logic registers                                   ; 0                      ; 0                              ;
 ;     -- By type:                                             ;                        ;                                ;
-;         -- Primary logic registers                          ; 9686 / 64140 ( 15 % )  ; 0 / 64140 ( 0 % )              ;
+;         -- Primary logic registers                          ; 9691 / 64140 ( 15 % )  ; 0 / 64140 ( 0 % )              ;
 ;         -- Secondary logic registers                        ; 0 / 64140 ( 0 % )      ; 0 / 64140 ( 0 % )              ;
 ;     -- By function:                                         ;                        ;                                ;
-;         -- Design implementation registers                  ; 9686                   ; 0                              ;
+;         -- Design implementation registers                  ; 9691                   ; 0                              ;
 ;         -- Routing optimization registers                   ; 0                      ; 0                              ;
 ;                                                             ;                        ;                                ;
 ;                                                             ;                        ;                                ;
@@ -611,8 +611,8 @@ The pin-out file can be found in /home/ec2022/ra260628/Documents/MC613/2024s1-mc
 ;     -- Registered Output Connections                        ; 0                      ; 0                              ;
 ;                                                             ;                        ;                                ;
 ; Internal Connections                                        ;                        ;                                ;
-;     -- Total Connections                                    ; 173776                 ; 0                              ;
-;     -- Registered Connections                               ; 29759                  ; 0                              ;
+;     -- Total Connections                                    ; 113138                 ; 0                              ;
+;     -- Registered Connections                               ; 36019                  ; 0                              ;
 ;                                                             ;                        ;                                ;
 ; External Connections                                        ;                        ;                                ;
 ;     -- Top                                                  ; 0                      ; 0                              ;
@@ -644,13 +644,13 @@ The pin-out file can be found in /home/ec2022/ra260628/Documents/MC613/2024s1-mc
 +----------+-------+----------+--------------+--------------+--------------+-----------------------+--------------------+--------+----------------+-----------------+----------+--------------+--------------+-------------+---------------------------+----------------------+-----------+
 ; Name     ; Pin # ; I/O Bank ; X coordinate ; Y coordinate ; Z coordinate ; Combinational Fan-Out ; Registered Fan-Out ; Global ; Input Register ; PCI I/O Enabled ; Bus Hold ; Weak Pull Up ; I/O Standard ; Termination ; Termination Control Block ; Location assigned by ; Slew Rate ;
 +----------+-------+----------+--------------+--------------+--------------+-----------------------+--------------------+--------+----------------+-----------------+----------+--------------+--------------+-------------+---------------------------+----------------------+-----------+
-; CLOCK_50 ; AF14  ; 3B       ; 32           ; 0            ; 0            ; 9638                  ; 0                  ; yes    ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
+; CLOCK_50 ; AF14  ; 3B       ; 32           ; 0            ; 0            ; 9643                  ; 0                  ; yes    ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
 ; KEY[0]   ; AA14  ; 3B       ; 36           ; 0            ; 0            ; 1                     ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
 ; KEY[1]   ; AA15  ; 3B       ; 36           ; 0            ; 17           ; 1                     ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
 ; KEY[2]   ; W15   ; 3B       ; 40           ; 0            ; 0            ; 3                     ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
 ; KEY[3]   ; Y16   ; 3B       ; 40           ; 0            ; 17           ; 4                     ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
-; SW[0]    ; AB12  ; 3A       ; 12           ; 0            ; 17           ; 121                   ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
-; SW[1]    ; AC12  ; 3A       ; 16           ; 0            ; 0            ; 36                    ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
+; SW[0]    ; AB12  ; 3A       ; 12           ; 0            ; 17           ; 47                    ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
+; SW[1]    ; AC12  ; 3A       ; 16           ; 0            ; 0            ; 41                    ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
 ; SW[2]    ; AF9   ; 3A       ; 8            ; 0            ; 34           ; 0                     ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
 ; SW[3]    ; AF10  ; 3A       ; 4            ; 0            ; 51           ; 0                     ; 0                  ; no     ; no             ; no              ; no       ; Off          ; 2.5 V        ; Off         ; --                        ; User                 ; no        ;
 +----------+-------+----------+--------------+--------------+--------------+-----------------------+--------------------+--------+----------------+-----------------+----------+--------------+--------------+-------------+---------------------------+----------------------+-----------+
@@ -1671,9 +1671,9 @@ Note: Pin directions (input, output or bidir) are based on device operating in u
 +----------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+-------------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; ALMs needed [=A-B+C] ; [A] ALMs used in final placement ; [B] Estimate of ALMs recoverable by dense packing ; [C] Estimate of ALMs unavailable ; ALMs used for memory ; Combinational ALUTs ; Dedicated Logic Registers ; I/O Registers ; Block Memory Bits ; M10Ks ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name     ; Entity Name ; Library Name ;
 +----------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+-------------------------+-------------+--------------+
-; |top1                      ; 21371.8 (4.4)        ; 23092.2 (4.4)                    ; 1762.9 (0.0)                                      ; 42.5 (0.0)                       ; 0.0 (0.0)            ; 35379 (5)           ; 9686 (2)                  ; 0 (0)         ; 0                 ; 0     ; 0          ; 38   ; 0            ; |top1                   ; top1        ; work         ;
-;    |jogador1:jogador1|     ; 21328.3 (21328.3)    ; 23046.8 (23046.8)                ; 1761.1 (1761.1)                                   ; 42.5 (42.5)                      ; 0.0 (0.0)            ; 35303 (35303)       ; 9663 (9663)               ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |top1|jogador1:jogador1 ; jogador1    ; work         ;
-;    |vga:vga|               ; 39.0 (39.0)          ; 40.9 (40.9)                      ; 1.9 (1.9)                                         ; 0.0 (0.0)                        ; 0.0 (0.0)            ; 71 (71)             ; 21 (21)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |top1|vga:vga           ; vga         ; work         ;
+; |top1                      ; 13878.9 (3.7)        ; 14847.3 (3.7)                    ; 985.5 (0.0)                                       ; 17.0 (0.0)                       ; 0.0 (0.0)            ; 16633 (5)           ; 9691 (2)                  ; 0 (0)         ; 0                 ; 0     ; 0          ; 38   ; 0            ; |top1                   ; top1        ; work         ;
+;    |jogador1:jogador1|     ; 13835.1 (13835.1)    ; 14802.6 (14802.6)                ; 984.5 (984.5)                                     ; 17.0 (17.0)                      ; 0.0 (0.0)            ; 16558 (16558)       ; 9668 (9668)               ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |top1|jogador1:jogador1 ; jogador1    ; work         ;
+;    |vga:vga|               ; 39.2 (39.2)          ; 40.9 (40.9)                      ; 1.8 (1.8)                                         ; 0.1 (0.1)                        ; 0.0 (0.0)            ; 70 (70)             ; 21 (21)                   ; 0 (0)         ; 0                 ; 0     ; 0          ; 0    ; 0            ; |top1|vga:vga           ; vga         ; work         ;
 +----------------------------+----------------------+----------------------------------+---------------------------------------------------+----------------------------------+----------------------+---------------------+---------------------------+---------------+-------------------+-------+------------+------+--------------+-------------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -1734,11 +1734,11 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; SW[0]                                             ;                   ;         ;
 ;      - jogador1:jogador1|Add5~25                  ; 0                 ; 0       ;
 ;      - jogador1:jogador1|Add5~21                  ; 0                 ; 0       ;
-;      - jogador1:jogador1|Add5~17                  ; 0                 ; 0       ;
 ;      - jogador1:jogador1|Add5~13                  ; 0                 ; 0       ;
-;      - jogador1:jogador1|Add5~1                   ; 0                 ; 0       ;
-;      - jogador1:jogador1|Add5~5                   ; 0                 ; 0       ;
+;      - jogador1:jogador1|Add5~17                  ; 0                 ; 0       ;
 ;      - jogador1:jogador1|Add5~9                   ; 0                 ; 0       ;
+;      - jogador1:jogador1|Add5~5                   ; 0                 ; 0       ;
+;      - jogador1:jogador1|Add5~1                   ; 0                 ; 0       ;
 ;      - jogador1:jogador1|Add6~13                  ; 0                 ; 0       ;
 ;      - jogador1:jogador1|Add6~17                  ; 0                 ; 0       ;
 ;      - jogador1:jogador1|Add6~21                  ; 0                 ; 0       ;
@@ -1750,119 +1750,45 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ;      - vga:vga|x[6]~0                             ; 0                 ; 0       ;
 ;      - vga:vga|y[0]~0                             ; 0                 ; 0       ;
 ;      - jogador1:jogador1|OUT_G[0]~0               ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y~0          ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y[7]~1       ; 0                 ; 0       ;
 ;      - jogador1:jogador1|always0~0                ; 0                 ; 0       ;
-;      - jogador1:jogador1|coord_atual_x[5]~0       ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y[8]~4       ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y~6          ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y~7          ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y~9          ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x[9]~1       ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x~3          ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x~4          ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x~6          ; 0                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x~7          ; 0                 ; 0       ;
 ;      - jogador1:jogador1|LessThan5~0              ; 0                 ; 0       ;
-;      - jogador1:jogador1|OUT_G[0]~1               ; 0                 ; 0       ;
-;      - jogador1:jogador1|contador_jogador1[2]~1   ; 0                 ; 0       ;
+;      - jogador1:jogador1|contador_jogador1[0]~0   ; 0                 ; 0       ;
+;      - jogador1:jogador1|contador_matriz_coluna~0 ; 0                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~1 ; 0                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~2 ; 0                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~3 ; 0                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~4 ; 0                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~5 ; 0                 ; 0       ;
-;      - jogador1:jogador1|contador_matriz_coluna~6 ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~1               ; 0                 ; 0       ;
-;      - jogador1:jogador1|contador_matriz_linha~0  ; 0                 ; 0       ;
+;      - jogador1:jogador1|contador_matriz_coluna~7 ; 0                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_linha~1  ; 0                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_linha~2  ; 0                 ; 0       ;
-;      - jogador1:jogador1|contador_matriz_linha~4  ; 0                 ; 0       ;
-;      - jogador1:jogador1|contador_matriz_linha~6  ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~3               ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~4               ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~5               ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~7               ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~9               ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~10              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~11              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~13              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~15              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~16              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~17              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~19              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~21              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~22              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~23              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~25              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~27              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~28              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~29              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~31              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~33              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~34              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~35              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~37              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~39              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~40              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~41              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~43              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~45              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~46              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~47              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~49              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~51              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~52              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~53              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~55              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~57              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~58              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~59              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~61              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~63              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~64              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~65              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~67              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~69              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~70              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~71              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~73              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~75              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~77              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~79              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~81              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~83              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~85              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~87              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~88              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~89              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~90              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~91              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~92              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~93              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~94              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~95              ; 0                 ; 0       ;
-;      - jogador1:jogador1|contador_matriz_linha~8  ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~97              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~99              ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~101             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~103             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~105             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~107             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~109             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~111             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~112             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~113             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~114             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~115             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~116             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~117             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~118             ; 0                 ; 0       ;
-;      - jogador1:jogador1|Decoder3~119             ; 0                 ; 0       ;
+;      - jogador1:jogador1|OUT_G[0]~1               ; 0                 ; 0       ;
 ;      - jogador1:jogador1|Selector5~0              ; 0                 ; 0       ;
 ;      - jogador1:jogador1|contador_clock[14]~0     ; 0                 ; 0       ;
 ;      - jogador1:jogador1|contador_clock[14]~1     ; 0                 ; 0       ;
 ;      - jogador1:jogador1|Selector1~0              ; 0                 ; 0       ;
-;      - jogador1:jogador1|fim_de_jogo~2            ; 0                 ; 0       ;
 ;      - jogador1:jogador1|Selector2~0              ; 0                 ; 0       ;
 ; CLOCK_50                                          ;                   ;         ;
 ;      - vga:vga|VGA_CLK                            ; 0                 ; 0       ;
 ; SW[1]                                             ;                   ;         ;
 ;      - jogador1:jogador1|Add5~25                  ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Add5~21                  ; 1                 ; 0       ;
-;      - jogador1:jogador1|Add5~17                  ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Add5~13                  ; 1                 ; 0       ;
-;      - jogador1:jogador1|Add5~1                   ; 1                 ; 0       ;
-;      - jogador1:jogador1|Add5~5                   ; 1                 ; 0       ;
+;      - jogador1:jogador1|Add5~17                  ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Add5~9                   ; 1                 ; 0       ;
+;      - jogador1:jogador1|Add5~5                   ; 1                 ; 0       ;
+;      - jogador1:jogador1|Add5~1                   ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Add6~17                  ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Add6~21                  ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Add6~25                  ; 1                 ; 0       ;
@@ -1870,11 +1796,20 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ;      - jogador1:jogador1|Add6~5                   ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Add6~1                   ; 1                 ; 0       ;
 ;      - jogador1:jogador1|OUT_G[0]~0               ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y~0          ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y[7]~1       ; 1                 ; 0       ;
 ;      - jogador1:jogador1|always0~0                ; 1                 ; 0       ;
-;      - jogador1:jogador1|coord_atual_x[5]~0       ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y[8]~4       ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y~6          ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y~7          ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_y~9          ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x[9]~1       ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x~3          ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x~4          ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x~6          ; 1                 ; 0       ;
+;      - jogador1:jogador1|coord_atual_x~7          ; 1                 ; 0       ;
 ;      - jogador1:jogador1|LessThan5~0              ; 1                 ; 0       ;
-;      - jogador1:jogador1|OUT_G[0]~1               ; 1                 ; 0       ;
-;      - jogador1:jogador1|contador_jogador1[2]~1   ; 1                 ; 0       ;
+;      - jogador1:jogador1|contador_jogador1[0]~0   ; 1                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~0 ; 1                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~1 ; 1                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~2 ; 1                 ; 0       ;
@@ -1882,15 +1817,11 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ;      - jogador1:jogador1|contador_matriz_coluna~4 ; 1                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~5 ; 1                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_coluna~6 ; 1                 ; 0       ;
-;      - jogador1:jogador1|contador_matriz_linha~0  ; 1                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_linha~1  ; 1                 ; 0       ;
 ;      - jogador1:jogador1|contador_matriz_linha~2  ; 1                 ; 0       ;
-;      - jogador1:jogador1|contador_matriz_linha~4  ; 1                 ; 0       ;
-;      - jogador1:jogador1|contador_matriz_linha~6  ; 1                 ; 0       ;
-;      - jogador1:jogador1|contador_matriz_linha~8  ; 1                 ; 0       ;
+;      - jogador1:jogador1|OUT_G[0]~1               ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Selector5~0              ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Selector1~0              ; 1                 ; 0       ;
-;      - jogador1:jogador1|fim_de_jogo~2            ; 1                 ; 0       ;
 ;      - jogador1:jogador1|Selector2~0              ; 1                 ; 0       ;
 ; KEY[0]                                            ;                   ;         ;
 ;      - jogador1:jogador1|always2~0                ; 0                 ; 0       ;
@@ -1914,16 +1845,19 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; Name                                     ; Location            ; Fan-Out ; Usage                     ; Global ; Global Resource Used ; Global Line Name ; Enable Signal Source Name ;
 +------------------------------------------+---------------------+---------+---------------------------+--------+----------------------+------------------+---------------------------+
 ; CLOCK_50                                 ; PIN_AF14            ; 2       ; Clock                     ; no     ; --                   ; --               ; --                        ;
-; CLOCK_50                                 ; PIN_AF14            ; 9637    ; Clock                     ; yes    ; Global Clock         ; GCLK6            ; --                        ;
-; jogador1:jogador1|OUT_G[0]~0             ; LABCELL_X63_Y34_N48 ; 1       ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; jogador1:jogador1|OUT_G[0]~1             ; LABCELL_X63_Y34_N30 ; 20      ; Sync. clear               ; no     ; --                   ; --               ; --                        ;
-; jogador1:jogador1|contador_clock[14]~0   ; LABCELL_X37_Y24_N12 ; 20      ; Sync. clear               ; no     ; --                   ; --               ; --                        ;
-; jogador1:jogador1|contador_clock[14]~1   ; LABCELL_X36_Y22_N51 ; 20      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; jogador1:jogador1|contador_jogador1[2]~1 ; LABCELL_X63_Y34_N3  ; 3       ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; jogador1:jogador1|coord_atual_x[5]~0     ; LABCELL_X63_Y34_N24 ; 16      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
-; vga:vga|VGA_CLK                          ; FF_X43_Y24_N59      ; 50      ; Clock                     ; no     ; --                   ; --               ; --                        ;
-; vga:vga|x[6]~0                           ; LABCELL_X43_Y13_N57 ; 20      ; Clock enable, Sync. clear ; no     ; --                   ; --               ; --                        ;
-; vga:vga|y[0]~0                           ; LABCELL_X12_Y49_N6  ; 10      ; Sync. clear               ; no     ; --                   ; --               ; --                        ;
+; CLOCK_50                                 ; PIN_AF14            ; 9642    ; Clock                     ; yes    ; Global Clock         ; GCLK6            ; --                        ;
+; jogador1:jogador1|OUT_G[0]~0             ; LABCELL_X33_Y28_N51 ; 1       ; Clock enable              ; no     ; --                   ; --               ; --                        ;
+; jogador1:jogador1|OUT_G[0]~1             ; LABCELL_X33_Y28_N15 ; 16      ; Sync. clear               ; no     ; --                   ; --               ; --                        ;
+; jogador1:jogador1|always0~0              ; LABCELL_X33_Y28_N24 ; 37      ; Sync. clear               ; no     ; --                   ; --               ; --                        ;
+; jogador1:jogador1|contador_clock[14]~0   ; LABCELL_X31_Y17_N54 ; 20      ; Sync. clear               ; no     ; --                   ; --               ; --                        ;
+; jogador1:jogador1|contador_clock[14]~1   ; LABCELL_X31_Y17_N3  ; 20      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
+; jogador1:jogador1|contador_jogador1[0]~0 ; LABCELL_X33_Y28_N3  ; 2       ; Clock enable              ; no     ; --                   ; --               ; --                        ;
+; jogador1:jogador1|coord_atual_x[9]~1     ; LABCELL_X45_Y23_N6  ; 3       ; Clock enable              ; no     ; --                   ; --               ; --                        ;
+; jogador1:jogador1|coord_atual_y[7]~1     ; LABCELL_X33_Y28_N6  ; 16      ; Clock enable              ; no     ; --                   ; --               ; --                        ;
+; jogador1:jogador1|coord_atual_y[8]~4     ; LABCELL_X33_Y17_N48 ; 3       ; Clock enable              ; no     ; --                   ; --               ; --                        ;
+; vga:vga|VGA_CLK                          ; FF_X18_Y15_N11      ; 50      ; Clock                     ; no     ; --                   ; --               ; --                        ;
+; vga:vga|x[6]~0                           ; LABCELL_X16_Y34_N54 ; 20      ; Clock enable, Sync. clear ; no     ; --                   ; --               ; --                        ;
+; vga:vga|y[0]~0                           ; LABCELL_X18_Y14_N48 ; 10      ; Sync. clear               ; no     ; --                   ; --               ; --                        ;
 +------------------------------------------+---------------------+---------+---------------------------+--------+----------------------+------------------+---------------------------+
 
 
@@ -1932,45 +1866,29 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------+----------+---------+----------------------+------------------+---------------------------+
 ; Name     ; Location ; Fan-Out ; Global Resource Used ; Global Line Name ; Enable Signal Source Name ;
 +----------+----------+---------+----------------------+------------------+---------------------------+
-; CLOCK_50 ; PIN_AF14 ; 9637    ; Global Clock         ; GCLK6            ; --                        ;
+; CLOCK_50 ; PIN_AF14 ; 9642    ; Global Clock         ; GCLK6            ; --                        ;
 +----------+----------+---------+----------------------+------------------+---------------------------+
 
 
-+------------------------------------------------------+
-; Non-Global High Fan-Out Signals                      ;
-+--------------------------------------------+---------+
-; Name                                       ; Fan-Out ;
-+--------------------------------------------+---------+
-; jogador1:jogador1|contador_matriz_linha~3  ; 7529    ;
-; jogador1:jogador1|fim_de_jogo~1            ; 4860    ;
-; jogador1:jogador1|always0~3                ; 4800    ;
-; jogador1:jogador1|matriz_jogo~195          ; 4160    ;
-; jogador1:jogador1|matriz_jogo~4239         ; 3840    ;
-; jogador1:jogador1|contador_matriz_linha~11 ; 1608    ;
-; jogador1:jogador1|contador_matriz_linha~9  ; 1127    ;
-; jogador1:jogador1|matriz_jogo~969          ; 1120    ;
-; jogador1:jogador1|coord_futura_x~8         ; 1085    ;
-; vga:vga|next_x[3]~6                        ; 1085    ;
-; vga:vga|next_x[4]~7                        ; 1085    ;
-; jogador1:jogador1|coord_futura_x~6         ; 1082    ;
-; jogador1:jogador1|coord_futura_x~4         ; 1078    ;
-; jogador1:jogador1|coord_futura_x~7         ; 1076    ;
-; vga:vga|next_x[5]~4                        ; 1076    ;
-; vga:vga|next_x[6]~5                        ; 1076    ;
-; vga:vga|next_x[7]~2                        ; 965     ;
-; vga:vga|next_x[8]~3                        ; 965     ;
-; jogador1:jogador1|coord_futura_x~2         ; 964     ;
-; jogador1:jogador1|coord_futura_x~3         ; 964     ;
-; jogador1:jogador1|matriz_jogo~1930         ; 960     ;
-; jogador1:jogador1|matriz_jogo~0            ; 960     ;
-; jogador1:jogador1|contador_matriz_linha~7  ; 814     ;
-; jogador1:jogador1|matriz_jogo~390          ; 806     ;
-; jogador1:jogador1|matriz_jogo~2            ; 803     ;
-; jogador1:jogador1|matriz_jogo~10736        ; 720     ;
-; jogador1:jogador1|matriz_jogo~7127         ; 720     ;
-; jogador1:jogador1|matriz_jogo~15373        ; 640     ;
-; jogador1:jogador1|matriz_jogo~5203         ; 640     ;
-+--------------------------------------------+---------+
++-----------------------------------------------+
+; Non-Global High Fan-Out Signals               ;
++-------------------------------------+---------+
+; Name                                ; Fan-Out ;
++-------------------------------------+---------+
+; jogador1:jogador1|always0~3         ; 4800    ;
+; jogador1:jogador1|coord_atual_x[5]  ; 1123    ;
+; vga:vga|next_x[3]~5                 ; 1083    ;
+; vga:vga|next_x[4]~6                 ; 1083    ;
+; jogador1:jogador1|coord_futura_x[4] ; 1081    ;
+; jogador1:jogador1|coord_futura_x[6] ; 1081    ;
+; jogador1:jogador1|coord_futura_x[3] ; 1078    ;
+; vga:vga|next_x[5]~3                 ; 1075    ;
+; vga:vga|next_x[6]~4                 ; 1075    ;
+; jogador1:jogador1|coord_atual_x[8]  ; 1003    ;
+; vga:vga|next_x[8]~2                 ; 965     ;
+; vga:vga|next_x[7]~1                 ; 964     ;
+; jogador1:jogador1|coord_futura_x[7] ; 964     ;
++-------------------------------------+---------+
 
 
 +-------------------------------------------------------------------------+
@@ -1978,14 +1896,14 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +---------------------------------------------+---------------------------+
 ; Routing Resource Type                       ; Usage                     ;
 +---------------------------------------------+---------------------------+
-; Block interconnects                         ; 74,741 / 289,320 ( 26 % ) ;
-; C12 interconnects                           ; 5,044 / 13,420 ( 38 % )   ;
-; C2 interconnects                            ; 31,142 / 119,108 ( 26 % ) ;
-; C4 interconnects                            ; 17,613 / 56,300 ( 31 % )  ;
+; Block interconnects                         ; 49,490 / 289,320 ( 17 % ) ;
+; C12 interconnects                           ; 2,731 / 13,420 ( 20 % )   ;
+; C2 interconnects                            ; 17,787 / 119,108 ( 15 % ) ;
+; C4 interconnects                            ; 9,044 / 56,300 ( 16 % )   ;
 ; DQS bus muxes                               ; 0 / 25 ( 0 % )            ;
 ; DQS-18 I/O buses                            ; 0 / 25 ( 0 % )            ;
 ; DQS-9 I/O buses                             ; 0 / 25 ( 0 % )            ;
-; Direct links                                ; 2,679 / 289,320 ( < 1 % ) ;
+; Direct links                                ; 1,637 / 289,320 ( < 1 % ) ;
 ; Global clocks                               ; 1 / 16 ( 6 % )            ;
 ; HPS SDRAM PLL inputs                        ; 0 / 1 ( 0 % )             ;
 ; HPS SDRAM PLL outputs                       ; 0 / 1 ( 0 % )             ;
@@ -2041,13 +1959,13 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; HPS_INTERFACE_TPIU_TRACE_INPUTs             ; 0 / 2 ( 0 % )             ;
 ; HPS_INTERFACE_TPIU_TRACE_OUTPUTs            ; 0 / 33 ( 0 % )            ;
 ; Horizontal periphery clocks                 ; 0 / 72 ( 0 % )            ;
-; Local interconnects                         ; 24,996 / 84,580 ( 30 % )  ;
+; Local interconnects                         ; 8,621 / 84,580 ( 10 % )   ;
 ; Quadrant clocks                             ; 0 / 66 ( 0 % )            ;
-; R14 interconnects                           ; 5,382 / 12,676 ( 42 % )   ;
-; R14/C12 interconnect drivers                ; 9,107 / 20,720 ( 44 % )   ;
-; R3 interconnects                            ; 36,519 / 130,992 ( 28 % ) ;
-; R6 interconnects                            ; 63,180 / 266,960 ( 24 % ) ;
-; Spine clocks                                ; 11 / 360 ( 3 % )          ;
+; R14 interconnects                           ; 3,169 / 12,676 ( 25 % )   ;
+; R14/C12 interconnect drivers                ; 4,811 / 20,720 ( 23 % )   ;
+; R3 interconnects                            ; 20,696 / 130,992 ( 16 % ) ;
+; R6 interconnects                            ; 33,359 / 266,960 ( 12 % ) ;
+; Spine clocks                                ; 10 / 360 ( 3 % )          ;
 ; Wire stub REs                               ; 0 / 15,858 ( 0 % )        ;
 +---------------------------------------------+---------------------------+
 
@@ -2195,127 +2113,108 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +---------------------------+--------+
 
 
-+---------------------------------------------------------------------+
-; Estimated Delay Added for Hold Timing Summary                       ;
-+--------------------------+----------------------+-------------------+
-; Source Clock(s)          ; Destination Clock(s) ; Delay Added in ns ;
-+--------------------------+----------------------+-------------------+
-; vga:vga|VGA_CLK,CLOCK_50 ; CLOCK_50             ; 771.7             ;
-; CLOCK_50                 ; CLOCK_50             ; 224.1             ;
-; CLOCK_50,I/O             ; CLOCK_50             ; 81.4              ;
-; vga:vga|VGA_CLK          ; CLOCK_50             ; 28.4              ;
-+--------------------------+----------------------+-------------------+
++-------------------------------------------------------------------------+
+; Estimated Delay Added for Hold Timing Summary                           ;
++--------------------------+--------------------------+-------------------+
+; Source Clock(s)          ; Destination Clock(s)     ; Delay Added in ns ;
++--------------------------+--------------------------+-------------------+
+; vga:vga|VGA_CLK          ; CLOCK_50                 ; 77.3              ;
+; vga:vga|VGA_CLK          ; vga:vga|VGA_CLK,CLOCK_50 ; 28.5              ;
+; vga:vga|VGA_CLK,CLOCK_50 ; CLOCK_50                 ; 23.1              ;
+; vga:vga|VGA_CLK          ; vga:vga|VGA_CLK          ; 7.4               ;
+; CLOCK_50                 ; CLOCK_50                 ; 3.2               ;
+; CLOCK_50,I/O             ; CLOCK_50                 ; 2.7               ;
++--------------------------+--------------------------+-------------------+
 Note: For more information on problematic transfers, consider running the Fitter again with the Optimize hold timing option (Settings Menu) turned off.
 This will disable optimization of problematic paths and expose them for further analysis using the TimeQuest Timing Analyzer.
 
 
-+----------------------------------------------------------------------------------------------------+
-; Estimated Delay Added for Hold Timing Details                                                      ;
-+------------------------------------------+-------------------------------------+-------------------+
-; Source Register                          ; Destination Register                ; Delay Added in ns ;
-+------------------------------------------+-------------------------------------+-------------------+
-; vga:vga|VGA_CLK                          ; vga:vga|VGA_CLK                     ; 3.847             ;
-; jogador1:jogador1|sentido[0]             ; jogador1:jogador1|coord_atual_y[9]  ; 3.635             ;
-; jogador1:jogador1|sentido[1]             ; jogador1:jogador1|coord_atual_x[7]  ; 3.497             ;
-; jogador1:jogador1|contador_clock[12]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.215             ;
-; jogador1:jogador1|contador_clock[3]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.215             ;
-; jogador1:jogador1|contador_clock[2]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.214             ;
-; jogador1:jogador1|contador_clock[8]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.206             ;
-; jogador1:jogador1|contador_clock[19]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.200             ;
-; jogador1:jogador1|contador_clock[6]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.198             ;
-; jogador1:jogador1|contador_clock[15]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.197             ;
-; jogador1:jogador1|contador_clock[9]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.191             ;
-; jogador1:jogador1|contador_clock[14]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.183             ;
-; jogador1:jogador1|contador_clock[5]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.179             ;
-; jogador1:jogador1|contador_clock[18]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.177             ;
-; jogador1:jogador1|contador_clock[11]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.173             ;
-; jogador1:jogador1|contador_clock[4]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.171             ;
-; jogador1:jogador1|contador_clock[16]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.158             ;
-; jogador1:jogador1|contador_clock[17]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.158             ;
-; jogador1:jogador1|contador_clock[13]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.158             ;
-; jogador1:jogador1|contador_clock[10]     ; jogador1:jogador1|coord_atual_y[9]  ; 3.158             ;
-; jogador1:jogador1|contador_clock[7]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.158             ;
-; jogador1:jogador1|contador_clock[1]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.158             ;
-; jogador1:jogador1|contador_clock[0]      ; jogador1:jogador1|coord_atual_y[9]  ; 3.158             ;
-; jogador1:jogador1|coord_futura_x[5]      ; jogador1:jogador1|coord_futura_x[5] ; 3.092             ;
-; jogador1:jogador1|coord_atual_x[5]       ; jogador1:jogador1|coord_futura_x[5] ; 3.092             ;
-; jogador1:jogador1|coord_atual_x[4]       ; jogador1:jogador1|coord_futura_x[5] ; 3.092             ;
-; jogador1:jogador1|coord_atual_x[3]       ; jogador1:jogador1|coord_futura_x[5] ; 3.092             ;
-; jogador1:jogador1|coord_atual_x[7]       ; jogador1:jogador1|coord_atual_x[7]  ; 2.938             ;
-; jogador1:jogador1|coord_atual_x[6]       ; jogador1:jogador1|coord_atual_x[7]  ; 2.938             ;
-; jogador1:jogador1|coord_futura_x[4]      ; jogador1:jogador1|coord_atual_x[4]  ; 2.801             ;
-; jogador1:jogador1|coord_atual_x[8]       ; jogador1:jogador1|coord_atual_x[8]  ; 2.410             ;
-; jogador1:jogador1|coord_futura_x[3]      ; jogador1:jogador1|coord_atual_x[3]  ; 2.380             ;
-; SW[0]                                    ; vga:vga|VGA_CLK                     ; 1.924             ;
-; vga:vga|x[8]                             ; jogador1:jogador1|OUT_G[0]          ; 1.869             ;
-; jogador1:jogador1|coord_atual_y[6]       ; jogador1:jogador1|coord_atual_y[6]  ; 1.863             ;
-; jogador1:jogador1|coord_atual_y[5]       ; jogador1:jogador1|coord_atual_y[6]  ; 1.863             ;
-; jogador1:jogador1|coord_atual_y[4]       ; jogador1:jogador1|coord_atual_y[6]  ; 1.863             ;
-; jogador1:jogador1|coord_atual_y[3]       ; jogador1:jogador1|coord_atual_y[6]  ; 1.863             ;
-; vga:vga|x[5]                             ; jogador1:jogador1|OUT_G[0]          ; 1.851             ;
-; vga:vga|x[4]                             ; jogador1:jogador1|OUT_G[0]          ; 1.832             ;
-; vga:vga|x[6]                             ; jogador1:jogador1|OUT_G[0]          ; 1.763             ;
-; vga:vga|x[9]                             ; jogador1:jogador1|OUT_G[0]          ; 1.653             ;
-; vga:vga|x[7]                             ; jogador1:jogador1|OUT_G[0]          ; 1.653             ;
-; jogador1:jogador1|coord_atual_y[7]       ; jogador1:jogador1|fim_de_jogo       ; 1.377             ;
-; jogador1:jogador1|coord_atual_x[9]       ; jogador1:jogador1|fim_de_jogo       ; 1.301             ;
-; vga:vga|x[3]                             ; jogador1:jogador1|OUT_G[0]          ; 1.234             ;
-; vga:vga|x[2]                             ; jogador1:jogador1|OUT_G[0]          ; 1.234             ;
-; vga:vga|x[1]                             ; jogador1:jogador1|OUT_G[0]          ; 1.234             ;
-; vga:vga|x[0]                             ; jogador1:jogador1|OUT_G[0]          ; 1.234             ;
-; jogador1:jogador1|estado.IDLE            ; jogador1:jogador1|estado.AH_MOVE    ; 1.228             ;
-; jogador1:jogador1|coord_atual_y[8]       ; jogador1:jogador1|coord_atual_y[8]  ; 1.222             ;
-; SW[1]                                    ; jogador1:jogador1|coord_atual_x[8]  ; 1.205             ;
-; jogador1:jogador1|coord_atual_y[9]       ; jogador1:jogador1|coord_atual_y[9]  ; 1.186             ;
-; jogador1:jogador1|matriz_jogo[27][48][0] ; jogador1:jogador1|fim_de_jogo       ; 1.097             ;
-; jogador1:jogador1|matriz_jogo[27][52][0] ; jogador1:jogador1|fim_de_jogo       ; 1.097             ;
-; jogador1:jogador1|matriz_jogo[27][50][0] ; jogador1:jogador1|fim_de_jogo       ; 1.097             ;
-; jogador1:jogador1|matriz_jogo[27][54][0] ; jogador1:jogador1|fim_de_jogo       ; 1.097             ;
-; jogador1:jogador1|matriz_jogo[11][2][0]  ; jogador1:jogador1|fim_de_jogo       ; 1.085             ;
-; jogador1:jogador1|matriz_jogo[11][18][0] ; jogador1:jogador1|fim_de_jogo       ; 1.085             ;
-; jogador1:jogador1|matriz_jogo[11][34][0] ; jogador1:jogador1|fim_de_jogo       ; 1.085             ;
-; jogador1:jogador1|matriz_jogo[11][50][0] ; jogador1:jogador1|fim_de_jogo       ; 1.085             ;
-; jogador1:jogador1|matriz_jogo[27][32][0] ; jogador1:jogador1|fim_de_jogo       ; 1.049             ;
-; jogador1:jogador1|matriz_jogo[27][36][0] ; jogador1:jogador1|fim_de_jogo       ; 1.049             ;
-; jogador1:jogador1|matriz_jogo[27][34][0] ; jogador1:jogador1|fim_de_jogo       ; 1.049             ;
-; jogador1:jogador1|matriz_jogo[27][38][0] ; jogador1:jogador1|fim_de_jogo       ; 1.049             ;
-; jogador1:jogador1|matriz_jogo[11][5][0]  ; jogador1:jogador1|fim_de_jogo       ; 1.040             ;
-; jogador1:jogador1|matriz_jogo[11][21][0] ; jogador1:jogador1|fim_de_jogo       ; 1.040             ;
-; jogador1:jogador1|matriz_jogo[11][37][0] ; jogador1:jogador1|fim_de_jogo       ; 1.040             ;
-; jogador1:jogador1|matriz_jogo[11][53][0] ; jogador1:jogador1|fim_de_jogo       ; 1.040             ;
-; jogador1:jogador1|matriz_jogo[29][40][0] ; jogador1:jogador1|fim_de_jogo       ; 1.038             ;
-; jogador1:jogador1|matriz_jogo[29][44][0] ; jogador1:jogador1|fim_de_jogo       ; 1.038             ;
-; jogador1:jogador1|matriz_jogo[29][42][0] ; jogador1:jogador1|fim_de_jogo       ; 1.038             ;
-; jogador1:jogador1|matriz_jogo[29][46][0] ; jogador1:jogador1|fim_de_jogo       ; 1.038             ;
-; jogador1:jogador1|matriz_jogo[54][50][0] ; jogador1:jogador1|fim_de_jogo       ; 1.033             ;
-; jogador1:jogador1|matriz_jogo[54][51][0] ; jogador1:jogador1|fim_de_jogo       ; 1.033             ;
-; jogador1:jogador1|matriz_jogo[54][58][0] ; jogador1:jogador1|fim_de_jogo       ; 1.033             ;
-; jogador1:jogador1|matriz_jogo[54][59][0] ; jogador1:jogador1|fim_de_jogo       ; 1.033             ;
-; jogador1:jogador1|matriz_jogo[41][5][0]  ; jogador1:jogador1|fim_de_jogo       ; 0.998             ;
-; jogador1:jogador1|matriz_jogo[41][21][0] ; jogador1:jogador1|fim_de_jogo       ; 0.998             ;
-; jogador1:jogador1|matriz_jogo[41][37][0] ; jogador1:jogador1|fim_de_jogo       ; 0.998             ;
-; jogador1:jogador1|matriz_jogo[41][53][0] ; jogador1:jogador1|fim_de_jogo       ; 0.998             ;
-; jogador1:jogador1|matriz_jogo[11][9][0]  ; jogador1:jogador1|fim_de_jogo       ; 0.987             ;
-; jogador1:jogador1|matriz_jogo[11][25][0] ; jogador1:jogador1|fim_de_jogo       ; 0.987             ;
-; jogador1:jogador1|matriz_jogo[11][41][0] ; jogador1:jogador1|fim_de_jogo       ; 0.987             ;
-; jogador1:jogador1|matriz_jogo[11][57][0] ; jogador1:jogador1|fim_de_jogo       ; 0.987             ;
-; jogador1:jogador1|matriz_jogo[54][14][0] ; jogador1:jogador1|fim_de_jogo       ; 0.984             ;
-; jogador1:jogador1|matriz_jogo[54][15][0] ; jogador1:jogador1|fim_de_jogo       ; 0.984             ;
-; jogador1:jogador1|matriz_jogo[54][30][0] ; jogador1:jogador1|fim_de_jogo       ; 0.984             ;
-; jogador1:jogador1|matriz_jogo[54][31][0] ; jogador1:jogador1|fim_de_jogo       ; 0.984             ;
-; jogador1:jogador1|matriz_jogo[54][32][0] ; jogador1:jogador1|fim_de_jogo       ; 0.968             ;
-; jogador1:jogador1|matriz_jogo[54][33][0] ; jogador1:jogador1|fim_de_jogo       ; 0.968             ;
-; jogador1:jogador1|matriz_jogo[54][40][0] ; jogador1:jogador1|fim_de_jogo       ; 0.968             ;
-; jogador1:jogador1|matriz_jogo[54][41][0] ; jogador1:jogador1|fim_de_jogo       ; 0.968             ;
-; jogador1:jogador1|matriz_jogo[41][40][0] ; jogador1:jogador1|fim_de_jogo       ; 0.964             ;
-; jogador1:jogador1|matriz_jogo[41][44][0] ; jogador1:jogador1|fim_de_jogo       ; 0.964             ;
-; jogador1:jogador1|matriz_jogo[41][42][0] ; jogador1:jogador1|fim_de_jogo       ; 0.964             ;
-; jogador1:jogador1|matriz_jogo[41][46][0] ; jogador1:jogador1|fim_de_jogo       ; 0.964             ;
-; jogador1:jogador1|matriz_jogo[19][7][0]  ; jogador1:jogador1|fim_de_jogo       ; 0.957             ;
-; jogador1:jogador1|matriz_jogo[19][23][0] ; jogador1:jogador1|fim_de_jogo       ; 0.957             ;
-; jogador1:jogador1|matriz_jogo[19][39][0] ; jogador1:jogador1|fim_de_jogo       ; 0.957             ;
-+------------------------------------------+-------------------------------------+-------------------+
-Note: This table only shows the top 100 path(s) that have the largest delay added for hold.
++-------------------------------------------------------------------------------------------------+
+; Estimated Delay Added for Hold Timing Details                                                   ;
++----------------------------------------+------------------------------------+-------------------+
+; Source Register                        ; Destination Register               ; Delay Added in ns ;
++----------------------------------------+------------------------------------+-------------------+
+; vga:vga|VGA_CLK                        ; vga:vga|VGA_CLK                    ; 5.390             ;
+; jogador1:jogador1|sentido[0]           ; jogador1:jogador1|coord_atual_y[8] ; 3.492             ;
+; jogador1:jogador1|sentido[1]           ; jogador1:jogador1|coord_atual_y[9] ; 3.403             ;
+; vga:vga|y[3]                           ; jogador1:jogador1|OUT_G[0]         ; 3.112             ;
+; vga:vga|y[2]                           ; jogador1:jogador1|OUT_G[0]         ; 3.091             ;
+; vga:vga|y[8]                           ; jogador1:jogador1|OUT_G[0]         ; 3.077             ;
+; vga:vga|y[1]                           ; jogador1:jogador1|OUT_G[0]         ; 3.075             ;
+; vga:vga|y[4]                           ; jogador1:jogador1|OUT_G[0]         ; 3.074             ;
+; vga:vga|y[5]                           ; jogador1:jogador1|OUT_G[0]         ; 3.046             ;
+; vga:vga|y[0]                           ; jogador1:jogador1|OUT_G[0]         ; 2.985             ;
+; vga:vga|y[7]                           ; jogador1:jogador1|OUT_G[0]         ; 2.812             ;
+; SW[0]                                  ; vga:vga|VGA_CLK                    ; 2.695             ;
+; vga:vga|y[6]                           ; jogador1:jogador1|OUT_G[0]         ; 2.686             ;
+; vga:vga|y[9]                           ; jogador1:jogador1|OUT_G[0]         ; 2.626             ;
+; jogador1:jogador1|contador_clock[16]   ; jogador1:jogador1|coord_atual_y[5] ; 2.562             ;
+; jogador1:jogador1|contador_clock[12]   ; jogador1:jogador1|coord_atual_y[5] ; 2.560             ;
+; jogador1:jogador1|contador_clock[11]   ; jogador1:jogador1|coord_atual_y[5] ; 2.558             ;
+; jogador1:jogador1|contador_clock[9]    ; jogador1:jogador1|coord_atual_y[5] ; 2.518             ;
+; jogador1:jogador1|contador_clock[19]   ; jogador1:jogador1|coord_atual_y[5] ; 2.513             ;
+; jogador1:jogador1|contador_clock[0]    ; jogador1:jogador1|coord_atual_y[5] ; 2.511             ;
+; jogador1:jogador1|contador_clock[17]   ; jogador1:jogador1|coord_atual_y[5] ; 2.501             ;
+; jogador1:jogador1|contador_clock[15]   ; jogador1:jogador1|coord_atual_y[5] ; 2.499             ;
+; jogador1:jogador1|contador_clock[2]    ; jogador1:jogador1|coord_atual_y[5] ; 2.490             ;
+; jogador1:jogador1|contador_clock[6]    ; jogador1:jogador1|coord_atual_y[5] ; 2.487             ;
+; jogador1:jogador1|contador_clock[3]    ; jogador1:jogador1|coord_atual_y[5] ; 2.478             ;
+; jogador1:jogador1|contador_clock[8]    ; jogador1:jogador1|coord_atual_x[6] ; 2.478             ;
+; jogador1:jogador1|contador_clock[5]    ; jogador1:jogador1|coord_atual_y[5] ; 2.477             ;
+; jogador1:jogador1|contador_clock[10]   ; jogador1:jogador1|coord_atual_y[5] ; 2.475             ;
+; jogador1:jogador1|contador_clock[18]   ; jogador1:jogador1|coord_atual_y[5] ; 2.473             ;
+; jogador1:jogador1|contador_clock[7]    ; jogador1:jogador1|coord_atual_y[5] ; 2.463             ;
+; jogador1:jogador1|contador_clock[14]   ; jogador1:jogador1|coord_atual_y[5] ; 2.452             ;
+; jogador1:jogador1|contador_clock[4]    ; jogador1:jogador1|coord_atual_y[5] ; 2.424             ;
+; jogador1:jogador1|contador_clock[1]    ; jogador1:jogador1|coord_atual_x[6] ; 2.410             ;
+; jogador1:jogador1|contador_clock[13]   ; jogador1:jogador1|coord_atual_y[5] ; 2.408             ;
+; vga:vga|x[8]                           ; jogador1:jogador1|OUT_G[0]         ; 2.283             ;
+; vga:vga|x[7]                           ; jogador1:jogador1|OUT_G[0]         ; 2.231             ;
+; vga:vga|x[5]                           ; jogador1:jogador1|OUT_G[0]         ; 2.226             ;
+; vga:vga|x[4]                           ; jogador1:jogador1|OUT_G[0]         ; 2.210             ;
+; vga:vga|x[6]                           ; jogador1:jogador1|OUT_G[0]         ; 2.168             ;
+; vga:vga|x[9]                           ; jogador1:jogador1|OUT_G[0]         ; 2.083             ;
+; jogador1:jogador1|coord_futura_x[6]    ; jogador1:jogador1|coord_atual_x[6] ; 1.757             ;
+; jogador1:jogador1|coord_atual_x[6]     ; jogador1:jogador1|coord_atual_x[6] ; 1.757             ;
+; jogador1:jogador1|coord_atual_x[5]     ; jogador1:jogador1|coord_atual_x[6] ; 1.757             ;
+; jogador1:jogador1|coord_atual_x[4]     ; jogador1:jogador1|coord_atual_x[6] ; 1.757             ;
+; jogador1:jogador1|coord_atual_x[3]     ; jogador1:jogador1|coord_atual_x[6] ; 1.757             ;
+; vga:vga|x[1]                           ; jogador1:jogador1|OUT_G[0]         ; 1.582             ;
+; vga:vga|x[3]                           ; jogador1:jogador1|OUT_G[0]         ; 1.574             ;
+; vga:vga|x[2]                           ; jogador1:jogador1|OUT_G[0]         ; 1.421             ;
+; jogador1:jogador1|coord_atual_y[7]     ; jogador1:jogador1|coord_atual_y[7] ; 1.378             ;
+; jogador1:jogador1|coord_atual_y[6]     ; jogador1:jogador1|coord_atual_y[7] ; 1.378             ;
+; jogador1:jogador1|coord_atual_y[5]     ; jogador1:jogador1|coord_atual_y[7] ; 1.378             ;
+; jogador1:jogador1|coord_atual_y[4]     ; jogador1:jogador1|coord_atual_y[7] ; 1.378             ;
+; jogador1:jogador1|coord_futura_y[7]    ; jogador1:jogador1|coord_atual_y[7] ; 1.378             ;
+; jogador1:jogador1|coord_atual_y[3]     ; jogador1:jogador1|coord_atual_y[7] ; 1.378             ;
+; vga:vga|x[0]                           ; jogador1:jogador1|OUT_G[0]         ; 1.356             ;
+; jogador1:jogador1|coord_futura_y[5]    ; jogador1:jogador1|coord_atual_y[5] ; 1.346             ;
+; jogador1:jogador1|coord_futura_x[7]    ; jogador1:jogador1|coord_atual_x[7] ; 1.287             ;
+; jogador1:jogador1|coord_atual_x[7]     ; jogador1:jogador1|coord_atual_x[7] ; 1.287             ;
+; jogador1:jogador1|coord_atual_y[9]     ; jogador1:jogador1|OUT_G[0]         ; 1.200             ;
+; jogador1:jogador1|coord_atual_y[8]     ; jogador1:jogador1|OUT_G[0]         ; 1.200             ;
+; jogador1:jogador1|coord_futura_x[4]    ; jogador1:jogador1|coord_atual_x[4] ; 1.127             ;
+; jogador1:jogador1|coord_futura_y[6]    ; jogador1:jogador1|coord_atual_y[6] ; 1.095             ;
+; jogador1:jogador1|estado.IDLE          ; jogador1:jogador1|estado.H_MOVE    ; 1.010             ;
+; jogador1:jogador1|coord_futura_x[3]    ; jogador1:jogador1|coord_atual_x[3] ; 0.962             ;
+; jogador1:jogador1|coord_atual_x[8]     ; jogador1:jogador1|coord_atual_x[8] ; 0.923             ;
+; jogador1:jogador1|contador_jogador1[1] ; jogador1:jogador1|coord_atual_y[3] ; 0.893             ;
+; jogador1:jogador1|contador_jogador1[0] ; jogador1:jogador1|coord_atual_y[3] ; 0.893             ;
+; jogador1:jogador1|estado_matriz.001    ; jogador1:jogador1|coord_atual_y[3] ; 0.893             ;
+; jogador1:jogador1|contador_jogador1[2] ; jogador1:jogador1|coord_atual_y[3] ; 0.893             ;
+; SW[1]                                  ; jogador1:jogador1|coord_atual_y[3] ; 0.893             ;
+; jogador1:jogador1|estado.ESPERA        ; jogador1:jogador1|sentido[0]       ; 0.773             ;
+; jogador1:jogador1|coord_atual_x[9]     ; jogador1:jogador1|coord_atual_x[9] ; 0.772             ;
+; jogador1:jogador1|estado.AH_MOVE       ; jogador1:jogador1|estado.ESPERA    ; 0.629             ;
+; jogador1:jogador1|estado.H_MOVE        ; jogador1:jogador1|estado.ESPERA    ; 0.629             ;
+; KEY[0]                                 ; jogador1:jogador1|estado.ESPERA    ; 0.629             ;
+; KEY[1]                                 ; jogador1:jogador1|estado.ESPERA    ; 0.629             ;
+; KEY[2]                                 ; jogador1:jogador1|estado.ESPERA    ; 0.629             ;
+; KEY[3]                                 ; jogador1:jogador1|estado.ESPERA    ; 0.629             ;
+; jogador1:jogador1|coord_futura_y[4]    ; jogador1:jogador1|coord_atual_y[4] ; 0.609             ;
++----------------------------------------+------------------------------------+-------------------+
+Note: This table only shows the top 79 path(s) that have the largest delay added for hold.
 
 
 +-----------------+
@@ -2331,7 +2230,7 @@ Warning (292013): Feature LogicLock is only available with a valid subscription 
 Warning (15714): Some pins have incomplete I/O assignments. Refer to the I/O Assignment Warnings report for details
 Info (184020): Starting Fitter periphery placement operations
 Info (11191): Automatically promoted 1 clock (1 global)
-    Info (11162): CLOCK_50~inputCLKENA0 with 9637 fanout uses global clock CLKCTRL_G6
+    Info (11162): CLOCK_50~inputCLKENA0 with 9642 fanout uses global clock CLKCTRL_G6
 Info (184021): Fitter periphery placement operations ending: elapsed time is 00:00:00
 Info (176233): Starting register packing
 Critical Warning (332012): Synopsys Design Constraints File file not found: 'top1.sdc'. A Synopsys Design Constraints File is required by the TimeQuest Timing Analyzer to get proper timing constraints. Without it, the Compiler will not properly optimize the design.
@@ -2562,31 +2461,32 @@ Warning (15705): Ignored locations or region assignments to the following nodes
     Warning (15706): Node "USB_SCL" is assigned to location or region, but does not exist in design
     Warning (15706): Node "USB_SDA" is assigned to location or region, but does not exist in design
     Warning (15706): Node "USB_WR_N" is assigned to location or region, but does not exist in design
-Info (11798): Fitter preparation operations ending: elapsed time is 00:00:07
+Info (11798): Fitter preparation operations ending: elapsed time is 00:00:08
 Info (170189): Fitter placement preparation operations beginning
 Info (14951): The Fitter is using Advanced Physical Optimization.
-Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:52
+Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:33
 Info (170191): Fitter placement operations beginning
 Info (170137): Fitter placement was successful
-Info (170192): Fitter placement operations ending: elapsed time is 00:00:34
+Info (170192): Fitter placement operations ending: elapsed time is 00:00:18
 Info (170193): Fitter routing operations beginning
-Info (170195): Router estimated average interconnect usage is 25% of the available device resources
-    Info (170196): Router estimated peak interconnect usage is 55% of the available device resources in the region that extends from location X56_Y11 to location X66_Y22
-Info (170202): The Fitter performed an Auto Fit compilation.  No optimizations were skipped because the design's timing and routability requirements required full optimization.
-Info (170194): Fitter routing operations ending: elapsed time is 00:03:53
-Info (11888): Total time spent on timing analysis during the Fitter is 30.97 seconds.
+Info (170195): Router estimated average interconnect usage is 13% of the available device resources
+    Info (170196): Router estimated peak interconnect usage is 45% of the available device resources in the region that extends from location X45_Y23 to location X55_Y34
+Info (170199): The Fitter performed an Auto Fit compilation.  Optimizations were skipped to reduce compilation time.
+    Info (170201): Optimizations that may affect the design's routability were skipped
+Info (170194): Fitter routing operations ending: elapsed time is 00:02:01
+Info (11888): Total time spent on timing analysis during the Fitter is 20.38 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
-Info (11801): Fitter post-fit operations ending: elapsed time is 00:00:29
+Info (11801): Fitter post-fit operations ending: elapsed time is 00:00:20
 Warning (171167): Found invalid Fitter assignments. See the Ignored Assignments panel in the Fitter Compilation Report for more information.
 Info (144001): Generated suppressed messages file /home/ec2022/ra260628/Documents/MC613/2024s1-mc613-projeto-burningcircuit/arquivos quartus/output_files/top1.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 226 warnings
-    Info: Peak virtual memory: 3771 megabytes
-    Info: Processing ended: Wed Jun  5 18:35:49 2024
-    Info: Elapsed time: 00:07:08
-    Info: Total CPU time (on all processors): 00:28:43
+    Info: Peak virtual memory: 3617 megabytes
+    Info: Processing ended: Wed Jun  5 19:45:41 2024
+    Info: Elapsed time: 00:04:16
+    Info: Total CPU time (on all processors): 00:19:27
 
 
 +----------------------------+
