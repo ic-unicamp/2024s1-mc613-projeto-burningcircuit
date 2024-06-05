@@ -176,8 +176,13 @@ module jogador1(
         //   contador_clock = contador_clock + 1;
         // end
         
-        matriz_jogo[coord_atual_y /8][coord_atual_x /8] = 1;
+        matriz_jogo[coord_atual_y >> 3][coord_atual_x >> 3] = 1;
         //guarda coord atual
+        dado_matriz = matriz_jogo[(coord_futura_y) >> 3][(coord_futura_x) >> 3];
+        if (dado_matriz != 0) begin
+            fim_de_jogo = 1;
+          end
+
         coord_atual_x = coord_futura_x;
         coord_atual_y = coord_futura_y;
       end
@@ -186,11 +191,7 @@ module jogador1(
       else if (contador_jogador1 == 2) 
       begin
         //detecta colisao e encerra jogo
-        dado_matriz = matriz_jogo[coord_futura_y /8][coord_futura_x /8];
-        if (dado_matriz != 0 && (coord_futura_x != COORD_INICIAL_X && coord_futura_y != COORD_INICIAL_Y)) begin
-            fim_de_jogo = 1;
-          end
-
+        
       end
       contador_jogador1 = contador_jogador1 + 1;
     end
@@ -282,7 +283,7 @@ module jogador1(
     endcase
      
   end
-  assign saida_jogador1 = matriz_jogo[next_y / 8][next_x / 8];
+  assign saida_jogador1 = matriz_jogo[next_y >> 3][next_x >> 3];
 
 endmodule	
 

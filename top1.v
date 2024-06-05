@@ -26,10 +26,10 @@ module top1(
   wire [7:0] input_red;
   wire [7:0] input_green;
   wire [7:0] input_blue;
-  reg [1:0] matriz_jogo [0:79] [0:59];
+  reg [1:0] matriz_jogo [0:59] [0:79];
 
-  wire [7:0] saida_jogador1;
-  wire [7:0] saida_jogador2;
+  wire [1:0] saida_jogador1;
+  wire [1:0] saida_jogador2;
   
 
 
