@@ -179,6 +179,7 @@ module jogador1(
         dado_matriz = matriz_jogo[(coord_futura_y) >> 3][(coord_futura_x) >> 3];
         if (dado_matriz != 0) begin
             fim_de_jogo = 1;
+            estado_matriz = 1;
           end
 
         coord_atual_x = coord_futura_x;
@@ -233,7 +234,7 @@ module jogador1(
     end
     else begin
       if(fim_de_jogo == 0) begin
-        if (contador_clock < 500000) begin
+        if (contador_clock < 1500000) begin
           contador_clock = contador_clock + 1;
         end
         else begin
