@@ -17,12 +17,6 @@ module vga(
   output [9:0] next_y  // y-coordinate of NEXT pixel that will be drawn
 );
 
-/*
- falta implementar:
-    1. testar se a condição de colisão ja funciona, caso não tentar arrumar
-    2. quando colisão ok, incluir segundo jogador
-    3. incluir display com pontuação
-*/
 
   reg [9:0] x;
   reg [9:0] y;
@@ -65,7 +59,6 @@ module vga(
 
 endmodule
 
-
 module jogador1(
   input CLOCK_50,
   input VGA_CLK,
@@ -74,13 +67,10 @@ module jogador1(
   input [3:0] KEY,
   input [9:0] next_x,  // x-coordinate of NEXT pixel that will be drawn
   input [9:0] next_y,  // y-coordinate of NEXT pixel that will be drawn
-  input [7:0] dado_mem_atual,
   output reg [7:0] OUT_R,     // RED (to resistor DAC OUT connector)
   output reg [7:0] OUT_G,   // GREEN (to resistor DAC to OUT connector)
-  output reg [7:0] OUT_B,    // BLUE (to resistor DAC to OUT connector)
-  output [18:0] endereco_ram,
-  output [7:0] sinalRGB,
-  output reg wren
+  output reg [7:0] OUT_B,   // BLUE (to resistor DAC to OUT connector)
+  output [1:0] saida_jogador1
   );
 
  /*
@@ -88,43 +78,123 @@ module jogador1(
  KEY[2] -> horario
  */
 
-  //estados botões
+  //estados        coord_passada_y = coord_atual_y;
+  reg [1:0] matriz_jogo [0:79] [0:59];
   reg [3:0] estado;
   parameter IDLE = 3'b000;  
   parameter AH_MOVE = 3'b011;
   parameter H_MOVE = 3'b100;
   parameter ESPERA = 3'b101;
-
   parameter COORD_INICIAL_X = 216; 
   parameter COORD_INICIAL_Y = 240; 
+  reg [9:0] coord_atual_x;
+  reg [9:0] coord_atual_y;
   parameter COMPRIMENTO_JOGADOR1 = 8;
   parameter ALTURA_JOGADOR1 = 8;
-  parameter COORD_INICIAL_mem = COORD_INICIAL_X + (COORD_INICIAL_Y * 640);
-
   reg [1:0] sentido; /* sentido = 0 -> direita 
                         sentido = 1 -> baixo
                         sentido = 2 -> esquerda
                         sentido = 3 -> cima  */
   reg [19:0] contador_clock;
-
-  reg [9:0] coord_passada_x;
-  reg [9:0] coord_passada_y;
-  reg [9:0] coord_atual_x;
-  reg [9:0] coord_atual_y;
   reg [9:0] coord_futura_x;
   reg [9:0] coord_futura_y;
-
   reg fim_de_jogo;
-  reg jogo_iniciado;
 
-  reg [18:0] end_jog1;
-  reg [18:0] contador_ram;
-  reg [7:0] sinalRGB_jog1;
+  reg [1:0] dado_matriz;
 
-  wire [7:0] primeiro_movimento;
-  assign primeiro_movimento = (next_x == COORD_INICIAL_X + COMPRIMENTO_JOGADOR1 && next_y == COORD_INICIAL_Y) ? dado_mem_atual : 0 ; 
+  reg [2:0] contador_jogador1;
+  // reg leitura_realizada;
+  integer i;
+  integer j;
 
-// contador de frame
+  always @ (posedge CLOCK_50) begin
+    if (reset || reiniciar == 1) begin
+      coord_atual_x = COORD_INICIAL_X;
+      coord_atual_y = COORD_INICIAL_Y;
+      coord_futura_x = 0;
+      coord_futura_y = 0;
+      contador_jogador1 = 0;
+      for (i=0;i<80;i=i+1) begin
+        for (j=0;j<60;j=j+1) begin
+          if ((i >=2 && i <= 77) && (j >= 2 && j <= 57) )begin
+            matriz_jogo[i][j] = 0;
+          end
+          else begin
+            matriz_jogo[i][j] = 2;
+          end
+        end
+      end
+
+      fim_de_jogo = 0;
+
+    end
+    else begin
+      if (contador_jogador1 == 0) begin
+        //ler e gera o rgb
+        if( (next_x >= coord_atual_x) && (next_x < coord_atual_x + COMPRIMENTO_JOGADOR1) )begin
+          if ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + ALTURA_JOGADOR1) )begin
+            OUT_R = 127;
+            OUT_G = 127;
+            OUT_B = 0;
+          end
+          else begin
+            OUT_R = 0;
+            OUT_G = 0;
+            OUT_B = 0;
+          end
+      end
+      else begin
+          OUT_R = 0;
+          OUT_G = 0;
+          OUT_B = 0;
+      end
+      end
+
+      
+      else if (contador_clock == 0)
+      begin
+          /// move boneco
+          //escreve na memoria
+          if(sentido == 0) begin // deslocando para direita
+            coord_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;
+            coord_futura_y = coord_atual_y;  
+          end 
+          else if (sentido == 1) begin //deslocando para baixo
+            coord_futura_y = coord_atual_y + ALTURA_JOGADOR1; 
+            coord_futura_x = coord_atual_x;
+          end
+          else if (sentido == 2) begin // deslocando para esquerda
+            coord_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1; 
+            coord_futura_y = coord_atual_y;  
+    
+          end 
+          else if (sentido == 3) begin //deslocando para cima
+            coord_futura_y = coord_atual_y - ALTURA_JOGADOR1;
+            coord_futura_x = coord_atual_x;
+          end
+        
+        matriz_jogo[coord_atual_x / 8][coord_atual_y / 8] = 1;
+        //guarda coord atual
+        coord_atual_x = coord_futura_x;
+        coord_atual_y = coord_futura_y;
+      end
+
+
+      else if (contador_jogador1 == 2) 
+      begin
+        //detecta colisao e encerra jogo
+        dado_matriz = matriz_jogo[coord_futura_x / 8][coord_futura_y / 8];
+        // if (dado_matriz != 0) begin
+        //   fim_de_jogo = 1;
+        // end
+
+      end
+      contador_jogador1 = contador_jogador1 + 1;
+    end
+  end
+
+
+
   always @ (posedge VGA_CLK) begin
     if (reset) begin
       contador_clock = 0;
@@ -141,66 +211,13 @@ module jogador1(
     end
   end
 
-// always posiçoes
-always @(posedge VGA_CLK)begin
-   if(reset)begin
-    coord_passada_x = 0;
-    coord_passada_y = 0;
-    coord_atual_x = COORD_INICIAL_X;
-    coord_atual_y = COORD_INICIAL_Y;
-    coord_futura_x = 0;
-    coord_futura_y = 0;
-   end
-
-   else if (contador_clock == 0) begin
-    coord_passada_x = coord_atual_x;
-    coord_passada_y = coord_atual_y;
-    if(sentido == 0) begin // deslocando para direita
-      coord_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;
-      coord_futura_y = coord_atual_y;  
-    end 
-    else if (sentido == 1) begin //deslocando para baixo
-      coord_futura_x = coord_atual_x;
-      coord_futura_y = coord_atual_y + ALTURA_JOGADOR1; 
-    end
-    else if (sentido == 2) begin // deslocando para esquerda
-      coord_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1;
-      coord_futura_y = coord_atual_y;  
-
-    end 
-    else if (sentido == 3) begin //deslocando para cima
-      coord_futura_x = coord_atual_x;
-      coord_futura_y = coord_atual_y - ALTURA_JOGADOR1;
-    end
-  end
-
-    if(reiniciar == 1) begin
-      coord_passada_x = 0;
-      coord_passada_y = 0;
-      coord_futura_x = 0;
-      coord_futura_y = 0;
-      coord_atual_x = COORD_INICIAL_X ;
-      coord_atual_y = COORD_INICIAL_Y;
-      // leitura_realizada = 0;
-    end
-    else begin
-      coord_atual_x = coord_futura_x;
-      coord_atual_y = coord_futura_y;
-    end
-  
-end
-
-// always movimento/botoes
   always@ (posedge VGA_CLK)begin
     if(reset)begin
       estado = IDLE;
       sentido = 0;
     end
-      // end_mem = coord_futura_x + (coord_futura_y * 640);
       
-    if(reiniciar == 1) begin
-      sentido = 0;
-    end
+      
     case(estado)
       IDLE: begin
         if(KEY[3] == 0) begin
@@ -210,7 +227,7 @@ end
           estado = H_MOVE;
         end
         else begin
-          estado = IDLE;
+            estado = IDLE;
         end
       end
       AH_MOVE: begin
@@ -230,117 +247,11 @@ end
         estado = IDLE;
       end
     endcase
+     
   end
-
-// always colisao
-always @( posedge VGA_CLK)begin
-  if (reset || reiniciar == 1 )begin
-    fim_de_jogo = 0;
-  end
-  else begin
-
-    //testem se isso ja funciona com a nova "politica" de escrita e leitura do FB (escrever a passada e ler a atual)
-    //tentativa colisao com rastro (mais recente/ sem teste ainda)
-    if( next_x == coord_atual_x && next_y == coord_atual_y ) begin
-      if(dado_mem_atual != 0 ) begin
-        fim_de_jogo = 1;
-      end
-    end
-
-    //tentativa colisao com rastro (1 semana atras)
-    // if( next_x == coord_atual_x && next_y == coord_atual_y ) begin
-    //   if( (coord_atual_x == COORD_INICIAL_X) && (coord_atual_y == COORD_INICIAL_Y) && ( primeiro_movimento != 0) ) begin
-    //     fim_de_jogo = 1;
-    //   end
-    //   else if(dado_mem_atual != 0 ) begin
-    //     fim_de_jogo = 1;
-    //   end
-    // end
-
-
-    // colisao com a borda
-    if( !((coord_passada_x >= 16 && coord_passada_x <= 623) && (coord_passada_y >= 16 && coord_passada_y <= 463)) ) begin
-      fim_de_jogo = 1;
-    end
-  end
-
-end
-
-// always de deletar valores do framebuffer em reset ou reiniciar, e escrita no FB da coord passada e desenha jogador em coord atual, caso contrario
-  always @(posedge VGA_CLK) begin
-    if(reset || reiniciar == 1)begin
-      OUT_R = 0;
-      OUT_G = 0;
-      OUT_B = 0;
-      wren = 1;
-      sinalRGB_jog1 = 8'b00000000;
-      // if que deixa somente a area inicial que o jogador ocupa sem ser limpa do buffer
-      // if( (( contador_ram >= COORD_INICIAL_mem) && ( contador_ram < COORD_INICIAL_mem + 8)) ||
-      //     (( contador_ram >= COORD_INICIAL_mem+640) && ( contador_ram < COORD_INICIAL_mem + 640 + 8)) ||
-      //     (( contador_ram >= COORD_INICIAL_mem+640*2) && ( contador_ram < COORD_INICIAL_mem + 640*2 + 8)) ||
-      //     (( contador_ram >= COORD_INICIAL_mem+640*3) && ( contador_ram < COORD_INICIAL_mem + 640*3 + 8)) ||
-      //     (( contador_ram >= COORD_INICIAL_mem+640*4) && ( contador_ram < COORD_INICIAL_mem + 640*4 + 8)) ||
-      //     (( contador_ram >= COORD_INICIAL_mem+640*5) && ( contador_ram < COORD_INICIAL_mem + 640*5 + 8)) ||
-      //     (( contador_ram >= COORD_INICIAL_mem+640*6) && ( contador_ram < COORD_INICIAL_mem + 640*6 + 8)) ||
-      //     (( contador_ram >= COORD_INICIAL_mem+640*7) && ( contador_ram < COORD_INICIAL_mem + 640*7 + 8))) begin
-      //       sinalRGB_jog1 = 8'b00000001;
-      //   end
-      end_jog1 = contador_ram;
-      contador_ram = contador_ram + 1; 
-
-    end
-    else begin
-      contador_ram = 0;
-
-      // escrita no FB a partir da coordenada passada
-      if( (next_x >= coord_passada_x) && (next_x < coord_passada_x + COMPRIMENTO_JOGADOR1) )begin
-        if ( (next_y >= coord_passada_y) && (next_y < coord_passada_y + ALTURA_JOGADOR1) )begin
-          end_jog1 = next_x + (next_y * 640);
-          wren = 1;
-          sinalRGB_jog1 =  8'b00000001;
-        end
-        else begin
-          end_jog1 = 0;
-          sinalRGB_jog1 = 8'b00000000;
-          wren = 0;
-        end
-      end
-      else begin
-        end_jog1 = 0;
-        sinalRGB_jog1 = 8'b00000000;
-        wren = 0;
-      end
-
-      // desenha jogador na tela a partir da sua coordenada atual
-      if( (next_x >= coord_atual_x) && (next_x < coord_atual_x + COMPRIMENTO_JOGADOR1) )begin
-        if ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + ALTURA_JOGADOR1) )begin
-          OUT_R = 127;
-          OUT_G = 127;
-          OUT_B = 0;
-        end
-        else begin
-          OUT_R = 0;
-          OUT_G = 0;
-          OUT_B = 0;
-        end
-      end
-      else begin
-        OUT_R = 0;
-        OUT_G = 0;
-        OUT_B = 0;
-      end
-    end
-  end
-
-  // assign endereco_ram = coord_passada_x + (coord_passada_y * 640);
-  // assign endereco_ram = (  ( ( (next_x >= coord_passada_x) && (next_x < coord_passada_x + 8) ) && ( (next_y >= coord_passada_y) && (next_y < coord_passada_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
-  // assign endereco_ram = (  ( ( (next_x >= coord_passada_x) && (next_x < coord_passada_x + 8) ) && ( (next_y >= coord_passada_y) && (next_y < coord_passada_y + 8)  )  ) ) ?  next_x + (next_y * 640) : 0;
-  // assign endereco_ram = (leitura_realizada == 1) ? end_jog1 : 0;
-  assign endereco_ram = end_jog1 ;
-  assign sinalRGB = sinalRGB_jog1;
+  assign saida_jogador1 = matriz_jogo[next_x / 8][next_y / 8];
 
 endmodule	
-
 
 module top1(
   input CLOCK_50,
@@ -351,7 +262,7 @@ module top1(
   output VGA_BLANK_N,
   output VGA_HS,
   output VGA_VS,
-  output [7:0] VGA_R,   // RED (to resistor DAC VGA connector)
+  output [7:0] VGA_R,     // RED (to resistor DAC VGA connector)
   output [7:0] VGA_G,   // GREEN (to resistor DAC to VGA connector)
   output [7:0] VGA_B    // BLUE (to resistor DAC to VGA connector)
 );
@@ -370,27 +281,13 @@ module top1(
   wire [7:0] input_red;
   wire [7:0] input_green;
   wire [7:0] input_blue;
-  wire [18:0] endereco_ram_jogador1;
-  wire [18:0] endereco_escrita_jogador1;
-  wire [18:0] endereco_leitura_jogador1;
-  wire wren_jogador1;
-  wire [7:0] sinalRGB_jogador1;
-  wire [7:0] sinalRGB_jogador2;
-  wire [7:0] saida_jogador1;
-  wire [7:0] saida_jogador2;
+  reg [1:0] matriz_jogo [0:79] [0:59];
+
+  wire [1:0] saida_jogador1;
+  wire [1:0] saida_jogador2;
+  
 
 
-  assign endereco_leitura_jogador1 = next_x + (next_y * 640);
-
-  ram ram (
-  .data(sinalRGB_jogador1), // endereço de escrita jogador 1
-	.rdaddress(endereco_leitura_jogador1),
-	.rdclock(VGA_CLK),
-	.wraddress(endereco_escrita_jogador1),
-	.wrclock(VGA_CLK),
-	.wren(wren_jogador1),
-	.q(saida_jogador1)
-  );
 
   jogador1 jogador1(
     .CLOCK_50(CLOCK_50),
@@ -400,13 +297,10 @@ module top1(
     .KEY(KEY),
     .next_x(next_x),
     .next_y(next_y),
-    .dado_mem_atual(saida_jogador1),
     .OUT_R(jogador1_red),
     .OUT_G(jogador1_green),
     .OUT_B(jogador1_blue),
-    .endereco_ram(endereco_escrita_jogador1),
-    .sinalRGB(sinalRGB_jogador1),
-    .wren(wren_jogador1)
+    .saida_jogador1(saida_jogador1)
   );
   
   vga vga(
@@ -428,8 +322,7 @@ module top1(
   );
   
    always@ (posedge VGA_CLK)begin
-
-      if (saida_jogador1 == 8'b00000001)begin
+      if (saida_jogador1 == 1)begin
 
         jogador1_traco_red = 255;
         jogador1_traco_green = 255;
@@ -440,13 +333,7 @@ module top1(
         jogador1_traco_green = 0;
         jogador1_traco_blue = 0;
       end
-      // else begin
-      //   jogador1_traco_blue = 0;
-      //   jogador1_traco_green = 0;
-      //   jogador1_traco_red = 0;
-      // end
 
-      //if que desenha a borda
       if((next_x >= 16 && next_x <= 623) && (next_y >= 16 && next_y <= 463))begin
         borda_red = 0;  
         borda_green = 0;  
@@ -459,21 +346,11 @@ module top1(
         end
     end
   
-  // assign input_red = borda_red ^ jogador1_traco_red;
-  // assign input_green = borda_green ^ jogador1_traco_green;
-  // assign input_blue = borda_blue ^ jogador1_traco_blue;
-
 
   assign input_red = jogador1_red ^ borda_red ^ jogador1_traco_red;
   assign input_green = jogador1_green ^ borda_green ^ jogador1_traco_green;
   assign input_blue = jogador1_blue ^ borda_blue ^ jogador1_traco_blue;
 
-  // assign input_red = (next_x == 320 && next_y == 240) ?  jogador1_traco_red: jogador1_red ^ borda_red;
-  // assign input_green = (next_x == 320 && next_y == 240) ? jogador1_traco_green : jogador1_green ^ borda_green;
-  // assign input_blue = (next_x == 320 && next_y == 240) ?  jogador1_traco_blue : jogador1_blue ^ borda_blue;
-
-  // assign input_red =  jogador1_traco_red;
-  // assign input_green =  jogador1_traco_green;
-  // assign input_blue =  jogador1_traco_blue;
+ 
 
 endmodule
