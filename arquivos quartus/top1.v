@@ -188,7 +188,6 @@ module jogador1(
         dado_matriz = matriz_jogo[(coord_futura_y) >> 3][(coord_futura_x) >> 3];
         if (dado_matriz != 0) begin
             fim_de_jogo = 1;
-            estado_matriz = 1;
           end
       end
       contador_jogador1 = contador_jogador1 + 1;
@@ -198,7 +197,9 @@ module jogador1(
     0: begin //estado de espera
       contador_matriz_coluna = 0;
       contador_matriz_linha = 0;
-      
+      if (reset || reiniciar == 1) begin
+        estado_matriz = 1;
+      end
     end
 
 

@@ -197,7 +197,9 @@ module jogador1(
     0: begin //estado de espera
       contador_matriz_coluna = 0;
       contador_matriz_linha = 0;
-      
+      if (reset || reiniciar == 1) begin
+        estado_matriz = 1;
+      end
     end
 
 
