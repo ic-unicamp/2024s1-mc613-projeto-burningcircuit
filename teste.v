@@ -117,8 +117,8 @@ module jogador1(
     if (reset || reiniciar == 1) begin
       coord_atual_x = COORD_INICIAL_X;
       coord_atual_y = COORD_INICIAL_Y;
-      coord_futura_x = 0;
-      coord_futura_y = 0;
+      coord_futura_x = COORD_INICIAL_X + 8;
+      coord_futura_y = COORD_INICIAL_Y;
       contador_jogador1 = 0;
       estado_matriz = 1;
       contador_matriz_coluna = 0;
@@ -176,6 +176,10 @@ module jogador1(
         
         matriz_jogo[coord_atual_y >> 3][coord_atual_x >> 3] = 1;
         //guarda coord atual
+        dado_matriz = matriz_jogo[(coord_futura_y) >> 3][(coord_futura_x) >> 3];
+        if (dado_matriz != 0) begin
+            fim_de_jogo = 1;
+          end
 
         coord_atual_x = coord_futura_x;
         coord_atual_y = coord_futura_y;
@@ -185,10 +189,7 @@ module jogador1(
       else if (contador_jogador1 == 2) 
       begin
         //detecta colisao e encerra jogo
-        dado_matriz = matriz_jogo[(coord_futura_y) >> 3][(coord_futura_x) >> 3];
-        if (dado_matriz != 0) begin
-            fim_de_jogo = 1;
-          end
+        
       end
       contador_jogador1 = contador_jogador1 + 1;
     end
@@ -232,7 +233,7 @@ module jogador1(
     end
     else begin
       if(fim_de_jogo == 0) begin
-        if (contador_clock < 800000) begin
+        if (contador_clock < 500000) begin
           contador_clock = contador_clock + 1;
         end
         else begin
