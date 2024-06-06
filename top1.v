@@ -234,7 +234,7 @@ module jogador1(
                 matriz_jogo[contador_matriz_linha][contador_matriz_coluna] = 0;
             end
             else begin
-                matriz_jogo[contador_matriz_linha][contador_matriz_coluna] = 2;
+                matriz_jogo[contador_matriz_linha][contador_matriz_coluna] = 3;
             end
             contador_matriz_coluna = contador_matriz_coluna + 1;
         end
@@ -414,8 +414,13 @@ module top1(
         jogador_traco_green = 0;
         jogador_traco_blue = 255;
       end
+      else begin
+        jogador_traco_red = 0;
+        jogador_traco_green = 0;
+        jogador_traco_blue = 0;        
+      end
 
-      if((next_x >= 16 && next_x <= 623) && (next_y >= 16 && next_y <= 463))begin
+      if((next_x >= 16 && next_x <= 622) && (next_y >= 16 && next_y <= 462))begin
         borda_red = 0;  
         borda_green = 0;  
         borda_blue = 0; 
