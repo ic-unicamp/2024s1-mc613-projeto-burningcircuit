@@ -67,20 +67,25 @@ module jogador1(
   input [3:0] KEY,
   input [9:0] next_x,  // x-coordinate of NEXT pixel that will be drawn
   input [9:0] next_y,  // y-coordinate of NEXT pixel that will be drawn
-  output reg [7:0] OUT_R,     // RED (to resistor DAC OUT connector)
-  output reg [7:0] OUT_G,   // GREEN (to resistor DAC to OUT connector)
-  output reg [7:0] OUT_B,   // BLUE (to resistor DAC to OUT connector)
-  output [1:0] saida_jogador1
+  output reg [7:0] OUT_R1,     // RED (to resistor DAC OUT connector)
+  output reg [7:0] OUT_G1,   // GREEN (to resistor DAC to OUT connector)
+  output reg [7:0] OUT_B1,   // BLUE (to resistor DAC to OUT connector)
+  output reg [7:0] OUT_R2,     // RED (to resistor DAC OUT connector)
+  output reg [7:0] OUT_G2,   // GREEN (to resistor DAC to OUT connector)
+  output reg [7:0] OUT_B2,   // BLUE (to resistor DAC to OUT connector)
+  output [1:0] saida_jogador
   );
 
  /*
- KEY[3] -> anti-horario
- KEY[2] -> horario
+ KEY[3] -> anti-horario J1
+ KEY[2] -> horario J1
+ KEY[1] -> anti-horario J2
+ KEY[0] -> horario J2
  */
 
-  //estados        coord_passada_y = coord_atual_y;
   reg [1:0] matriz_jogo [0:59] [0:79] ;
-  reg [3:0] estado;
+  reg [3:0] estadoJ1;
+  reg [3:0] estadoJ2;
   reg [2:0] estado_matriz;
   reg [6:0] contador_matriz_linha;
   reg [6:0] contador_matriz_coluna;
@@ -88,144 +93,177 @@ module jogador1(
   parameter AH_MOVE = 3'b011;
   parameter H_MOVE = 3'b100;
   parameter ESPERA = 3'b101;
-  parameter COORD_INICIAL_X = 216; 
+  parameter COORD_INICIAL1_X = 216; 
+  parameter COORD_INICIAL2_X = 416; 
   parameter COORD_INICIAL_Y = 240; 
-  reg [9:0] coord_atual_x;
-  reg [9:0] coord_atual_y;
-  parameter COMPRIMENTO_JOGADOR1 = 8;
-  parameter ALTURA_JOGADOR1 = 8;
-  reg [1:0] sentido; /* sentido = 0 -> direita 
+  parameter COMPRIMENTO_JOGADOR = 8;
+  parameter ALTURA_JOGADOR = 8;
+  reg [1:0] sentidoJ1;
+  reg [1:0] sentidoJ2; /* sentido = 0 -> direita 
                         sentido = 1 -> baixo
                         sentido = 2 -> esquerda
                         sentido = 3 -> cima  */
   reg [19:0] contador_clock;
-  reg [9:0] coord_futura_x;
-  reg [9:0] coord_futura_y;
+  reg [9:0] coord_atual_x1;
+  reg [9:0] coord_atual_y1;
+  reg [9:0] coord_futura_x1;
+  reg [9:0] coord_futura_y1;
+  reg [9:0] coord_atual_x2;
+  reg [9:0] coord_atual_y2;
+  reg [9:0] coord_futura_x2;
+  reg [9:0] coord_futura_y2;
   reg fim_de_jogo;
-
-  reg [1:0] dado_matriz;
-
-  reg [2:0] contador_jogador1;
-  // reg leitura_realizada;
-  integer i;
-  integer j;
-
-
-  
+  reg [1:0] dado_matrizJ1;
+  reg [1:0] dado_matrizJ2;
+  reg [2:0] contador8;
+  // reg  [16:0] contador_sincroniza_clock;
 
   always @ (posedge CLOCK_50) begin
     if (reset || reiniciar == 1) begin
-      coord_atual_x = COORD_INICIAL_X;
-      coord_atual_y = COORD_INICIAL_Y;
-      coord_futura_x = COORD_INICIAL_X + 8;
-      coord_futura_y = COORD_INICIAL_Y;
-      contador_jogador1 = 0;
+      coord_atual_x1 = COORD_INICIAL1_X;
+      coord_atual_y1 = COORD_INICIAL_Y;
+      coord_futura_x1 = COORD_INICIAL1_X + 8;
+      coord_futura_y1 = COORD_INICIAL_Y;
+      coord_atual_x2 = COORD_INICIAL2_X;
+      coord_atual_y2 = COORD_INICIAL_Y;
+      coord_futura_x2 = COORD_INICIAL2_X - 8;
+      coord_futura_y2 = COORD_INICIAL_Y;
+      contador8 = 0;
       estado_matriz = 1;
       contador_matriz_coluna = 0;
       contador_matriz_linha = 0;
       fim_de_jogo = 0;
-
     end
     else if (estado_matriz == 0) begin
-      if (contador_jogador1 == 0) begin
-        //ler e gera o rgb
-        if( (next_x >= coord_atual_x) && (next_x < coord_atual_x + COMPRIMENTO_JOGADOR1) )begin
-          if ( (next_y >= coord_atual_y) && (next_y < coord_atual_y + ALTURA_JOGADOR1) )begin
-            OUT_R = 127;
-            OUT_G = 127;
-            OUT_B = 0;
-          end
-          else begin
-            OUT_R = 0;
-            OUT_G = 0;
-            OUT_B = 0;
-          end
-      end
-      else begin
-          OUT_R = 0;
-          OUT_G = 0;
-          OUT_B = 0;
-      end
+      if (contador8 == 0) begin
+        //lê e gera o rgb
+        if ((next_x >= coord_atual_x1) && (next_x < coord_atual_x1 + COMPRIMENTO_JOGADOR) && (next_y >= coord_atual_y1) && (next_y < coord_atual_y1 + ALTURA_JOGADOR)) begin
+            OUT_R1 = 127;
+            OUT_G1 = 127;
+            OUT_B1 = 0;
+
+            OUT_R2 = 0;
+            OUT_G2 = 0;
+            OUT_B2 = 0;
+        end
+        else if ((next_x >= coord_atual_x2) && (next_x < coord_atual_x2 + COMPRIMENTO_JOGADOR) && (next_y >= coord_atual_y2) && (next_y < coord_atual_y2 + ALTURA_JOGADOR)) begin
+            OUT_R1 = 0;
+            OUT_G1 = 0;
+            OUT_B1 = 0;
+            
+            OUT_R2 = 0;
+            OUT_G2 = 0;
+            OUT_B2 = 127;
+        end
+        else begin
+            OUT_R1 = 0;
+            OUT_G1 = 0;
+            OUT_B1 = 0;
+
+            OUT_R2 = 0;
+            OUT_G2 = 0;
+            OUT_B1 = 0;
+        end
       end
 
-      
       else if (contador_clock == 0)
-      begin
-          /// move boneco
-          //escreve na memoria
-          if(sentido == 0) begin // deslocando para direita
-            coord_futura_x = coord_atual_x + COMPRIMENTO_JOGADOR1;
-            coord_futura_y = coord_atual_y;  
-          end 
-          else if (sentido == 1) begin //deslocando para baixo
-            coord_futura_y = coord_atual_y + ALTURA_JOGADOR1; 
-            coord_futura_x = coord_atual_x;
+        begin
+          // movendo jogador 1
+        case (sentidoJ1)
+          0: begin // direita
+            coord_futura_x1 <= coord_atual_x1 + COMPRIMENTO_JOGADOR;
+            coord_futura_y1 <= coord_atual_y1;
           end
-          else if (sentido == 2) begin // deslocando para esquerda
-            coord_futura_x = coord_atual_x - COMPRIMENTO_JOGADOR1; 
-            coord_futura_y = coord_atual_y;  
-    
-          end 
-          else if (sentido == 3) begin //deslocando para cima
-            coord_futura_y = coord_atual_y - ALTURA_JOGADOR1;
-            coord_futura_x = coord_atual_x;
+          1: begin // baixo
+            coord_futura_y1 <= coord_atual_y1 + ALTURA_JOGADOR;
+            coord_futura_x1 <= coord_atual_x1;
           end
-        // else begin
-        //   contador_clock = contador_clock + 1;
-        // end
+          2: begin // esquerda
+            coord_futura_x1 <= coord_atual_x1 - COMPRIMENTO_JOGADOR;
+            coord_futura_y1 <= coord_atual_y1;
+          end
+          3: begin // cima
+            coord_futura_y1 <= coord_atual_y1 - ALTURA_JOGADOR;
+            coord_futura_x1 <= coord_atual_x1;
+          end
+        endcase
+
+        // Movendo jogador 2
+        case (sentidoJ2)
+          0: begin // direita
+            coord_futura_x2 <= coord_atual_x2 + COMPRIMENTO_JOGADOR;
+            coord_futura_y2 <= coord_atual_y2;
+          end
+          1: begin // baixo
+            coord_futura_y2 <= coord_atual_y2 + ALTURA_JOGADOR;
+            coord_futura_x2 <= coord_atual_x2;
+          end
+          2: begin // esquerda
+            coord_futura_x2 <= coord_atual_x2 - COMPRIMENTO_JOGADOR;
+            coord_futura_y2 <= coord_atual_y2;
+          end
+          3: begin // cima
+            coord_futura_y2 <= coord_atual_y2 - ALTURA_JOGADOR;
+            coord_futura_x2 <= coord_atual_x2;
+          end
+        endcase
+          
+          // guardando dados de onde os jogadores passaram
+          matriz_jogo[coord_atual_y1 >> 3][coord_atual_x1 >> 3] = 1;
+          matriz_jogo[coord_atual_y2 >> 3][coord_atual_x2 >> 3] = 2;
+
+          // lendo dados de onde os jogadores estão
+          dado_matrizJ1 = matriz_jogo[(coord_futura_y1) >> 3][(coord_futura_x1) >> 3];
+          dado_matrizJ2 = matriz_jogo[(coord_futura_y2) >> 3][(coord_futura_x2) >> 3];
         
-        matriz_jogo[coord_atual_y >> 3][coord_atual_x >> 3] = 1;
-        //guarda coord atual
-        dado_matriz = matriz_jogo[(coord_futura_y) >> 3][(coord_futura_x) >> 3];
-        if (dado_matriz != 0) begin
+          // verificando colisão
+          if (dado_matrizJ1 != 0 || dado_matrizJ2 != 0) begin
             fim_de_jogo = 1;
             estado_matriz = 1;
+            contador8 = 0;
           end
 
-        coord_atual_x = coord_futura_x;
-        coord_atual_y = coord_futura_y;
-      end
-
-
-      else if (contador_jogador1 == 2) 
-      begin
-        //detecta colisao e encerra jogo
-        
-      end
-      contador_jogador1 = contador_jogador1 + 1;
+          coord_atual_x1 = coord_futura_x1;
+          coord_atual_y1 = coord_futura_y1;
+          coord_atual_x2 = coord_futura_x2;
+          coord_atual_y2 = coord_futura_y2;
+        end
+      // else if (contador8 == 2) 
+      //   begin
+      //     // atualizando coordenadas
+         
+      //   end
+      contador8 = contador8 + 1;
     end
 
     case(estado_matriz)
-    0: begin //estado de espera
-      contador_matriz_coluna = 0;
-      contador_matriz_linha = 0;
-      if (reset || reiniciar == 1) begin
-        estado_matriz = 1;
-      end
-    end
-
-
-    1: begin //estado que zera a matriz
-      if(contador_matriz_coluna > 79) begin
-        contador_matriz_coluna = 0;
-        contador_matriz_linha = contador_matriz_linha + 1;
-        if (contador_matriz_linha > 59)
-          estado_matriz = 0;
-      end
-      if ((contador_matriz_linha >= 2 && contador_matriz_linha <= 57) && (contador_matriz_coluna >= 2 && contador_matriz_coluna <= 77)) begin
-        matriz_jogo[contador_matriz_linha][contador_matriz_coluna] = 0;
-      end
-      else begin
-        matriz_jogo[contador_matriz_linha][contador_matriz_coluna] = 2;
-      end
-      contador_matriz_coluna = contador_matriz_coluna + 1;
-    end
-    default: begin
-      estado_matriz = 0;
-    end
-  endcase
+        0: begin //estado de espera
+            contador_matriz_coluna = 0;
+            contador_matriz_linha = 0;
+            if (reset || reiniciar == 1) begin
+                estado_matriz = 1;
+            end
+        end
+        1: begin //estado que zera a matriz
+            if(contador_matriz_coluna > 79) begin
+                contador_matriz_coluna = 0;
+                contador_matriz_linha = contador_matriz_linha + 1;
+                if (contador_matriz_linha > 59)
+                estado_matriz = 0;
+            end
+            if ((contador_matriz_linha >= 2 && contador_matriz_linha <= 57) && (contador_matriz_coluna >= 2 && contador_matriz_coluna <= 77)) begin
+                matriz_jogo[contador_matriz_linha][contador_matriz_coluna] = 0;
+            end
+            else begin
+                matriz_jogo[contador_matriz_linha][contador_matriz_coluna] = 3;
+            end
+            contador_matriz_coluna = contador_matriz_coluna + 1;
+        end
+        default: begin
+            estado_matriz = 0;
+        end
+    endcase
   end
-
 
 
   always @ (posedge VGA_CLK) begin
@@ -234,7 +272,7 @@ module jogador1(
     end
     else begin
       if(fim_de_jogo == 0) begin
-        if (contador_clock < 1500000) begin
+        if (contador_clock < 100000) begin
           contador_clock = contador_clock + 1;
         end
         else begin
@@ -244,45 +282,81 @@ module jogador1(
     end
   end
 
-  always@ (posedge VGA_CLK)begin
+  always@ (*)begin
     if(reset || reiniciar == 1)begin
-      estado = IDLE;
-      sentido = 0;
+      estadoJ1 = IDLE;
+      sentidoJ1 = 0;
     end
       
-      
-    case(estado)
+    case(estadoJ1)
       IDLE: begin
         if(KEY[3] == 0) begin
-          estado = AH_MOVE;
+          estadoJ1 = AH_MOVE;
         end
         else if(KEY[2] == 0) begin
-          estado = H_MOVE;
+          estadoJ1 = H_MOVE;
         end
         else begin
-            estado = IDLE;
+            estadoJ1 = IDLE;
         end
       end
       AH_MOVE: begin
-        sentido = sentido - 1;
-        estado = ESPERA; 
+        sentidoJ1 = sentidoJ1 - 1;
+        estadoJ1 = ESPERA; 
       end 
       H_MOVE: begin
-        sentido = sentido + 1;
-        estado = ESPERA; 
+        sentidoJ1 = sentidoJ1 + 1;
+        estadoJ1 = ESPERA; 
       end   
       ESPERA: begin
         if(KEY[3] == 1 && KEY[2] == 1 && KEY[1] == 1 && KEY[0] == 1)begin
-          estado = IDLE;
+          estadoJ1 = IDLE;
         end
       end
       default: begin
-        estado = IDLE;
+        estadoJ1 = IDLE;
       end
     endcase
-     
   end
-  assign saida_jogador1 = matriz_jogo[next_y >> 3][next_x >> 3];
+
+always@ (*)begin
+    if(reset || reiniciar == 1)begin
+      estadoJ2 = IDLE;
+      sentidoJ2 = 2;
+    end
+      
+    case(estadoJ2)
+      IDLE: begin
+        if(KEY[3] == 0) begin
+          estadoJ2 = AH_MOVE;
+        end
+        else if(KEY[2] == 0) begin
+          estadoJ2 = H_MOVE;
+        end
+        else begin
+            estadoJ2 = IDLE;
+        end
+      end
+      AH_MOVE: begin
+        sentidoJ2 = sentidoJ2 - 1;
+        estadoJ2 = ESPERA; 
+      end 
+      H_MOVE: begin
+        sentidoJ2 = sentidoJ2 + 1;
+        estadoJ2 = ESPERA; 
+      end   
+      ESPERA: begin
+        if(KEY[3] == 1 && KEY[2] == 1 && KEY[1] == 1 && KEY[0] == 1)begin
+          estadoJ2 = IDLE;
+        end
+      end
+      default: begin
+        estadoJ2 = IDLE;
+      end
+    endcase
+  end
+
+  assign saida_jogador = matriz_jogo[next_y >> 3][next_x >> 3];
 
 endmodule	
 
@@ -308,19 +382,19 @@ module top1(
   reg [7:0] jogador1_traco_red;
   reg [7:0] jogador1_traco_green;
   reg [7:0] jogador1_traco_blue;
+  wire [7:0] jogador2_red;
+  wire [7:0] jogador2_green;
+  wire [7:0] jogador2_blue;
+  reg [7:0] jogador2_traco_red;
+  reg [7:0] jogador2_traco_green;
+  reg [7:0] jogador2_traco_blue;
   reg [7:0] borda_red;
   reg [7:0] borda_green;
   reg [7:0] borda_blue;
   wire [7:0] input_red;
   wire [7:0] input_green;
   wire [7:0] input_blue;
-  reg [1:0] matriz_jogo [0:59] [0:79];
-
-  wire [1:0] saida_jogador1;
-  wire [1:0] saida_jogador2;
-  
-
-
+  wire [1:0] saida_jogador;
 
   jogador1 jogador1(
     .CLOCK_50(CLOCK_50),
@@ -330,10 +404,13 @@ module top1(
     .KEY(KEY),
     .next_x(next_x),
     .next_y(next_y),
-    .OUT_R(jogador1_red),
-    .OUT_G(jogador1_green),
-    .OUT_B(jogador1_blue),
-    .saida_jogador1(saida_jogador1)
+    .OUT_R1(jogador1_red),
+    .OUT_G1(jogador1_green),
+    .OUT_B1(jogador1_blue),
+    .OUT_R2(jogador2_red),
+    .OUT_G2(jogador2_green),
+    .OUT_B2(jogador2_blue),
+    .saida_jogador(saida_jogador)
   );
   
   vga vga(
@@ -354,20 +431,37 @@ module top1(
    .next_y(next_y)
   );
   
-   always@ (posedge VGA_CLK)begin
-      if (saida_jogador1 == 1)begin
+   always@ (posedge VGA_CLK) begin
 
+      if (saida_jogador == 1)begin
         jogador1_traco_red = 255;
         jogador1_traco_green = 255;
         jogador1_traco_blue = 0;
+
+        jogador2_traco_blue = 0;
+        jogador2_traco_green = 0;
+        jogador2_traco_red = 0;
+      end
+      else if (saida_jogador == 2) begin
+        jogador1_traco_red = 0;
+        jogador1_traco_green = 0;
+        jogador1_traco_blue = 0;
+        
+        jogador2_traco_red = 0;
+        jogador2_traco_green = 0;
+        jogador2_traco_blue = 255;
       end
       else begin
         jogador1_traco_red = 0;
         jogador1_traco_green = 0;
         jogador1_traco_blue = 0;
+
+        jogador2_traco_red = 0;
+        jogador2_traco_green = 0;
+        jogador2_traco_blue = 0;        
       end
 
-      if((next_x >= 16 && next_x <= 623) && (next_y >= 16 && next_y <= 463))begin
+      if((next_x >= 16 && next_x <= 622) && (next_y >= 16 && next_y <= 462))begin
         borda_red = 0;  
         borda_green = 0;  
         borda_blue = 0; 
@@ -377,13 +471,11 @@ module top1(
         borda_green = 0;  
         borda_blue = 0;
         end
+
     end
   
-
-  assign input_red = jogador1_red ^ borda_red ^ jogador1_traco_red;
-  assign input_green = jogador1_green ^ borda_green ^ jogador1_traco_green;
-  assign input_blue = jogador1_blue ^ borda_blue ^ jogador1_traco_blue;
-
- 
+  assign input_red = jogador1_red ^ borda_red ^ jogador1_traco_red ^ jogador2_red ^ jogador2_traco_red;
+  assign input_green = jogador1_green ^ borda_green ^ jogador1_traco_green ^ jogador2_green ^ jogador2_traco_green;
+  assign input_blue = jogador1_blue ^ borda_blue ^ jogador1_traco_blue ^ jogador2_blue ^ jogador2_traco_blue;
 
 endmodule
