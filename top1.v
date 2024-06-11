@@ -504,7 +504,7 @@ module jogador1(
 
 
   always @ (posedge VGA_CLK) begin
-    if (reset) begin
+    if (reset || reiniciar) begin
       contador_clock = 0;
     end
     else begin
