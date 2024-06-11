@@ -1,65 +1,4 @@
-module vga(
-  input CLOCK_50,
-  input [9:0] SW,
-  input wren,
-  input [7:0] input_red,
-  input [7:0] input_green,
-  input [7:0] input_blue,
-  output reg VGA_CLK,
-  output VGA_SYNC_N,
-  output VGA_BLANK_N,
-  output VGA_HS,
-  output VGA_VS,
-  output [7:0] VGA_R,     // RED (to resistor DAC VGA connector)
-  output [7:0] VGA_G,   // GREEN (to resistor DAC to VGA connector)
-  output [7:0] VGA_B,    // BLUE (to resistor DAC to VGA connector)
-  output [9:0] next_x,  // x-coordinate of NEXT pixel that will be drawn
-  output [9:0] next_y  // y-coordinate of NEXT pixel that will be drawn
-);
-
-
-  reg [9:0] x;
-  reg [9:0] y;
-  wire ativo;
-
-  always @(posedge CLOCK_50) begin
-    if (SW[0]) begin
-      VGA_CLK <= 0;
-    end else begin
-      VGA_CLK <= ~VGA_CLK;
-    end
-  end
-
-  always @(posedge VGA_CLK) begin
-    if (SW[0]) begin
-      x = 0;
-      y = 0;
-    end else begin
-      x = x + 1;
-      if (x == 800) begin
-        x = 0;
-        y = y + 1;
-        if (y == 525) begin
-          y = 0;
-        end
-      end
-    end
-  end
-
-  assign VGA_HS = (x<96)?0:1 ;
-  assign VGA_VS = (y<2)?0:1 ;
-  assign ativo = ((x>96) && (y>2))?1:0 ;
-  assign VGA_R = (ativo)? input_red:0 ;
-  assign VGA_G = (ativo)? input_green:0 ;
-  assign VGA_B   = (ativo)? input_blue:0 ;
-  assign VGA_SYNC_N = 0 ;
-  assign VGA_BLANK_N = 1 ;
-  assign next_x = ((x > 143) && (x <= 783))? x - 143:0 ;
-  assign next_y = ((y > 36) && (y < 515))? y - 36:0 ;
-
-endmodule
-
-module jogador1(
+module jogador(
   input CLOCK_50,
   input VGA_CLK,
   input reset,
@@ -70,6 +9,8 @@ module jogador1(
   output reg [7:0] OUT_R,     // RED (to resistor DAC OUT connector)
   output reg [7:0] OUT_G,   // GREEN (to resistor DAC to OUT connector)
   output reg [7:0] OUT_B,   // BLUE (to resistor DAC to OUT connector)
+  output  [9:0] scoreJ1,
+  output  [9:0] scoreJ2,
   output [1:0] saida_jogador
   );
 
@@ -112,6 +53,8 @@ module jogador1(
   reg fim_de_jogo;
   reg [1:0] dado_matrizJ1;
   reg [1:0] dado_matrizJ2;
+  reg [9:0] reg_scoreJ1;
+  reg [9:0] reg_scoreJ2;
 
   always @ (posedge CLOCK_50) begin
     if (reset || reiniciar == 1) begin
@@ -127,28 +70,31 @@ module jogador1(
       contador_matriz_coluna = 0;
       contador_matriz_linha = 0;
       fim_de_jogo = 0;
+      if (reset) begin
+        reg_scoreJ1 = 0;
+        reg_scoreJ2 = 0;
+      end
     end
     else if (estado_matriz == 0  ) begin
-      if (contador_clock == 0) begin
-        //lê e gera o rgb
-        if ((next_x >= coord_atual_x1) && (next_x < coord_atual_x1 + COMPRIMENTO_JOGADOR) && (next_y >= coord_atual_y1) && (next_y < coord_atual_y1 + ALTURA_JOGADOR)) begin
-            OUT_R = 127;
-            OUT_G = 127;
-            OUT_B = 0;
-        end
-        else if ((next_x >= coord_atual_x2) && (next_x < coord_atual_x2 + COMPRIMENTO_JOGADOR) && (next_y >= coord_atual_y2) && (next_y < coord_atual_y2 + ALTURA_JOGADOR)) begin
-            OUT_R = 0;
-            OUT_G = 0;
-            OUT_B = 127;
-        end
-        else begin
-            OUT_R = 0;
-            OUT_G = 0;
-            OUT_B = 0;
-        end
+      
+      //lê e gera o rgb
+      if ((next_x > coord_atual_x1) && (next_x <= coord_atual_x1 + COMPRIMENTO_JOGADOR) && (next_y >= coord_atual_y1) && (next_y < coord_atual_y1 + ALTURA_JOGADOR)) begin
+          OUT_R = 127;
+          OUT_G = 127;
+          OUT_B = 0;
+      end
+      else if ((next_x > coord_atual_x2) && (next_x <= coord_atual_x2 + COMPRIMENTO_JOGADOR) && (next_y >= coord_atual_y2) && (next_y < coord_atual_y2 + ALTURA_JOGADOR)) begin
+          OUT_R = 0;
+          OUT_G = 0;
+          OUT_B = 127;
+      end
+      else begin
+          OUT_R = 0;
+          OUT_G = 0;
+          OUT_B = 0;
       end
 
-      else if (contador_clock == 125000)
+      if (contador_clock == 125000)
         begin
         // movendo jogador 1
           if(sentidoJ1 == 0) begin // deslocando para direita
@@ -205,9 +151,19 @@ module jogador1(
       else if (contador_clock == 500000) 
         begin
           // verificando colisão
-         if (dado_matrizJ1 != 0 || dado_matrizJ2 != 0) begin
+         if ((dado_matrizJ1 != 0 || dado_matrizJ2 != 0) && fim_de_jogo == 0) begin
+          //  if (dado_matrizJ1 != 0 && dado_matrizJ2 != 0) begin
+          //     scoreJ1 = scoreJ1 + 1;
+          //     scoreJ2 = scoreJ2 + 1;
+           //end
+           if (dado_matrizJ1 != 0) begin
+              reg_scoreJ2 = reg_scoreJ2 + 1;
+           end
+           if (dado_matrizJ2 != 0) begin
+              reg_scoreJ1 = reg_scoreJ1 + 1;
+          end
            fim_de_jogo = 1;
-           estado_matriz = 1;
+           estado_matriz = 0;
          end          
         end
       else if (contador_clock == 625000) begin
@@ -250,7 +206,7 @@ module jogador1(
 
 
   always @ (posedge VGA_CLK) begin
-    if (reset) begin
+    if (reset || reiniciar) begin
       contador_clock = 0;
     end
     else begin
@@ -340,104 +296,7 @@ always@ (posedge VGA_CLK)begin
   end
 
   assign saida_jogador = matriz_jogo[next_y >> 3][next_x >> 3];
+  assign scoreJ1 = reg_scoreJ1;
+  assign scoreJ2 = reg_scoreJ2;
 
 endmodule	
-
-module top1(
-  input CLOCK_50,
-  input [3:0] SW,
-  input [3:0] KEY,
-  output VGA_CLK,
-  output VGA_SYNC_N,
-  output VGA_BLANK_N,
-  output VGA_HS,
-  output VGA_VS,
-  output [7:0] VGA_R,     // RED (to resistor DAC VGA connector)
-  output [7:0] VGA_G,   // GREEN (to resistor DAC to VGA connector)
-  output [7:0] VGA_B    // BLUE (to resistor DAC to VGA connector)
-);
-
-  wire [9:0] next_x;
-  wire [9:0] next_y;
-  wire [7:0] jogador_red;
-  wire [7:0] jogador_green;
-  wire [7:0] jogador_blue;
-  reg [7:0] jogador_traco_red;
-  reg [7:0] jogador_traco_green;
-  reg [7:0] jogador_traco_blue;
-  reg [7:0] borda_red;
-  reg [7:0] borda_green;
-  reg [7:0] borda_blue;
-  wire [7:0] input_red;
-  wire [7:0] input_green;
-  wire [7:0] input_blue;
-  wire [1:0] saida_jogador;
-
-  jogador1 jogador1(
-    .CLOCK_50(CLOCK_50),
-    .VGA_CLK(VGA_CLK),
-    .reset(SW[0]),
-    .reiniciar(SW[1]),
-    .KEY(KEY),
-    .next_x(next_x),
-    .next_y(next_y),
-    .OUT_R(jogador_red),
-    .OUT_G(jogador_green),
-    .OUT_B(jogador_blue),
-    .saida_jogador(saida_jogador)
-  );
-  
-  vga vga(
-   .CLOCK_50(CLOCK_50),
-   .SW(SW),
-   .input_red(input_red),
-   .input_green(input_green),
-   .input_blue(input_blue),
-   .VGA_CLK(VGA_CLK),
-   .VGA_SYNC_N(VGA_SYNC_N),
-   .VGA_BLANK_N(VGA_BLANK_N),
-   .VGA_HS(VGA_HS),
-   .VGA_VS(VGA_VS),
-   .VGA_R(VGA_R),     // RED (to resistor DAC VGA connector),
-   .VGA_G(VGA_G),   // GREEN (to resistor DAC to VGA connector),
-   .VGA_B(VGA_B),    // BLUE (to resistor DAC to VGA connector)
-   .next_x(next_x),  // x-coordinate of NEXT pixel that will be drawn
-   .next_y(next_y)
-  );
-  
-   always@ (posedge VGA_CLK) begin
-
-      if (saida_jogador == 1)begin
-        jogador_traco_red = 255;
-        jogador_traco_green = 255;
-        jogador_traco_blue = 0;
-      end
-      else if (saida_jogador == 2) begin
-        jogador_traco_red = 0;
-        jogador_traco_green = 0;
-        jogador_traco_blue = 255;
-      end
-      else begin
-        jogador_traco_red = 0;
-        jogador_traco_green = 0;
-        jogador_traco_blue = 0;        
-      end
-
-      if((next_x >= 16 && next_x <= 622) && (next_y >= 16 && next_y <= 462))begin
-        borda_red = 0;  
-        borda_green = 0;  
-        borda_blue = 0; 
-      end
-      else begin
-        borda_red = 255;  
-        borda_green = 0;  
-        borda_blue = 0;
-        end
-
-    end
-  
-  assign input_red = jogador_red ^ borda_red ^ jogador_traco_red;
-  assign input_green = jogador_green ^ borda_green ^ jogador_traco_green;
-  assign input_blue = jogador_blue ^ borda_blue ^ jogador_traco_blue;
-
-endmodule

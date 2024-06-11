@@ -1,3 +1,0 @@
-display
-colisao: jogo congelando antes da hora, tanto na borda quanto nos jogadores
-reiniciar: as vezes nao reinicia

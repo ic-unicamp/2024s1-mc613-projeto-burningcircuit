@@ -1,12 +1,19 @@
 
-State Machine - |top1|jogador1:jogador1|estado_matriz
+State Machine - |top1|jogador:jogador|estado_matriz
 Name estado_matriz.001 
 estado_matriz.000 0 
 estado_matriz.001 1 
 
-State Machine - |top1|jogador1:jogador1|estado
-Name estado.ESPERA estado.H_MOVE estado.IDLE estado.AH_MOVE 
-estado.IDLE 0 0 0 0 
-estado.AH_MOVE 0 0 1 1 
-estado.H_MOVE 0 1 1 0 
-estado.ESPERA 1 0 1 0 
+State Machine - |top1|jogador:jogador|estadoJ1
+Name estadoJ1.ESPERA estadoJ1.H_MOVE estadoJ1.IDLE estadoJ1.AH_MOVE 
+estadoJ1.IDLE 0 0 0 0 
+estadoJ1.AH_MOVE 0 0 1 1 
+estadoJ1.H_MOVE 0 1 1 0 
+estadoJ1.ESPERA 1 0 1 0 
+
+State Machine - |top1|jogador:jogador|estadoJ2
+Name estadoJ2.ESPERA estadoJ2.H_MOVE estadoJ2.IDLE estadoJ2.AH_MOVE 
+estadoJ2.IDLE 0 0 0 0 
+estadoJ2.AH_MOVE 0 0 1 1 
+estadoJ2.H_MOVE 0 1 1 0 
+estadoJ2.ESPERA 1 0 1 0 
