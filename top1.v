@@ -296,7 +296,7 @@ module vga(
 
 endmodule
 
-module jogador1(
+module jogador(
   input CLOCK_50,
   input VGA_CLK,
   input reset,
@@ -638,7 +638,7 @@ module top1(
   wire [3:0] dig0_dec, dig1_dec, dig2_dec, dig3_dec, dig4_dec, dig5_dec;
 
 
-  jogador1 jogador1(
+  jogador jogador(
     .CLOCK_50(CLOCK_50),
     .VGA_CLK(VGA_CLK),
     .reset(SW[0]),
