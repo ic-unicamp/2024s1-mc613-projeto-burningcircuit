@@ -152,7 +152,7 @@ module jogador1(
 
       else if (contador_clock == 0)
         begin
-          // movendo jogador 1
+        // movendo jogador 1
           if(sentidoJ1 == 0) begin // deslocando para direita
             coord_futura_x1 = coord_atual_x1 + COMPRIMENTO_JOGADOR;
             coord_futura_y1 = coord_atual_y1;  
@@ -251,7 +251,7 @@ module jogador1(
     end
     else begin
       if(fim_de_jogo == 0) begin
-        if (contador_clock < 100000) begin
+        if (contador_clock < 1000000) begin
           contador_clock = contador_clock + 1;
         end
         else begin
@@ -306,10 +306,10 @@ always@ (*)begin
       
     case(estadoJ2)
       IDLE: begin
-        if(KEY[3] == 0) begin
+        if(KEY[1] == 0) begin
           estadoJ2 = AH_MOVE;
         end
-        else if(KEY[2] == 0) begin
+        else if(KEY[0] == 0) begin
           estadoJ2 = H_MOVE;
         end
         else begin
@@ -367,7 +367,6 @@ module top1(
   wire [7:0] input_red;
   wire [7:0] input_green;
   wire [7:0] input_blue;
-  reg [1:0] matriz_jogo [0:59] [0:79];
   wire [1:0] saida_jogador;
 
   jogador1 jogador1(
